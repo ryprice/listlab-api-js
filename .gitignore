@@ -6,6 +6,7 @@ build/
 target/
 debug/
 release/
+typings/
 tmp/
 node_modules/
 *.tmp
