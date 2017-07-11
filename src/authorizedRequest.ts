@@ -1,15 +1,14 @@
-import * as axios from "axios";
-import AxiosXHRConfig = Axios.AxiosXHRConfig;
+import {create} from "axios";
 import {IPromise} from "q";
 
 import {TaskApiConfig} from "./TaskApiConfig";
 
-export const authorizedRequest = <T>(config: TaskApiConfig, ajaxSettings: AxiosXHRConfig<T>): IPromise<T> => {
+export const authorizedRequest = <T>(config: TaskApiConfig, ajaxSettings: any): IPromise<T> => {
     if (ajaxSettings.headers === undefined) {
         ajaxSettings.headers = {};
     }
     ajaxSettings.headers["Authorization"] = config.AuthToken;
-    const returnXHR = axios(ajaxSettings);
+    const returnXHR = create({})(ajaxSettings);
     returnXHR.catch(config.handleHttpError ? config.handleHttpError : () => {});
-    return returnXHR.then(response => response.data);
+    return returnXHR.then((response: any) => response.data as T);
 };

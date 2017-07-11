@@ -7,6 +7,7 @@ target/
 debug/
 release/
 typings/
+dist/
 tmp/
 node_modules/
 *.tmp

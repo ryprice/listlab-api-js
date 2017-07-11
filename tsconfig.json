@@ -1,0 +1,46 @@
+{
+    "compilerOptions": {
+      "module": "amd",
+      "noImplicitAny": true,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "sourceMap": false,
+      "target": "es5",
+      "moduleResolution": "classic",
+      "noEmit": false,
+      "baseUrl": "./src/",
+      "rootDir": "./src/",
+      "typeRoots": ["typings/globals", "typings/modules"]
+    },
+    "files": [
+      "src/AuthClient.ts",
+      "src/authorizedRequest.ts",
+      "src/AuthSession.ts",
+      "src/CreatePublicListResponse.ts",
+      "src/FuzzyGranularity.ts",
+      "src/FuzzyTime.ts",
+      "src/FuzzyTimeFormatters.ts",
+      "src/FuzzyTimeRange.ts",
+      "src/index.ts",
+      "src/InitClient.ts",
+      "src/List.ts",
+      "src/ListClient.ts",
+      "src/ListShare.ts",
+      "src/ListTask.ts",
+      "src/parseHumanReadableFuzzyTime.ts",
+      "src/Payload.ts",
+      "src/Recurrence.ts",
+      "src/RecurrenceSchedule.ts",
+      "src/RoleClient.ts",
+      "src/Task.ts",
+      "src/TaskApiConfig.ts",
+      "src/TaskClient.ts",
+      "src/TaskFilter.ts",
+      "src/TimeString.ts",
+      "src/User.ts",
+      "src/UserClient.ts"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
+}

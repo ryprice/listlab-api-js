@@ -1,5 +1,5 @@
 {
-  "name": "quqmber-api-js",
+  "name": "quqmber-api",
   "dependencies": {
     "q": "registry:dt/q#1.0.0+20170315012124",
     "qs": "registry:dt/qs#6.2.0+20170307004300"

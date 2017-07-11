@@ -2,12 +2,12 @@ var gulp = require('gulp');
 var typescript = require('gulp-typescript');
 var uglify = require('gulp-uglify');
 var requirejsOptimize = require('gulp-requirejs-optimize');
-var sass = require('gulp-sass');
-var bower = require('gulp-bower');
 var rename = require('gulp-rename');
 var tslint = require('gulp-tslint');
 var sequence = require('gulp-sequence');
 var argv = require('yargs').argv;
+var concat = require('gulp-concat');
+var dtsGenerator = require('dts-generator').default;
 
 
 
@@ -65,7 +65,16 @@ gulp.task('minify-release', () => {
         .pipe(gulp.dest("build/"));
 });
 
-
+gulp.task('concat-declarations', () => {
+  dtsGenerator({
+      name: 'ququmber-api',
+      project: './',
+      main: 'ququmber-api/index',
+      externs: ['q', 'qs', 'axios'],
+      excludes: ['./typings/**/*.d.ts'],
+      out: 'dist/ququmber-api.d.ts'
+  });
+})
 
 
 // External tasks
@@ -75,14 +84,16 @@ var destPath = './build';
 gulp.task('debug', function(cb) {
     sequence(
         'tslint',
-        'tsc-debug'
+        'tsc-debug',
+        'concat-declarations'
     )(cb);
 });
 
 gulp.task('release', (cb) => {
     sequence(
         ['tslint', 'release-intermediate'],
-        'minify-release'
+        'minify-release',
+        'concat-declarations'
     )(cb);
 });
 

@@ -1,5 +1,5 @@
 {
-  "name": "quqmber-api-js",
+  "name": "quqmber-api",
   "version": "1.0.0",
   "description": "JavaScript client for Ququmber APIs.",
   "main": "gulpfile.js",
@@ -12,17 +12,20 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.23.0",
     "babel-plugin-transform-es2015-modules-amd": "^6.22.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "dts-generator": "^2.1.0",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
     "gulp-requirejs-optimize": "^1.2.0",
     "gulp-sass": "^2.3.2",
+    "gulp-sequence": "^0.4.6",
+    "gulp-tslint": "^7.1.0",
     "gulp-typescript": "^3.1.4",
     "gulp-uglify": "^2.0.0",
     "tslint": "^4.4.2",
-    "gulp-rename": "^1.2.2",
-    "gulp-tslint": "^7.1.0",
-    "gulp-sequence": "^0.4.6",
-    "typescript": "^2.1.0"
-},
+    "typescript": "^2.4.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -36,8 +39,5 @@
   "bugs": {
     "url": "https://github.com/ryprice/QuqumberWeb/issues"
   },
-  "homepage": "https://github.com/ryprice/QuqumberWeb#readme",
-  "devDependencies": {
-    "babel-preset-stage-2": "^6.22.0"
-  }
+  "homepage": "https://github.com/ryprice/QuqumberWeb#readme"
 }
