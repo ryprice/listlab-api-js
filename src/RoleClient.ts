@@ -1,3 +1,5 @@
+import {IPromise} from "q";
+
 import {authorizedRequest} from "./authorizedRequest";
 import {TaskApiConfig} from "./TaskApiConfig";
 
@@ -12,7 +14,7 @@ export class RoleClient {
         this.roleServiceAddress = config.TaskServiceAddress + "/role";
     }
 
-    postListRole(listId: number, secret: string) {
+    postListRole(listId: number, secret: string): IPromise<void> {
         const ajaxSettings = {
             url: `${this.roleServiceAddress}/list/${listId}?s=${secret}`,
             method: "POST"
