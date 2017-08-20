@@ -1,7 +1,7 @@
 import FuzzyGranularity from "./FuzzyGranularity";
 import FuzzyTime from "./FuzzyTime";
 
-export const parseHumanReadableFuzzyTime = (str: string): FuzzyTime => {
+export default (str: string): FuzzyTime => {
     str = str.toLowerCase();
     str = str.trim();
     const words = str.split(" ");
