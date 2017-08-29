@@ -31,4 +31,17 @@ export default class FuzzyTimeRange {
     public setEnd(end: FuzzyTime) {
         return new FuzzyTimeRange(this.start, end);
     }
+
+    public equals(otherRange: FuzzyTimeRange): boolean {
+        return this.start.equals(otherRange.getStart()) && this.end.equals(otherRange.getEnd());
+    }
+
+    public expandToInclude(time: FuzzyTime): FuzzyTimeRange {
+        if (this.start && this.start.compareTo(time) < 0) {
+            return this.setStart(time);
+        } else if (this.end && this.end.compareTo(time) > 0) {
+            return this.setEnd(time);
+        }
+        return this;
+    }
 }
