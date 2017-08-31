@@ -245,6 +245,13 @@ export default class FuzzyTime {
             return sequence[currentIndex + 1];
         }
 
+        public getFirstChild() {
+            if (this.getGranularity() === FuzzyGranularity.DAY) {
+                throw "Cannot get children of days";
+            }
+            return this.withGranularity(this.getGranularity().getPrev(FuzzyTime.StandardGranularitySequence));
+        }
+
         public static StandardGranularitySequence = new Array<FuzzyGranularity>(
             FuzzyGranularity.DAY,
             FuzzyGranularity.WEEK,
