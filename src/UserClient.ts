@@ -1,4 +1,4 @@
-import {IPromise} from "q";
+import {IPromise, resolve} from "q";
 
 import {authorizedRequest} from "./authorizedRequest";
 import AuthSession from "./AuthSession";
@@ -28,6 +28,17 @@ export class UserClient {
     search(q: string): IPromise<User[]> {
         const ajaxSettings = {
             url: `${this.userServiceAddress}/search?q=${q}`,
+            method: "GET"
+        };
+        return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
+            return this.consumeUsers(json);
+        });
+    }
+
+    getUsersById(ids: number[]): IPromise<User[]> {
+        if (ids.length < 1) return resolve([]);
+        const ajaxSettings = {
+            url: `${this.userServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
             method: "GET"
         };
         return authorizedRequest(this.config, ajaxSettings).then((json: any) => {

@@ -2,6 +2,7 @@ import {IPromise} from "q";
 
 import {authorizedRequest} from "./authorizedRequest";
 import List from "./List";
+import ListShare from "./ListShare";
 import ListTask from "./ListTask";
 import Payload from "./Payload";
 import Task from "./Task";
@@ -117,20 +118,47 @@ export class ListClient {
         }
     }
 
-    addShareToList(userId: number, listId: number): IPromise<void> {
+    addShareToList(userId: number, listId: number, type: string): IPromise<void> {
         const ajaxSettings = {
-            url: `${this.listServiceAddress}/${listId}/share/${userId}`,
+            url: `${this.config.TaskServiceAddress}/role/list/${listId}/share?userId=${userId}&type=${type}`,
             method: "PUT"
         };
         return authorizedRequest(this.config, ajaxSettings).then(() => {});
     }
 
-    removeShareFromList(userId: number, listId: number): IPromise<void> {
+    removeShareFromList(userId: number, listId: number, type: string): IPromise<void> {
         const ajaxSettings = {
-            url: `${this.listServiceAddress}/${listId}/share/${userId}`,
+            url: `${this.config.TaskServiceAddress}/role/list/${listId}/share?userId=${userId}&type=${type}`,
             method: "DELETE"
         };
         return authorizedRequest(this.config, ajaxSettings).then(() => {});
+    }
+
+    getListDetails(listId: number): IPromise<Payload> {
+        const ajaxSettings = {
+            url: `${this.config.TaskServiceAddress}/list/${listId}/details`,
+            method: "GET"
+        };
+        return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
+            const lists = consumeLists(json.lists);
+            const list = lists[0];
+            const roleUserToType = (roleUser: any): string => {
+                let type = null;
+                if (roleUser.roleId === list.publicReadRole) {
+                    type = 'read';
+                } else if (roleUser.roleId === list.publicWriteRole) {
+                    type = 'write';
+                }
+                return type;
+            };
+
+            return {
+                lists: lists,
+                listShares: json.roleUsers.map((roleUser: any) => (
+                    new ListShare(listId, roleUser.userId, roleUserToType(roleUser))
+                ))
+            } as Payload;
+        });
     }
 
     constructEmptyEntity(): List {
@@ -173,6 +201,8 @@ export const consumeList = (json: any): List => {
     list.color = json.color;
     list.sortOrder = json.sortOrder;
     list.parentId = json.parentId;
+    list.publicReadRole = json.publicReadRole;
+    list.publicWriteRole = json.publicWriteRole;
     if (json.tasks) {
         this.consumeListTasks(list, json.tasks);
     }
