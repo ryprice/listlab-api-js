@@ -16,8 +16,10 @@ export {default as ListShare} from './ListShare';
 export {default as ListTask} from './ListTask';
 export {default as parseHumanReadableFuzzyTime} from './parseHumanReadableFuzzyTime';
 export {default as Payload} from './Payload';
+export {buildPublicListUrl} from './QuqumberUrlBuilders';
 export {default as Recurrence} from './Recurrence';
 export {default as RecurrenceSchedule} from './RecurrenceSchedule';
+export {default as Role} from './Role';
 export {RoleClient} from './RoleClient';
 export {
   default as Task,

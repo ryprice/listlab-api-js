@@ -5,6 +5,7 @@ import List from "./List";
 import ListShare from "./ListShare";
 import ListTask from "./ListTask";
 import Payload from "./Payload";
+import Role from "./Role";
 import Task from "./Task";
 import {TaskApiConfig} from "./TaskApiConfig";
 import {consumeTasks} from "./TaskClient";
@@ -156,7 +157,8 @@ export class ListClient {
                 lists: lists,
                 listShares: json.roleUsers.map((roleUser: any) => (
                     new ListShare(listId, roleUser.userId, roleUserToType(roleUser))
-                ))
+                )),
+                roles: json.roles.map((role: any) => new Role(role.roleId, role.secret))
             } as Payload;
         });
     }
