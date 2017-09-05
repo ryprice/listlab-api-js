@@ -127,9 +127,9 @@ export class ListClient {
         return authorizedRequest(this.config, ajaxSettings).then(() => {});
     }
 
-    removeShareFromList(userId: number, listId: number, type: string): IPromise<void> {
+    removeShareFromList(userId: number, listId: number): IPromise<void> {
         const ajaxSettings = {
-            url: `${this.config.TaskServiceAddress}/role/list/${listId}/share?userId=${userId}&type=${type}`,
+            url: `${this.config.TaskServiceAddress}/role/list/${listId}/share?userId=${userId}`,
             method: "DELETE"
         };
         return authorizedRequest(this.config, ajaxSettings).then(() => {});

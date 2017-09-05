@@ -1,4 +1,4 @@
-import * as axios from "axios";
+import axios from "axios";
 import {IPromise} from "q";
 import * as qs from "qs";
 
@@ -39,7 +39,7 @@ export class AuthClient {
             },
             data: qs.stringify({userId: userId})
         };
-        return axios(ajaxSettings).then(response => {
+        return axios(ajaxSettings).then((response: any) => {
             this.parseAuthResult(response);
         });
     }
@@ -52,7 +52,7 @@ export class AuthClient {
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 data: qs.stringify({idToken: googleIdToken}),
             };
-            return axios(ajaxSettings).then(response => {
+            return axios(ajaxSettings).then((response: any) => {
                 this.parseAuthResult(response);
             });
         }
@@ -66,7 +66,7 @@ export class AuthClient {
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 data: qs.stringify({accessToken: fbAccessToken})
             };
-            return axios(ajaxSettings).then(response => {
+            return axios(ajaxSettings).then((response: any) => {
                 this.parseAuthResult(response);
             });
         }
@@ -78,7 +78,7 @@ export class AuthClient {
             method: "POST",
             headers: {"Content-Type": "application/x-www-form-urlencoded"}
         };
-        return axios(ajaxSettings).then(response => {
+        return axios(ajaxSettings).then((response: any) => {
             this.parseAuthResult(response);
         });
     }
