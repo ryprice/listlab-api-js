@@ -53,6 +53,7 @@ export default class FuzzyTime {
                 parents.push(parent);
                 lastParent = parent;
             }
+            parents.push(forever);
             return parents;
         }
 
@@ -103,9 +104,9 @@ export default class FuzzyTime {
             if (this.granularity === FuzzyGranularity.FOREVER && other.getGranularity() === FuzzyGranularity.FOREVER) {
                 return 0;
             } else if (other.getGranularity() === FuzzyGranularity.FOREVER) {
-                return -1;
-            } else if (this.granularity === FuzzyGranularity.FOREVER) {
                 return 1;
+            } else if (this.granularity === FuzzyGranularity.FOREVER) {
+                return -1;
             } else if (this.getTime() < other.getTime()) {
                 return -1;
             } else if (this.getTime() > other.getTime()) {
@@ -256,7 +257,8 @@ export default class FuzzyTime {
             FuzzyGranularity.DAY,
             FuzzyGranularity.WEEK,
             FuzzyGranularity.MONTH,
-            FuzzyGranularity.YEAR
+            FuzzyGranularity.YEAR,
+            FuzzyGranularity.FOREVER
             );
     }
 

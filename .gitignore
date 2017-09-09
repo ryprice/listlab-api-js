@@ -1,7 +1,6 @@
 
 .metadata
 bin/
-bower_components/
 build/
 target/
 debug/
