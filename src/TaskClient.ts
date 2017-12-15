@@ -5,6 +5,7 @@ import {authorizedRequest} from "./authorizedRequest";
 import FuzzyGranularity from "./FuzzyGranularity";
 import FuzzyTime from "./FuzzyTime";
 import {consumePayloadResult} from "./InitClient";
+import InsertResult from "./InsertResult";
 import Payload from "./Payload";
 import Recurrence from "./Recurrence";
 import RecurrenceSchedule from "./RecurrenceSchedule";
@@ -131,19 +132,16 @@ export class TaskClient {
         return authorizedRequest(this.config, ajaxSettings);
     }
 
-    putTask(task: Task): IPromise<Task> {
+    putTask(task: Task): IPromise<Payload> {
         const ajaxSettings: any = {
             url: `${this.taskServiceAddress}/task`,
             data: JSON.stringify(this.generateJson(task)),
             headers: {"Content-Type": "application/json"},
             method: "PUT"
         };
-        return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-            const persistedId = this.consumeInsertResult(json);
-            task = task.clone();
-            task.taskId = persistedId;
-            return task;
-        });
+        return authorizedRequest(this.config, ajaxSettings).then((json: any) =>
+            consumePayloadResult(json)
+        );
     }
 
     putTasks(tasks: Task[]): void {
@@ -152,9 +150,9 @@ export class TaskClient {
         }
     }
 
-    moveTaskBefore(task: Task, before: Task): IPromise<Payload> {
+    moveTaskBefore(taskId: number, beforeId: number): IPromise<Payload> {
         const ajaxSettings = {
-            url: `${this.taskServiceAddress}/tasks/move?taskId=${task.taskId}&before=${before.taskId}`,
+            url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&before=${beforeId}`,
             method: "POST"
         };
         return authorizedRequest(this.config, ajaxSettings).then((json) => {
@@ -162,9 +160,9 @@ export class TaskClient {
         });
     }
 
-    moveTaskAfter(task: Task, after: Task): IPromise<Payload> {
+    moveTaskAfter(taskId: number, afterId: number): IPromise<Payload> {
         const ajaxSettings = {
-            url: `${this.taskServiceAddress}/tasks/move?taskId=${task.taskId}&after=${after.taskId}`,
+            url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&after=${afterId}`,
             method: "POST"
         };
         return authorizedRequest(this.config, ajaxSettings).then((json) => {
@@ -187,14 +185,6 @@ export class TaskClient {
             return this.getTask(task.parentId);
         }
         return resolve(null);
-    }
-
-    consumeInsertResult(json: any): number {
-      if (json.id) {
-        return json.id;
-      } else {
-        return 0;
-      }
     }
 
     generateJson(task: Task): Object {
