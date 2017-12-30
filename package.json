@@ -24,6 +24,7 @@
     "webpack": "^3.5.5"
   },
   "scripts": {
+    "build": "tsc -d --declarationDir lib/ququmber-api --outDir lib/ququmber-api",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

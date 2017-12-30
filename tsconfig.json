@@ -36,7 +36,6 @@
       "src/TaskApiConfig.ts",
       "src/TaskClient.ts",
       "src/TaskFilter.ts",
-      "src/TimeString.ts",
       "src/User.ts",
       "src/UserClient.ts"
     ],

@@ -7,6 +7,7 @@ debug/
 release/
 typings/
 dist/
+lib/
 tmp/
 node_modules/
 *.tmp
