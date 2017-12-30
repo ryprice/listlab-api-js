@@ -5,7 +5,6 @@ import {authorizedRequest} from "./authorizedRequest";
 import FuzzyGranularity from "./FuzzyGranularity";
 import FuzzyTime from "./FuzzyTime";
 import {consumePayloadResult} from "./InitClient";
-import InsertResult from "./InsertResult";
 import Payload from "./Payload";
 import Recurrence from "./Recurrence";
 import RecurrenceSchedule from "./RecurrenceSchedule";

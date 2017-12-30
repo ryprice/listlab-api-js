@@ -9,6 +9,7 @@ import Role from "./Role";
 import Task from "./Task";
 import {TaskApiConfig} from "./TaskApiConfig";
 import {consumeTasks} from "./TaskClient";
+import CreatePublicListResponse from './CreatePublicListResponse';
 
 export class ListClient {
 
