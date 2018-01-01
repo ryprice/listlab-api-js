@@ -75,6 +75,12 @@ export default class FuzzyTime {
         }
 
         public overlaps(other: FuzzyTime) {
+            if (
+              other.getGranularity() === FuzzyGranularity.FOREVER ||
+              this.getGranularity() === FuzzyGranularity.FOREVER
+            ) {
+              return true;
+            }
             const start = this.getTime().getTime();
             const end = this.getNext().getTime().getTime();
             const otherStart = other.getTime().getTime();
