@@ -1,15 +1,14 @@
 import {IPromise} from "q";
 
 import {authorizedRequest} from "./authorizedRequest";
+import CreatePublicListResponse from './CreatePublicListResponse';
 import List from "./List";
 import ListShare from "./ListShare";
 import ListTask from "./ListTask";
 import Payload from "./Payload";
 import Role from "./Role";
-import Task from "./Task";
 import {TaskApiConfig} from "./TaskApiConfig";
 import {consumeTasks} from "./TaskClient";
-import CreatePublicListResponse from './CreatePublicListResponse';
 
 export class ListClient {
 
@@ -98,23 +97,23 @@ export class ListClient {
         });
     }
 
-    removeTaskFromList(task: Task, listId: number): IPromise<void> {
+    removeTaskFromList(taskId: number, listId: number): IPromise<void> {
         const ajaxSettings = {
-            url: `${this.listServiceAddress}/${listId}/${task.taskId}`,
+            url: `${this.listServiceAddress}/${listId}/${taskId}`,
             method: "DELETE"
         };
         return authorizedRequest(this.config, ajaxSettings).then(() => {});
     }
 
-    private addTaskToList(task: Task, listId: number): IPromise<void> {
+    private addTaskToList(taskId: number, listId: number): IPromise<void> {
         const ajaxSettings = {
-            url: `${this.listServiceAddress}/${listId}/${task.taskId}`,
+            url: `${this.listServiceAddress}/${listId}/${taskId}`,
             method: "PUT"
         };
         return authorizedRequest(this.config, ajaxSettings).then(() => {});
     }
 
-    addTasksToList(tasks: Task[], listId: number): void {
+    addTasksToList(tasks: number[], listId: number): void {
         for (const task of tasks) {
             this.addTaskToList(task, listId);
         }
