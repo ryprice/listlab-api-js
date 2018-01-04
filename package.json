@@ -25,7 +25,7 @@
     "file-system": "^2.2.2"
   },
   "scripts": {
-    "build": "tsc -d --declarationDir lib/ququmber-api --outDir lib/ququmber-api || node tools/copy-package.js",
+    "build": "tsc -d --declarationDir lib --outDir lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -38,5 +38,7 @@
   "bugs": {
     "url": "https://github.com/ryprice/QuqumberWeb/issues"
   },
-  "homepage": "https://github.com/ryprice/QuqumberWeb#readme"
+  "homepage": "https://github.com/ryprice/QuqumberWeb#readme",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts"
 }
