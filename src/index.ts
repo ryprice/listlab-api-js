@@ -14,6 +14,8 @@ export {default as List} from './List';
 export {ListClient} from './ListClient';
 export {default as ListShare} from './ListShare';
 export {default as ListTask} from './ListTask';
+export {default as Notification} from './Notification';
+export {default as NotificationClient} from './NotificationClient';
 export {default as parseHumanReadableFuzzyTime} from './parseHumanReadableFuzzyTime';
 export {default as Payload} from './Payload';
 export {buildPublicListUrl} from './QuqumberUrlBuilders';
