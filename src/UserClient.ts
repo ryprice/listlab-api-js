@@ -49,7 +49,9 @@ export class UserClient {
     postSettings(settings: {[key: string]: string}): IPromise<void> {
         const ajaxSettings = {
             url: `${this.userServiceAddress}/settings`,
-            method: "POST"
+            method: "POST",
+            data: JSON.stringify(settings),
+            headers: {"Content-Type": "application/json"},
         };
         return authorizedRequest(this.config, ajaxSettings).then(() => {return;});
     }
@@ -58,7 +60,6 @@ export class UserClient {
         const user = new User();
         user.userId = json.userId;
         user.name = json.name;
-        user.email = json.email;
         return user;
     }
 
