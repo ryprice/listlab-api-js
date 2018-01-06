@@ -4,6 +4,7 @@ import {authorizedRequest} from "./authorizedRequest";
 import AuthSession from "./AuthSession";
 import {TaskApiConfig} from "./TaskApiConfig";
 import User from "./User";
+import UserDetails from "./UserDetails";
 
 export class UserClient {
 
@@ -51,6 +52,16 @@ export class UserClient {
             url: `${this.userServiceAddress}/settings`,
             method: "POST",
             data: JSON.stringify(settings),
+            headers: {"Content-Type": "application/json"},
+        };
+        return authorizedRequest(this.config, ajaxSettings).then(() => {return;});
+    }
+
+    postUserDetails(user: UserDetails): IPromise<void> {
+        const ajaxSettings = {
+            url: `${this.userServiceAddress}`,
+            method: "POST",
+            data: JSON.stringify(user),
             headers: {"Content-Type": "application/json"},
         };
         return authorizedRequest(this.config, ajaxSettings).then(() => {return;});

@@ -35,3 +35,4 @@ export {TaskClient} from './TaskClient';
 export {default as TaskFilter} from './TaskFilter';
 export {default as User} from './User';
 export {UserClient} from './UserClient';
+export {default as UserDetails} from './UserDetails';
