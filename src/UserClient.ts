@@ -1,12 +1,12 @@
 import {IPromise, resolve} from "q";
 
-import {authorizedRequest} from "./authorizedRequest";
+import authorizedRequest from "./authorizedRequest";
 import AuthSession from "./AuthSession";
-import {TaskApiConfig} from "./TaskApiConfig";
+import TaskApiConfig from "./TaskApiConfig";
 import User from "./User";
 import UserDetails from "./UserDetails";
 
-export class UserClient {
+export default class UserClient {
 
     private config: TaskApiConfig;
     private userServiceAddress: string;

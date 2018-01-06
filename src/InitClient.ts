@@ -1,13 +1,13 @@
 import {IPromise} from "q";
 
-import {authorizedRequest} from "./authorizedRequest";
+import authorizedRequest from "./authorizedRequest";
 import {consumeLists} from "./ListClient";
 import ListTask from "./ListTask";
 import Payload from "./Payload";
-import {TaskApiConfig} from "./TaskApiConfig";
+import TaskApiConfig from "./TaskApiConfig";
 import {consumeRecurrences, consumeTasks} from "./TaskClient";
 
-export class InitClient {
+export default class InitClient {
 
     private initServiceAddress: string;
 

@@ -1,8 +1,8 @@
 import {IPromise} from "q";
 
-import {authorizedRequest} from "./authorizedRequest";
+import authorizedRequest from "./authorizedRequest";
 import Notification from "./Notification";
-import {TaskApiConfig} from "./TaskApiConfig";
+import TaskApiConfig from "./TaskApiConfig";
 
 export default class NotificationClient {
   private config: TaskApiConfig;

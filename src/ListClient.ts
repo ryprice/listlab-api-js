@@ -1,16 +1,16 @@
 import {IPromise} from "q";
 
-import {authorizedRequest} from "./authorizedRequest";
+import authorizedRequest from "./authorizedRequest";
 import CreatePublicListResponse from './CreatePublicListResponse';
 import List from "./List";
 import ListShare from "./ListShare";
 import ListTask from "./ListTask";
 import Payload from "./Payload";
 import Role from "./Role";
-import {TaskApiConfig} from "./TaskApiConfig";
+import TaskApiConfig from "./TaskApiConfig";
 import {consumeTasks} from "./TaskClient";
 
-export class ListClient {
+export default class ListClient {
 
     private listServiceAddress: string;
 

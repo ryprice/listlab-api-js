@@ -1,4 +1,4 @@
-export class TaskApiConfig {
+export default class TaskApiConfig {
   public WebAddress: string;
   public AppAddress: string;
   public TaskServiceAddress: string;

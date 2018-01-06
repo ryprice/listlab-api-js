@@ -1,7 +1,7 @@
 import {create} from "axios";
 import {IPromise} from "q";
 
-import {TaskApiConfig} from "./TaskApiConfig";
+import TaskApiConfig from "./TaskApiConfig";
 
 export const authorizedRequest = <T>(config: TaskApiConfig, ajaxSettings: any): IPromise<T> => {
     if (ajaxSettings.headers === undefined) {
@@ -12,3 +12,5 @@ export const authorizedRequest = <T>(config: TaskApiConfig, ajaxSettings: any): 
     returnXHR.catch(config.handleHttpError ? config.handleHttpError : () => {});
     return returnXHR.then((response: any) => response.data as T);
 };
+
+export default authorizedRequest;

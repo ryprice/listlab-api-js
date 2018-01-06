@@ -1,7 +1,7 @@
 import {IPromise, resolve} from "q";
 import * as qs from 'qs';
 
-import {authorizedRequest} from "./authorizedRequest";
+import authorizedRequest from "./authorizedRequest";
 import FuzzyGranularity from "./FuzzyGranularity";
 import FuzzyTime from "./FuzzyTime";
 import {consumePayloadResult} from "./InitClient";
@@ -9,9 +9,9 @@ import Payload from "./Payload";
 import Recurrence from "./Recurrence";
 import RecurrenceSchedule from "./RecurrenceSchedule";
 import Task from "./Task";
-import {TaskApiConfig} from "./TaskApiConfig";
+import TaskApiConfig from "./TaskApiConfig";
 
-export class TaskClient {
+export default class TaskClient {
 
     private config: TaskApiConfig;
 

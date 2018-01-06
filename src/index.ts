@@ -1,5 +1,5 @@
 
-export {AuthClient} from './AuthClient';
+export {default as AuthClient} from './AuthClient';
 export {default as AuthSession} from './AuthSession';
 export {default as FuzzyGranularity} from './FuzzyGranularity';
 export {default as FuzzyTime} from './FuzzyTime';
@@ -9,9 +9,9 @@ export {
   formatRelativeShortName
 } from './FuzzyTimeFormatters';
 export {default as FuzzyTimeRange} from './FuzzyTimeRange';
-export {InitClient} from './InitClient';
+export {default as InitClient} from './InitClient';
 export {default as List} from './List';
-export {ListClient} from './ListClient';
+export {default as ListClient} from './ListClient';
 export {default as ListShare} from './ListShare';
 export {default as ListTask} from './ListTask';
 export {default as Notification} from './Notification';
@@ -22,7 +22,7 @@ export {buildPublicListUrl} from './QuqumberUrlBuilders';
 export {default as Recurrence} from './Recurrence';
 export {default as RecurrenceSchedule} from './RecurrenceSchedule';
 export {default as Role} from './Role';
-export {RoleClient} from './RoleClient';
+export {default as RoleClient} from './RoleClient';
 export {
   default as Task,
   dueComparator,
@@ -30,9 +30,9 @@ export {
 } from './Task';
 export {} from './Task';
 export {} from './Task';
-export {TaskApiConfig} from './TaskApiConfig';
-export {TaskClient} from './TaskClient';
+export {default as TaskApiConfig} from './TaskApiConfig';
+export {default as TaskClient} from './TaskClient';
 export {default as TaskFilter} from './TaskFilter';
 export {default as User} from './User';
-export {UserClient} from './UserClient';
+export {default as UserClient} from './UserClient';
 export {default as UserDetails} from './UserDetails';

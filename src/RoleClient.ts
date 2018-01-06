@@ -1,9 +1,9 @@
 import {IPromise} from "q";
 
-import {authorizedRequest} from "./authorizedRequest";
-import {TaskApiConfig} from "./TaskApiConfig";
+import authorizedRequest from "./authorizedRequest";
+import TaskApiConfig from "./TaskApiConfig";
 
-export class RoleClient {
+export default class RoleClient {
 
     private roleServiceAddress: string;
 

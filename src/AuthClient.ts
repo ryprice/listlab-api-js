@@ -2,9 +2,9 @@ import axios from "axios";
 import {IPromise} from "q";
 import * as qs from "qs";
 
-import {TaskApiConfig} from "./TaskApiConfig";
+import TaskApiConfig from "./TaskApiConfig";
 
-export class AuthClient {
+export default class AuthClient {
 
     private authServiceAddress: string;
     private config: TaskApiConfig;
