@@ -13,12 +13,20 @@ export default class NotificationClient {
 
   getNotifications(): IPromise<Notification[]> {
     const ajaxSettings = {
-      url: `${this.config.NotificationServiceAddress}/all`,
+      url: `${this.config.NotificationServiceAddress}`,
       method: "GET"
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) =>
       this.consumeNotifications(json)
     );
+  }
+
+  markSeen(notificationId: number): IPromise<Notification[]> {
+    const ajaxSettings = {
+      url: `${this.config.NotificationServiceAddress}/seen?notificationId=${notificationId}`,
+      method: "PUT"
+    };
+    return authorizedRequest(this.config, ajaxSettings);
   }
 
   consumeNotification(json: any): Notification {
