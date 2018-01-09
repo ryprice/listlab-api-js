@@ -1,4 +1,4 @@
 export default interface CreatePublicListResponse {
-    id: number;
-    secret: string;
+  id: number;
+  secret: string;
 }

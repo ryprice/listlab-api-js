@@ -9,42 +9,42 @@ import {consumeRecurrences, consumeTasks} from "./TaskClient";
 
 export default class InitClient {
 
-    private initServiceAddress: string;
+  private initServiceAddress: string;
 
-    private config: TaskApiConfig;
+  private config: TaskApiConfig;
 
-    constructor(config: TaskApiConfig) {
-        this.config = config;
-        this.initServiceAddress = `${config.TaskServiceAddress}/todoweb`;
-    }
+  constructor(config: TaskApiConfig) {
+    this.config = config;
+    this.initServiceAddress = `${config.TaskServiceAddress}/todoweb`;
+  }
 
-    public init(): IPromise<Payload> {
-        const ajaxSettings = {
-            url: `${this.initServiceAddress}/init`,
-            method: "GET"
-        };
-        return authorizedRequest(this.config, ajaxSettings).then((json) => consumePayloadResult(json));
-    }
+  public init(): IPromise<Payload> {
+    const ajaxSettings = {
+      url: `${this.initServiceAddress}/init`,
+      method: "GET"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then((json) => consumePayloadResult(json));
+  }
 }
 
 export const consumePayloadResult = (json: any): Payload => {
-    const payload = new Payload();
-    if (json.tasks) {
-        payload.tasks = consumeTasks(json.tasks);
+  const payload = new Payload();
+  if (json.tasks) {
+    payload.tasks = consumeTasks(json.tasks);
+  }
+  if (json.listTasks) {
+    const listTasks: ListTask[] = [];
+    for (const lt of json.listTasks) {
+      const listTask = new ListTask(lt.listId, lt.taskId);
+      listTasks.push(listTask);
     }
-    if (json.listTasks) {
-        const listTasks: ListTask[] = [];
-        for (const lt of json.listTasks) {
-            const listTask = new ListTask(lt.listId, lt.taskId);
-            listTasks.push(listTask);
-        }
-        payload.listTasks = listTasks;
-    }
-    if (json.lists) {
-        payload.lists = consumeLists(json.lists);
-    }
-    if (json.recurrences) {
-        payload.recurrences = consumeRecurrences(json.recurrences);
-    }
-    return payload;
+    payload.listTasks = listTasks;
+  }
+  if (json.lists) {
+    payload.lists = consumeLists(json.lists);
+  }
+  if (json.recurrences) {
+    payload.recurrences = consumeRecurrences(json.recurrences);
+  }
+  return payload;
 };
