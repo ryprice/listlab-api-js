@@ -6,6 +6,7 @@ import ListTask from "./ListTask";
 import Payload from "./Payload";
 import TaskApiConfig from "./TaskApiConfig";
 import {consumeRecurrences, consumeTasks} from "./TaskClient";
+import {consumeUsers} from "./UserClient";
 
 export default class InitClient {
 
@@ -45,6 +46,9 @@ export const consumePayloadResult = (json: any): Payload => {
   }
   if (json.recurrences) {
     payload.recurrences = consumeRecurrences(json.recurrences);
+  }
+  if (json.users) {
+    payload.users = consumeUsers(json.users);
   }
   return payload;
 };

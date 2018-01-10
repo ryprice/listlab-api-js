@@ -21,9 +21,7 @@ export default class UserClient {
       url: `${this.userServiceAddress}/me`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return this.consumeMe(json);
-    });
+    return authorizedRequest(this.config, ajaxSettings).then(consumeUserDetails);
   }
 
   search(q: string): IPromise<User[]> {
@@ -31,9 +29,7 @@ export default class UserClient {
       url: `${this.userServiceAddress}/search?q=${q}`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return this.consumeUsers(json);
-    });
+    return authorizedRequest(this.config, ajaxSettings).then(consumeUsers);
   }
 
   getUsersById(ids: number[]): IPromise<User[]> {
@@ -42,9 +38,7 @@ export default class UserClient {
       url: `${this.userServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return this.consumeUsers(json);
-    });
+    return authorizedRequest(this.config, ajaxSettings).then(consumeUsers);
   }
 
   postSettings(settings: {[key: string]: string}): IPromise<void> {
@@ -54,7 +48,7 @@ export default class UserClient {
       data: JSON.stringify(settings),
       headers: {"Content-Type": "application/json"},
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {return;});
+    return authorizedRequest(this.config, ajaxSettings).then(() => { });
   }
 
   postUserDetails(user: UserDetails): IPromise<void> {
@@ -64,31 +58,32 @@ export default class UserClient {
       data: JSON.stringify(user),
       headers: {"Content-Type": "application/json"},
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {return;});
-  }
-
-  consumeUser(json: any): User {
-    const user = new User();
-    user.userId = json.userId;
-    user.name = json.name;
-    return user;
-  }
-
-  consumeUsers(json: any): User[] {
-    const users = new Array<User>();
-    for (let i = 0; i < json.length; i++) {
-      const entity = this.consumeUser(json[i]);
-      users.push(entity);
-    }
-    return users;
-  }
-
-  consumeMe(json: any): AuthSession {
-    const me = new AuthSession();
-    me.userId = json.userId;
-    me.name = json.name;
-    me.email = json.email;
-    me.settings = json.settings;
-    return me;
+    return authorizedRequest(this.config, ajaxSettings).then(() => { });
   }
 }
+
+
+export const consumeUser = (json: any): User => {
+  const user = new User();
+  user.userId = json.userId;
+  user.name = json.name;
+  return user;
+};
+
+export const consumeUsers = (json: any): User[] => {
+  const users = new Array<User>();
+  for (let i = 0; i < json.length; i++) {
+    const entity = this.consumeUser(json[i]);
+    users.push(entity);
+  }
+  return users;
+};
+
+export const consumeUserDetails = (json: any): AuthSession => {
+  const me = new AuthSession();
+  me.userId = json.userId;
+  me.name = json.name;
+  me.email = json.email;
+  me.settings = json.settings;
+  return me;
+};
