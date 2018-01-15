@@ -85,5 +85,7 @@ export const consumeUserDetails = (json: any): AuthSession => {
   me.name = json.name;
   me.email = json.email;
   me.settings = json.settings;
+  me.facebookId = json.facebookId;
+  me.googleId = json.googleId;
   return me;
 };

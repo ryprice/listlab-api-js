@@ -1,4 +1,5 @@
 
+export {default as authorizedRequest} from './authorizedRequest';
 export {default as AuthClient} from './AuthClient';
 export {default as AuthSession} from './AuthSession';
 export {default as FuzzyGranularity} from './FuzzyGranularity';
@@ -16,6 +17,7 @@ export {default as ListShare} from './ListShare';
 export {default as ListTask} from './ListTask';
 export {default as Notification} from './Notification';
 export {default as NotificationClient} from './NotificationClient';
+export {default as NotificationTypes} from './NotificationTypes';
 export {default as parseHumanReadableFuzzyTime} from './parseHumanReadableFuzzyTime';
 export {default as Payload} from './Payload';
 export {buildPublicListUrl} from './QuqumberUrlBuilders';
