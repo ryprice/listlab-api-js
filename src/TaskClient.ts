@@ -186,6 +186,14 @@ export default class TaskClient {
     return resolve(null);
   }
 
+  assignTask(taskId: number, ownerId: number): IPromise<Task[]> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/tasks/assign?taskId=${taskId}&ownerId=${ownerId}`,
+      method: "POST"
+    };
+    return authorizedRequest(this.config, ajaxSettings);
+  }
+
   generateJson(task: Task): Object {
     return {
       taskId: task.taskId,
