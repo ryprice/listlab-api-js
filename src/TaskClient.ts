@@ -10,6 +10,7 @@ import Recurrence from "./Recurrence";
 import RecurrenceSchedule from "./RecurrenceSchedule";
 import Task from "./Task";
 import TaskApiConfig from "./TaskApiConfig";
+import TaskShare from "./TaskShare";
 
 export default class TaskClient {
 
@@ -194,6 +195,22 @@ export default class TaskClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
+  shareTask(taskId: number, userId: number): IPromise<Task[]> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/task/${taskId}/share?userId=${userId}`,
+      method: "POST"
+    };
+    return authorizedRequest(this.config, ajaxSettings);
+  }
+
+  unshareTask(taskId: number, userId: number): IPromise<Task[]> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/task/${taskId}/share?userId=${userId}`,
+      method: "DELETE"
+    };
+    return authorizedRequest(this.config, ajaxSettings);
+  }
+
   generateJson(task: Task): Object {
     return {
       taskId: task.taskId,
@@ -298,4 +315,17 @@ export const consumeRecurrences = (json: any[]): Recurrence[] => {
     recurrences.push(entity);
   }
   return recurrences;
+};
+
+export const consumeTaskShare = (json: any) => {
+  return new TaskShare(json.taskId, json.userId);
+};
+
+export const consumeTaskShares = (json: any[]): TaskShare[] => {
+  const taskShares = new Array<TaskShare>();
+  for (let i = 0; i < json.length; i++) {
+    const entity = this.consumeTaskShare(json[i]);
+    taskShares.push(entity);
+  }
+  return taskShares;
 };

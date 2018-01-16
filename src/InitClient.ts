@@ -5,7 +5,11 @@ import {consumeLists} from "./ListClient";
 import ListTask from "./ListTask";
 import Payload from "./Payload";
 import TaskApiConfig from "./TaskApiConfig";
-import {consumeRecurrences, consumeTasks} from "./TaskClient";
+import {
+  consumeRecurrences,
+  consumeTasks,
+  consumeTaskShares
+} from "./TaskClient";
 import {consumeUsers} from "./UserClient";
 
 export default class InitClient {
@@ -49,6 +53,9 @@ export const consumePayloadResult = (json: any): Payload => {
   }
   if (json.users) {
     payload.users = consumeUsers(json.users);
+  }
+  if (json.taskShares) {
+    payload.taskShares = consumeTaskShares(json.taskShares);
   }
   return payload;
 };

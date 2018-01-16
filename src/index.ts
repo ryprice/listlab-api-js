@@ -35,6 +35,7 @@ export {} from './Task';
 export {default as TaskApiConfig} from './TaskApiConfig';
 export {default as TaskClient} from './TaskClient';
 export {default as TaskFilter} from './TaskFilter';
+export {default as TaskShare} from './TaskShare';
 export {default as User} from './User';
 export {default as UserClient} from './UserClient';
 export {default as UserDetails} from './UserDetails';
