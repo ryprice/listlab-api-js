@@ -9,8 +9,12 @@ export const authorizedRequest = <T>(config: TaskApiConfig, ajaxSettings: any): 
   }
   ajaxSettings.headers["Authorization"] = config.AuthToken;
   const returnXHR = create({})(ajaxSettings);
-  returnXHR.catch(config.handleHttpError ? config.handleHttpError : () => {});
-  return returnXHR.then((response: any) => response.data as T);
+  return returnXHR.then(
+    (response: any) => response.data as T,
+    (response: any) => {
+      config.handleHttpError && config.handleHttpError(response);
+    }
+  );
 };
 
 export default authorizedRequest;
