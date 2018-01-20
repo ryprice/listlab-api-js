@@ -6,6 +6,7 @@ export default class AuthSession {
   public settings: {[key: string]: string};
   public facebookId: string;
   public googleId: string;
+  public username: string;
 
   clone(): AuthSession {
     const clone = new AuthSession();
@@ -15,6 +16,7 @@ export default class AuthSession {
     clone.settings = this.settings;
     clone.facebookId = this.facebookId;
     clone.googleId = this.googleId;
+    clone.username = this.username;
     return clone;
   }
 }

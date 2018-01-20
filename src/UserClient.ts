@@ -1,6 +1,6 @@
-import {IPromise, resolve} from "q";
+import {IPromise, Promise, resolve} from "q";
 
-import authorizedRequest from "./authorizedRequest";
+import authorizedRequest, {authorizedRequestRaw} from "./authorizedRequest";
 import AuthSession from "./AuthSession";
 import TaskApiConfig from "./TaskApiConfig";
 import User from "./User";
@@ -41,6 +41,22 @@ export default class UserClient {
     return authorizedRequest(this.config, ajaxSettings).then(consumeUsers);
   }
 
+  isUsernameTaken(username: string): IPromise<boolean> {
+    return Promise((resolve, reject) => {
+      const ajaxSettings = {
+        url: `${this.userServiceAddress}/byUsername/${username}`,
+        method: "GET"
+      };
+      return authorizedRequestRaw(this.config, ajaxSettings).then(
+        () => resolve(true),
+        ({response}) => {
+          if (response.status === 404) resolve(false);
+          else throw reject(response);
+        }
+      );
+    });
+  }
+
   postSettings(settings: {[key: string]: string}): IPromise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/settings`,
@@ -62,11 +78,11 @@ export default class UserClient {
   }
 }
 
-
 export const consumeUser = (json: any): User => {
   const user = new User();
   user.userId = json.userId;
   user.name = json.name;
+  user.username = json.username;
   return user;
 };
 
@@ -80,12 +96,13 @@ export const consumeUsers = (json: any): User[] => {
 };
 
 export const consumeUserDetails = (json: any): AuthSession => {
-  const me = new AuthSession();
-  me.userId = json.userId;
-  me.name = json.name;
-  me.email = json.email;
-  me.settings = json.settings;
-  me.facebookId = json.facebookId;
-  me.googleId = json.googleId;
-  return me;
+  const userDetails = new AuthSession();
+  userDetails.userId = json.userId;
+  userDetails.name = json.name;
+  userDetails.email = json.email;
+  userDetails.settings = json.settings;
+  userDetails.facebookId = json.facebookId;
+  userDetails.googleId = json.googleId;
+  userDetails.username = json.username;
+  return userDetails;
 };

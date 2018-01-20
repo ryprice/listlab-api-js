@@ -17,4 +17,14 @@ export const authorizedRequest = <T>(config: TaskApiConfig, ajaxSettings: any): 
   );
 };
 
+export const authorizedRequestRaw = (config: TaskApiConfig, ajaxSettings: any): IPromise<any> => {
+  if (ajaxSettings.headers === undefined) {
+    ajaxSettings.headers = {};
+  }
+  ajaxSettings.headers["Authorization"] = config.AuthToken;
+  const returnXHR = create({})(ajaxSettings);
+  return returnXHR;
+};
+
+
 export default authorizedRequest;
