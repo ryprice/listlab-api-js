@@ -211,6 +211,14 @@ export default class TaskClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
+  markSeen(taskId: number): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/task/${taskId}/seen`,
+      method: "POST"
+    };
+    return authorizedRequest(this.config, ajaxSettings);
+  }
+
   generateJson(task: Task): Object {
     return {
       taskId: task.taskId,

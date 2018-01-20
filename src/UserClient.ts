@@ -16,9 +16,9 @@ export default class UserClient {
     this.userServiceAddress = config.UserServiceAddress;
   }
 
-  getMe(): IPromise<AuthSession> {
+  getDetails(): IPromise<AuthSession> {
     const ajaxSettings = {
-      url: `${this.userServiceAddress}/me`,
+      url: `${this.userServiceAddress}/details`,
       method: "GET"
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeUserDetails);

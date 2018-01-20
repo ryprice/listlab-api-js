@@ -7,6 +7,7 @@ export default class TaskFilter {
   public readonly completed: boolean;
   public readonly query: string;
   public readonly inProgress: boolean;
+  public readonly seen: boolean;
 
   constructor(init?: {[P in keyof TaskFilter]?: TaskFilter[P]}) {
     if (init) {
@@ -16,6 +17,7 @@ export default class TaskFilter {
       this.completed = init.completed;
       this.query = init.query;
       this.inProgress = init.inProgress;
+      this.seen = init.seen;
     }
   }
 
