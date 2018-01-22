@@ -2,6 +2,7 @@
 export {default as authorizedRequest} from './authorizedRequest';
 export {default as AuthClient} from './AuthClient';
 export {default as AuthSession} from './AuthSession';
+export {default as CommentClient} from './CommentClient';
 export {default as FuzzyGranularity} from './FuzzyGranularity';
 export {default as FuzzyTime} from './FuzzyTime';
 export {
@@ -34,6 +35,7 @@ export {} from './Task';
 export {} from './Task';
 export {default as TaskApiConfig} from './TaskApiConfig';
 export {default as TaskClient} from './TaskClient';
+export {default as TaskComment} from './TaskComment';
 export {default as TaskFilter} from './TaskFilter';
 export {default as TaskShare} from './TaskShare';
 export {default as User} from './User';
