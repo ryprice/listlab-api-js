@@ -22,14 +22,23 @@ export default class CommentClient {
     return authorizedRequest(this.config, ajaxSettings).then(consumeTaskComments);
   }
 
-  postTaskComment(comment: TaskComment): IPromise<void> {
+  postTaskComment(comment: TaskComment): IPromise<TaskComment> {
     const ajaxSettings = {
-      url: `${this.commentServiceAddress}`,
+      url: `${this.commentServiceAddress}/task`,
       method: "POST",
       data: JSON.stringify(comment),
       headers: {"Content-Type": "application/json"},
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => { });
+    return authorizedRequest(this.config, ajaxSettings).then(consumeTaskComment);
+  }
+
+
+  deleteTaskComment(commentId: number): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.commentServiceAddress}/taskComment/${commentId}`,
+      method: "DELETE",
+    };
+    return authorizedRequest(this.config, ajaxSettings);
   }
 }
 
