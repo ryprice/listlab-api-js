@@ -55,10 +55,12 @@ export default class TaskClient {
 
   getTaskChildren(taskId: number): IPromise<Task[]> {
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/task/${taskId}/children`,
+      url: `${this.taskServiceAddress}/tasks?${qs.stringify({parentId: taskId})}`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => { return consumeTasks(json); });
+    return authorizedRequest(this.config, ajaxSettings).then(
+      (json: any) => consumePayloadResult(json).tasks
+    );
   }
 
   getTasksInProgress(): IPromise<Task[]> {
@@ -66,7 +68,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/tasks/inprogress`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => { return consumePayloadResult(json).tasks; });
+    return authorizedRequest(this.config, ajaxSettings).then((json: any) => consumePayloadResult(json).tasks);
   }
 
   getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): IPromise<Task[]> {
