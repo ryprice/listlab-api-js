@@ -31,8 +31,6 @@ export {
   dueComparator,
   idComparator
 } from './Task';
-export {} from './Task';
-export {} from './Task';
 export {default as TaskApiConfig} from './TaskApiConfig';
 export {default as TaskClient} from './TaskClient';
 export {default as TaskComment} from './TaskComment';

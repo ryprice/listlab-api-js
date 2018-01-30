@@ -221,6 +221,15 @@ export default class TaskClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
+  getTasksByIds(ids: number[]): IPromise<Task[]> {
+    if (ids.length < 1) return resolve([]);
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/tasks/byId?${ids.map(id => `id=${id}&`).join('')}`,
+      method: "GET"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then(consumeTasks);
+  }
+
   generateJson(task: Task): Object {
     return {
       taskId: task.taskId,

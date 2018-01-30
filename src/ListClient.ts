@@ -1,4 +1,4 @@
-import {IPromise} from "q";
+import {IPromise, resolve} from "q";
 
 import authorizedRequest from "./authorizedRequest";
 import CreatePublicListResponse from './CreatePublicListResponse';
@@ -161,6 +161,15 @@ export default class ListClient {
         roles: json.roles.map((role: any) => new Role(role.roleId, role.secret))
       } as Payload;
     });
+  }
+
+  getListsByIds(ids: number[]): IPromise<List[]> {
+    if (ids.length < 1) return resolve([]);
+    const ajaxSettings = {
+      url: `${this.listServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
+      method: "GET"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then(consumeLists);
   }
 
   constructEmptyEntity(): List {
