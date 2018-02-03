@@ -1,29 +1,37 @@
-import {create} from "axios";
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse
+} from "axios";
 import {IPromise} from "q";
 
 import TaskApiConfig from "./TaskApiConfig";
 
-export const authorizedRequest = <T>(config: TaskApiConfig, ajaxSettings: any): IPromise<T> => {
+export const authorizedRequest = <T>(
+  config: TaskApiConfig,
+  ajaxSettings: AxiosRequestConfig
+): IPromise<T> => {
   if (ajaxSettings.headers === undefined) {
     ajaxSettings.headers = {};
   }
   ajaxSettings.headers["Authorization"] = config.AuthToken;
-  const returnXHR = create({})(ajaxSettings);
+  const returnXHR = axios.create({}).request<T>(ajaxSettings);
   return returnXHR.then(
-    (response: any) => response.data as T,
+    (response: any) => response.data,
     (response: any) => {
       config.handleHttpError && config.handleHttpError(response);
     }
   );
 };
 
-export const authorizedRequestRaw = (config: TaskApiConfig, ajaxSettings: any): IPromise<any> => {
+export const authorizedRequestRaw = <T>(
+  config: TaskApiConfig,
+  ajaxSettings: AxiosRequestConfig
+): IPromise<AxiosResponse<T>> => {
   if (ajaxSettings.headers === undefined) {
     ajaxSettings.headers = {};
   }
   ajaxSettings.headers["Authorization"] = config.AuthToken;
-  const returnXHR = create({})(ajaxSettings);
-  return returnXHR;
+  return axios.create({}).request<T>(ajaxSettings);
 };
 
 

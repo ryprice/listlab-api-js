@@ -51,7 +51,7 @@ export const formatRelativeName = (time: FuzzyTime): string => {
             case FuzzyGranularity.DAY:
                 return "Today";
             case FuzzyGranularity.FOREVER:
-                return "Forever";
+                return "None";
             default:
                 return "This " + time.getGranularity().getName();
         }
