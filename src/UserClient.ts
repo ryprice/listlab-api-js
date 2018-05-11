@@ -104,5 +104,6 @@ export const consumeUserDetails = (json: any): AuthSession => {
   userDetails.facebookId = json.facebookId;
   userDetails.googleId = json.googleId;
   userDetails.username = json.username;
+  userDetails.pendingEmail = json.pendingEmail;
   return userDetails;
 };
