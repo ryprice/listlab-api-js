@@ -172,6 +172,14 @@ export default class TaskClient {
     });
   }
 
+  moveTaskToParent(taskId: number, parentId: number): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&parent=${parentId}`,
+      method: "POST"
+    };
+    return authorizedRequest(this.config, ajaxSettings);
+  }
+
   deleteTasks(tasks: Task[]): IPromise<Task[]> {
     const idsQuery = qs.stringify({id: tasks.map((t) => t.taskId)}, {arrayFormat: 'repeat'});
     const ajaxSettings = {

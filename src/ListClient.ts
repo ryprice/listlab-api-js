@@ -75,8 +75,6 @@ export default class ListClient {
     });
   }
 
-
-
   postList(list: List): IPromise<List> {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
@@ -85,6 +83,14 @@ export default class ListClient {
       method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => list);
+  }
+
+  moveList(listId: number, parentId: number): IPromise<List> {
+    const ajaxSettings: any = {
+      url: `${this.listServiceAddress}/${listId}/move?parentId=${parentId}`,
+      method: "POST"
+    };
+    return authorizedRequest(this.config, ajaxSettings);
   }
 
   getTasksInList(listId: number): IPromise<Payload> {
