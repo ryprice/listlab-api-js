@@ -18,7 +18,7 @@ export default class ListClient {
 
   constructor(config: TaskApiConfig) {
     this.config = config;
-    this.listServiceAddress = `${config.TaskServiceAddress}/list`;
+    this.listServiceAddress = `${config.ListServiceAddress}`;
   }
 
   public getList(listId: number): IPromise<List> {
@@ -93,41 +93,9 @@ export default class ListClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
-  getTasksInList(listId: number): IPromise<Payload> {
-    const ajaxSettings = {
-      url: `${this.listServiceAddress}/${listId}/tasks`,
-      method: "GET"
-    };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return consumeListTasks(listId, json);
-    });
-  }
-
-  removeTaskFromList(taskId: number, listId: number): IPromise<void> {
-    const ajaxSettings = {
-      url: `${this.listServiceAddress}/${listId}/${taskId}`,
-      method: "DELETE"
-    };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
-  }
-
-  private addTaskToList(taskId: number, listId: number): IPromise<void> {
-    const ajaxSettings = {
-      url: `${this.listServiceAddress}/${listId}/${taskId}`,
-      method: "PUT"
-    };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
-  }
-
-  addTasksToList(tasks: number[], listId: number): void {
-    for (const task of tasks) {
-      this.addTaskToList(task, listId);
-    }
-  }
-
   addShareToList(userId: number, listId: number, type: string): IPromise<void> {
     const ajaxSettings = {
-      url: `${this.config.TaskServiceAddress}/role/list/${listId}/share?userId=${userId}&type=${type}`,
+      url: `${this.listServiceAddress}/role/${listId}/share?userId=${userId}&type=${type}`,
       method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
@@ -135,7 +103,7 @@ export default class ListClient {
 
   removeShareFromList(userId: number, listId: number): IPromise<void> {
     const ajaxSettings = {
-      url: `${this.config.TaskServiceAddress}/role/list/${listId}/share?userId=${userId}`,
+      url: `${this.listServiceAddress}/role/${listId}/share?userId=${userId}`,
       method: "DELETE"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
@@ -143,7 +111,7 @@ export default class ListClient {
 
   getListDetails(listId: number): IPromise<Payload> {
     const ajaxSettings = {
-      url: `${this.config.TaskServiceAddress}/list/${listId}/details`,
+      url: `${this.listServiceAddress}/${listId}/details`,
       method: "GET"
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {

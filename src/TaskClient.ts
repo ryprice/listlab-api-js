@@ -5,6 +5,7 @@ import authorizedRequest from "./authorizedRequest";
 import FuzzyGranularity from "./FuzzyGranularity";
 import FuzzyTime from "./FuzzyTime";
 import {consumePayloadResult} from "./InitClient";
+import {consumeListTasks} from "./ListClient";
 import Payload from "./Payload";
 import Recurrence from "./Recurrence";
 import RecurrenceSchedule from "./RecurrenceSchedule";
@@ -237,6 +238,39 @@ export default class TaskClient {
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeTasks);
   }
+
+  getTasksInList(listId: number): IPromise<Payload> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/list/${listId}/tasks`,
+      method: "GET"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
+      return consumeListTasks(listId, json);
+    });
+  }
+
+  removeTaskFromList(taskId: number, listId: number): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
+      method: "DELETE"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+  }
+
+  private addTaskToList(taskId: number, listId: number): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
+      method: "PUT"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+  }
+
+  addTasksToList(tasks: number[], listId: number): void {
+    for (const task of tasks) {
+      this.addTaskToList(task, listId);
+    }
+  }
+
 
   generateJson(task: Task): Object {
     return {

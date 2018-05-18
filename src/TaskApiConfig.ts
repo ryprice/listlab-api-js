@@ -6,6 +6,7 @@ export default class TaskApiConfig {
   public UserServiceAddress: string;
   public CommentServiceAddress: string;
   public NotificationServiceAddress: string;
+  public ListServiceAddress: string;
   public RootDomain: string;
   public AuthToken: string;
   public Env: string;
