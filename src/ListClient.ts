@@ -95,7 +95,7 @@ export default class ListClient {
 
   addShareToList(userId: number, listId: number, type: string): IPromise<void> {
     const ajaxSettings = {
-      url: `${this.listServiceAddress}/role/${listId}/share?userId=${userId}&type=${type}`,
+      url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}&type=${type}`,
       method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
@@ -103,7 +103,7 @@ export default class ListClient {
 
   removeShareFromList(userId: number, listId: number): IPromise<void> {
     const ajaxSettings = {
-      url: `${this.listServiceAddress}/role/${listId}/share?userId=${userId}`,
+      url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}`,
       method: "DELETE"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
@@ -119,9 +119,9 @@ export default class ListClient {
       const list = lists[0];
       const roleUserToType = (roleUser: any): string => {
         let type = null;
-        if (roleUser.roleId === list.publicReadRole) {
+        if (roleUser.roleId === list.readRole) {
           type = 'read';
-        } else if (roleUser.roleId === list.publicWriteRole) {
+        } else if (roleUser.roleId === list.writeRole) {
           type = 'write';
         }
         return type;
@@ -186,8 +186,8 @@ export const consumeList = (json: any): List => {
   list.color = json.color;
   list.sortOrder = json.sortOrder;
   list.parentId = json.parentId;
-  list.publicReadRole = json.publicReadRole;
-  list.publicWriteRole = json.publicWriteRole;
+  list.readRole = json.readRole;
+  list.writeRole = json.writeRole;
   if (json.tasks) {
     this.consumeListTasks(list, json.tasks);
   }

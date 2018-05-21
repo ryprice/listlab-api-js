@@ -5,8 +5,8 @@ export default class List {
   public color: string;
   public sortOrder: number;
   public parentId: number;
-  public publicReadRole: number;
-  public publicWriteRole: number;
+  public readRole: number;
+  public writeRole: number;
 
   clone(): List {
     const clone = new List();
@@ -16,8 +16,8 @@ export default class List {
     clone.color = this.color;
     clone.sortOrder = this.sortOrder;
     clone.parentId = this.parentId;
-    clone.publicReadRole = this.publicReadRole;
-    clone.publicWriteRole = this.publicWriteRole;
+    clone.readRole = this.readRole;
+    clone.writeRole = this.writeRole;
     return clone;
   }
 }
