@@ -241,12 +241,10 @@ export default class TaskClient {
 
   getTasksInList(listId: number): IPromise<Payload> {
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/list/${listId}/tasks`,
+      url: `${this.taskServiceAddress}/tasks?listId=${listId}`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return consumeListTasks(listId, json);
-    });
+    return authorizedRequest(this.config, ajaxSettings).then(consumePayloadResult);
   }
 
   removeTaskFromList(taskId: number, listId: number): IPromise<void> {
