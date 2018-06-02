@@ -6,9 +6,10 @@ import List from "./List";
 import ListShare from "./ListShare";
 import ListTask from "./ListTask";
 import Payload from "./Payload";
-import Role from "./Role";
+import ListRole from "./ListRole";
 import TaskApiConfig from "./TaskApiConfig";
 import {consumeTasks} from "./TaskClient";
+import {consumeListRole} from "./ListPermissionClient";
 
 export default class ListClient {
 
@@ -132,7 +133,7 @@ export default class ListClient {
         listShares: json.roleUsers.map((roleUser: any) => (
           new ListShare(listId, roleUser.userId, roleUserToType(roleUser))
         )),
-        roles: json.roles.map((role: any) => new Role(role.roleId, role.secret))
+        listRoles: json.listRoles.map(consumeListRole)
       } as Payload;
     });
   }

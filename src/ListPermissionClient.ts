@@ -1,9 +1,10 @@
 import {IPromise} from "q";
 
 import authorizedRequest from "./authorizedRequest";
+import ListRole from "./ListRole";
 import TaskApiConfig from "./TaskApiConfig";
 
-export default class RoleClient {
+export default class ListPermissionClient {
 
   private listServiceAddress: string;
 
@@ -26,3 +27,11 @@ export default class RoleClient {
       );
   }
 }
+
+export const consumeListRole = (json: any): ListRole => {
+  const listRole = new ListRole();
+  listRole.roleId = json.roleId;
+  listRole.secret = json.secret;
+  listRole.type = json.type;
+  return listRole;
+};

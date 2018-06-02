@@ -14,6 +14,8 @@ export {default as FuzzyTimeRange} from './FuzzyTimeRange';
 export {default as InitClient} from './InitClient';
 export {default as List} from './List';
 export {default as ListClient} from './ListClient';
+export {default as ListPermissionClient} from './ListPermissionClient';
+export {default as ListRole} from './ListRole';
 export {default as ListShare} from './ListShare';
 export {default as ListTask} from './ListTask';
 export {default as Notification} from './Notification';
@@ -24,8 +26,6 @@ export {default as Payload} from './Payload';
 export {buildPublicListUrl} from './QuqumberUrlBuilders';
 export {default as Recurrence} from './Recurrence';
 export {default as RecurrenceSchedule} from './RecurrenceSchedule';
-export {default as Role} from './Role';
-export {default as RoleClient} from './RoleClient';
 export {
   default as Task,
   dueComparator,
