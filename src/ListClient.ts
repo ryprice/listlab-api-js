@@ -66,11 +66,18 @@ export default class ListClient {
     });
   }
 
-  createPublicList(): IPromise<CreatePublicListResponse> {
-    const ajaxSettings: any = {
+  createPublicList(newList?: List): IPromise<CreatePublicListResponse> {
+    let ajaxSettings: any = {
       url: `${this.listServiceAddress}/create-public`,
-      method: "PUT"
+      method: "PUT",
     };
+    if (newList != null) {
+      ajaxSettings = {
+        ...ajaxSettings,
+        headers: {"Content-Type": "application/json"},
+        data: JSON.stringify(this.generateJson(newList))
+      }
+    }
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return json as CreatePublicListResponse;
     });

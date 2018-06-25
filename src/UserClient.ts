@@ -1,4 +1,5 @@
 import {IPromise, Promise, resolve} from "q";
+import * as qs from "qs";
 
 import authorizedRequest, {authorizedRequestRaw} from "./authorizedRequest";
 import AuthSession from "./AuthSession";
@@ -73,6 +74,26 @@ export default class UserClient {
       method: "POST",
       data: JSON.stringify(user),
       headers: {"Content-Type": "application/json"},
+    };
+    return authorizedRequest(this.config, ajaxSettings).then(() => { });
+  }
+
+  anonMergeFacebook(accessToken: string): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.userServiceAddress}/anon-merge/facebook`,
+      method: "POST",
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      data: qs.stringify({accessToken})
+    };
+    return authorizedRequest(this.config, ajaxSettings).then(() => { });
+  }
+
+  anonMergeGoogle(accessToken: string): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.userServiceAddress}/anon-merge/google`,
+      method: "POST",
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      data: qs.stringify({accessToken})
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => { });
   }
