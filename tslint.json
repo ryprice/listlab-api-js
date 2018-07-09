@@ -1,15 +1,15 @@
 {
-    "rules": {
-        "class-name": false,
-        "indent": [true, "spaces"],
-        "no-trailing-whitespace": true,
-        "only-arrow-functions": true,
-        "ordered-imports": false,
-        "semicolon": true,
-        "triple-equals": [true, "allow-null-check"],
-        "no-unused-variable": true,
-        "no-var-keyword": true,
-        "ordered-imports": true,
-        "no-var-keyword": true
-    }
+  "rules": {
+    "class-name": false,
+    "indent": [true, "spaces"],
+    "no-trailing-whitespace": true,
+    "only-arrow-functions": true,
+    "ordered-imports": false,
+    "semicolon": true,
+    "triple-equals": [true, "allow-null-check"],
+    "no-unused-variable": true,
+    "no-var-keyword": true,
+    "ordered-imports": true,
+    "no-var-keyword": true
+  }
 }

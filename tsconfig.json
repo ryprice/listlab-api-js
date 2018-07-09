@@ -12,7 +12,8 @@
     "rootDir": "./src/",
     "paths": {
       "ququmber-api/*": ["./src/*"]
-    }
+    },
+    "noUnusedLocals": true
   },
   "include": [
     "src/**/*.ts",

@@ -19,12 +19,12 @@
     "dts-generator": "^2.1.0",
     "dtsbundler-webpack-plugin": "^1.0.0",
     "file-system": "^2.2.2",
-    "tslint": "^4.4.2",
+    "tslint": "^5.10.0",
     "typescript": "^2.9.2",
     "webpack": "^3.12.0"
   },
   "scripts": {
-    "build": "tsc -d --declarationDir lib --outDir lib",
+    "build": "tsc -d --declarationDir lib --outDir lib && tslint -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
