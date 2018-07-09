@@ -1,12 +1,14 @@
+import ListRoleType from './ListRoleType';
+
 export default class ListShare {
 
   public listId: number;
 
   public userId: number;
 
-  public type: string;
+  public type: ListRoleType;
 
-  public constructor(listId: number, userId: number, type: string) {
+  public constructor(listId: number, userId: number, type: ListRoleType) {
     this.listId = listId;
     this.userId = userId;
     this.type = type;

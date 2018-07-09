@@ -3,13 +3,15 @@ import {IPromise, resolve} from "q";
 import authorizedRequest from "./authorizedRequest";
 import CreatePublicListResponse from './CreatePublicListResponse';
 import List from "./List";
+import {consumeListRole} from "./ListPermissionClient";
+import ListRoleType, {
+  generateListRoleTypeJson
+} from "./ListRoleType";
 import ListShare from "./ListShare";
 import ListTask from "./ListTask";
 import Payload from "./Payload";
-import ListRole from "./ListRole";
 import TaskApiConfig from "./TaskApiConfig";
 import {consumeTasks} from "./TaskClient";
-import {consumeListRole} from "./ListPermissionClient";
 
 export default class ListClient {
 
@@ -76,7 +78,7 @@ export default class ListClient {
         ...ajaxSettings,
         headers: {"Content-Type": "application/json"},
         data: JSON.stringify(this.generateJson(newList))
-      }
+      };
     }
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return json as CreatePublicListResponse;
@@ -101,9 +103,9 @@ export default class ListClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
-  addShareToList(userId: number, listId: number, type: string): IPromise<void> {
+  addShareToList(userId: number, listId: number, type: ListRoleType): IPromise<void> {
     const ajaxSettings = {
-      url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}&type=${type}`,
+      url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}&type=${generateListRoleTypeJson(type)}`,
       method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
@@ -125,12 +127,12 @@ export default class ListClient {
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       const lists = consumeLists(json.lists);
       const list = lists[0];
-      const roleUserToType = (roleUser: any): string => {
+      const roleUserToType = (roleUser: any): ListRoleType => {
         let type = null;
         if (roleUser.roleId === list.readRole) {
-          type = 'read';
+          type = ListRoleType.READ;
         } else if (roleUser.roleId === list.writeRole) {
-          type = 'write';
+          type = ListRoleType.WRITE;
         }
         return type;
       };

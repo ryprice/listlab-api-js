@@ -2,6 +2,10 @@ import {IPromise} from "q";
 
 import authorizedRequest from "./authorizedRequest";
 import ListRole from "./ListRole";
+import ListRoleType, {
+  consumeListRoleType,
+  generateListRoleTypeJson
+} from "./ListRoleType";
 import TaskApiConfig from "./TaskApiConfig";
 
 export default class ListPermissionClient {
@@ -27,10 +31,10 @@ export default class ListPermissionClient {
       );
   }
 
-  addRoleToList(listId: number, type: string): IPromise<ListRole> {
+  addRoleToList(listId: number, type: ListRoleType): IPromise<ListRole> {
     const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
     const ajaxSettings = {
-      url: `${this.listServiceAddress}/permission/${listId}/role?s=${secret}&type=${type}`,
+      url: `${this.listServiceAddress}/permission/${listId}/role?s=${secret}&type=${generateListRoleTypeJson(type)}`,
       method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeListRole);
@@ -50,6 +54,6 @@ export const consumeListRole = (json: any): ListRole => {
   listRole.roleId = json.roleId;
   listRole.listId = json.listId;
   listRole.secret = json.secret;
-  listRole.type = json.type;
+  listRole.type = consumeListRoleType(json.type);
   return listRole;
 };

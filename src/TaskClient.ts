@@ -5,7 +5,6 @@ import authorizedRequest from "./authorizedRequest";
 import FuzzyGranularity from "./FuzzyGranularity";
 import FuzzyTime from "./FuzzyTime";
 import {consumePayloadResult} from "./InitClient";
-import {consumeListTasks} from "./ListClient";
 import Payload from "./Payload";
 import Recurrence from "./Recurrence";
 import RecurrenceSchedule from "./RecurrenceSchedule";
@@ -181,14 +180,14 @@ export default class TaskClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
-  deleteTasks(tasks: Task[]): IPromise<Task[]> {
-    const idsQuery = qs.stringify({id: tasks.map((t) => t.taskId)}, {arrayFormat: 'repeat'});
+  deleteTasks(taskIds: number[]): IPromise<number[]> {
+    const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${idsQuery}`,
       method: "DELETE",
       headers: {"Content-Type": "application/json"}
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => tasks);
+    return authorizedRequest(this.config, ajaxSettings).then(() => taskIds);
   }
 
   getParent(task: Task): IPromise<Payload> {

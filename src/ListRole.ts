@@ -1,4 +1,6 @@
-export default class Role {
+import ListRoleType from './ListRoleType';
+
+export default class ListRole {
 
   public roleId: number;
 
@@ -6,5 +8,5 @@ export default class Role {
 
   public secret: string;
 
-  public type: string;
+  public type: ListRoleType;
 }

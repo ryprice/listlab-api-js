@@ -16,6 +16,7 @@ export {default as List} from './List';
 export {default as ListClient} from './ListClient';
 export {default as ListPermissionClient} from './ListPermissionClient';
 export {default as ListRole} from './ListRole';
+export {default as ListRoleType} from './ListRoleType';
 export {default as ListShare} from './ListShare';
 export {default as ListTask} from './ListTask';
 export {default as Notification} from './Notification';
