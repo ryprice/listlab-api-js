@@ -1,7 +1,7 @@
-import FuzzyGranularity from "./FuzzyGranularity";
-import FuzzyTime, {unoffsetNow} from "./FuzzyTime";
-import FuzzyTimeRange from "./FuzzyTimeRange";
-import {dayNames, monthNames, shortMonthNames} from "./TimeStrings";
+import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
+import FuzzyTime, {unoffsetNow} from "ququmber-api/FuzzyTime";
+import FuzzyTimeRange from "ququmber-api/FuzzyTimeRange";
+import {dayNames, monthNames, shortMonthNames} from "ququmber-api/TimeStrings";
 
 export const formatRelativeShortName = (time: FuzzyTime): string => {
     const now = new FuzzyTime(new Date(unoffsetNow()), time.getGranularity());

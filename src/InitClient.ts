@@ -1,16 +1,16 @@
 import {IPromise} from "q";
 
-import authorizedRequest from "./authorizedRequest";
-import {consumeLists} from "./ListClient";
-import ListTask from "./ListTask";
-import Payload from "./Payload";
-import TaskApiConfig from "./TaskApiConfig";
+import authorizedRequest from "ququmber-api/authorizedRequest";
+import {consumeLists} from "ququmber-api/ListClient";
+import ListTask from "ququmber-api/ListTask";
+import Payload from "ququmber-api/Payload";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
 import {
   consumeRecurrences,
   consumeTasks,
   consumeTaskShares
-} from "./TaskClient";
-import {consumeUsers} from "./UserClient";
+} from "ququmber-api/TaskClient";
+import {consumeUsers} from "ququmber-api/UserClient";
 
 export default class InitClient {
 

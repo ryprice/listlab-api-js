@@ -1,17 +1,17 @@
 import {IPromise, resolve} from "q";
 
-import authorizedRequest from "./authorizedRequest";
-import CreatePublicListResponse from './CreatePublicListResponse';
-import List from "./List";
-import {consumeListRole} from "./ListPermissionClient";
+import authorizedRequest from "ququmber-api/authorizedRequest";
+import CreatePublicListResponse from 'ququmber-api/CreatePublicListResponse';
+import List from "ququmber-api/List";
+import {consumeListRole} from "ququmber-api/ListPermissionClient";
 import ListRoleType, {
   generateListRoleTypeJson
-} from "./ListRoleType";
-import ListShare from "./ListShare";
-import ListTask from "./ListTask";
-import Payload from "./Payload";
-import TaskApiConfig from "./TaskApiConfig";
-import {consumeTasks} from "./TaskClient";
+} from "ququmber-api/ListRoleType";
+import ListShare from "ququmber-api/ListShare";
+import ListTask from "ququmber-api/ListTask";
+import Payload from "ququmber-api/Payload";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
+import {consumeTasks} from "ququmber-api/TaskClient";
 
 export default class ListClient {
 

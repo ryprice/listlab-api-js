@@ -1,4 +1,4 @@
-import {VgtSequence} from "./FuzzyTime";
+import {VgtSequence} from "ququmber-api/FuzzyTime";
 
 export default class FuzzyGranularity {
     private name: string;

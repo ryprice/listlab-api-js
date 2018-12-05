@@ -4,7 +4,7 @@ import axios, {
 } from "axios";
 import {IPromise} from "q";
 
-import TaskApiConfig from "./TaskApiConfig";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
 
 export const authorizedRequest = <T>(
   config: TaskApiConfig,

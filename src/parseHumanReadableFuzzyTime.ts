@@ -1,5 +1,5 @@
-import FuzzyGranularity from "./FuzzyGranularity";
-import FuzzyTime from "./FuzzyTime";
+import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
+import FuzzyTime from "ququmber-api/FuzzyTime";
 
 export default (str: string): FuzzyTime => {
     str = str.toLowerCase();

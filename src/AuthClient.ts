@@ -2,7 +2,7 @@ import axios from "axios";
 import {IPromise} from "q";
 import * as qs from "qs";
 
-import TaskApiConfig from "./TaskApiConfig";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
 
 export default class AuthClient {
 

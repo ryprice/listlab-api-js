@@ -1,8 +1,8 @@
 import {IPromise} from "q";
 
-import authorizedRequest from "./authorizedRequest";
-import Notification from "./Notification";
-import TaskApiConfig from "./TaskApiConfig";
+import authorizedRequest from "ququmber-api/authorizedRequest";
+import Notification from "ququmber-api/Notification";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
 
 export default class NotificationClient {
   private config: TaskApiConfig;

@@ -1,16 +1,16 @@
 import {IPromise, resolve} from "q";
 import * as qs from 'qs';
 
-import authorizedRequest from "./authorizedRequest";
-import FuzzyGranularity from "./FuzzyGranularity";
-import FuzzyTime from "./FuzzyTime";
-import {consumePayloadResult} from "./InitClient";
-import Payload from "./Payload";
-import Recurrence from "./Recurrence";
-import RecurrenceSchedule from "./RecurrenceSchedule";
-import Task from "./Task";
-import TaskApiConfig from "./TaskApiConfig";
-import TaskShare from "./TaskShare";
+import authorizedRequest from "ququmber-api/authorizedRequest";
+import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
+import FuzzyTime from "ququmber-api/FuzzyTime";
+import {consumePayloadResult} from "ququmber-api/InitClient";
+import Payload from "ququmber-api/Payload";
+import Recurrence from "ququmber-api/Recurrence";
+import RecurrenceSchedule from "ququmber-api/RecurrenceSchedule";
+import Task from "ququmber-api/Task";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
+import TaskShare from "ququmber-api/TaskShare";
 
 export default class TaskClient {
 

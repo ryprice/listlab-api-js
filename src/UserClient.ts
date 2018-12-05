@@ -1,11 +1,11 @@
 import {IPromise, Promise, resolve} from "q";
 import * as qs from "qs";
 
-import authorizedRequest, {authorizedRequestRaw} from "./authorizedRequest";
-import AuthSession from "./AuthSession";
-import TaskApiConfig from "./TaskApiConfig";
-import User from "./User";
-import UserDetails from "./UserDetails";
+import authorizedRequest, {authorizedRequestRaw} from "ququmber-api/authorizedRequest";
+import AuthSession from "ququmber-api/AuthSession";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
+import User from "ququmber-api/User";
+import UserDetails from "ququmber-api/UserDetails";
 
 export default class UserClient {
 

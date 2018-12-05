@@ -1,5 +1,5 @@
-import FuzzyGranularity from "./FuzzyGranularity";
-import FuzzyTime, {unoffsetNow} from "./FuzzyTime";
+import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
+import FuzzyTime, {unoffsetNow} from "ququmber-api/FuzzyTime";
 
 export default class Task {
   public taskId: number;

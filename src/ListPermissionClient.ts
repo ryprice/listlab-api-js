@@ -1,12 +1,12 @@
 import {IPromise} from "q";
 
-import authorizedRequest from "./authorizedRequest";
-import ListRole from "./ListRole";
+import authorizedRequest from "ququmber-api/authorizedRequest";
+import ListRole from "ququmber-api/ListRole";
 import ListRoleType, {
   consumeListRoleType,
   generateListRoleTypeJson
-} from "./ListRoleType";
-import TaskApiConfig from "./TaskApiConfig";
+} from "ququmber-api/ListRoleType";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
 
 export default class ListPermissionClient {
 

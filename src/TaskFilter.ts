@@ -1,4 +1,4 @@
-import FuzzyTimeRange from "./FuzzyTimeRange";
+import FuzzyTimeRange from "ququmber-api/FuzzyTimeRange";
 
 export default class TaskFilter {
   public readonly listId: number;

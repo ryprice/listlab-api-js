@@ -1,4 +1,4 @@
-import ListRoleType from './ListRoleType';
+import ListRoleType from 'ququmber-api/ListRoleType';
 
 export default class ListRole {
 

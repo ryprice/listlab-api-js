@@ -11,7 +11,7 @@
     "baseUrl": "./src/",
     "rootDir": "./src/",
     "paths": {
-      "ququmber-api/*": ["./src/*"]
+      "ququmber-api/*": ["./*"]
     },
     "noUnusedLocals": true
   },

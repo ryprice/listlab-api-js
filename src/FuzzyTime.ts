@@ -1,4 +1,4 @@
-import FuzzyGranularity from "./FuzzyGranularity";
+import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
 
 export default class FuzzyTime {
 

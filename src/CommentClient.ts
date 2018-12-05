@@ -1,8 +1,8 @@
 import {IPromise} from "q";
 
-import authorizedRequest from "./authorizedRequest";
-import TaskApiConfig from "./TaskApiConfig";
-import TaskComment from "./TaskComment";
+import authorizedRequest from "ququmber-api/authorizedRequest";
+import TaskApiConfig from "ququmber-api/TaskApiConfig";
+import TaskComment from "ququmber-api/TaskComment";
 
 export default class CommentClient {
 
