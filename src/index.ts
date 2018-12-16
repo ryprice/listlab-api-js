@@ -24,7 +24,7 @@ export {default as NotificationClient} from 'ququmber-api/NotificationClient';
 export {default as NotificationTypes} from 'ququmber-api/NotificationTypes';
 export {default as parseHumanReadableFuzzyTime} from 'ququmber-api/parseHumanReadableFuzzyTime';
 export {default as Payload} from 'ququmber-api/Payload';
-export {buildPublicListUrl} from 'ququmber-api/QuqumberUrlBuilders';
+export {buildPublicListUrl, buildPublicTaskUrl} from 'ququmber-api/QuqumberUrlBuilders';
 export {default as Recurrence} from 'ququmber-api/Recurrence';
 export {default as RecurrenceSchedule} from 'ququmber-api/RecurrenceSchedule';
 export {
@@ -36,6 +36,9 @@ export {default as TaskApiConfig} from 'ququmber-api/TaskApiConfig';
 export {default as TaskClient} from 'ququmber-api/TaskClient';
 export {default as TaskComment} from 'ququmber-api/TaskComment';
 export {default as TaskFilter} from 'ququmber-api/TaskFilter';
+export {default as TaskPermissionClient} from 'ququmber-api/TaskPermissionClient';
+export {default as TaskRole} from 'ququmber-api/TaskRole';
+export {default as TaskRoleType} from 'ququmber-api/TaskRoleType';
 export {default as TaskShare} from 'ququmber-api/TaskShare';
 export {default as User} from 'ququmber-api/User';
 export {default as UserClient} from 'ququmber-api/UserClient';

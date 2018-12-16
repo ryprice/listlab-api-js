@@ -15,6 +15,8 @@ export default class Task {
   public recurrenceId: number;
   public creationTime: Date;
   public completionTime: Date;
+  public readRole: number;
+  public writeRole: number;
 
   constructor() {
     this.name = "";
@@ -38,6 +40,8 @@ export default class Task {
     clone.recurrenceId = this.recurrenceId;
     clone.creationTime = this.creationTime;
     clone.completionTime = this.completionTime;
+    clone.readRole = this.readRole;
+    clone.writeRole = this.writeRole;
     return clone;
   }
 }
