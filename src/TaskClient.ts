@@ -332,10 +332,12 @@ export default class TaskClient {
   }
 
   generateFuzzyTimeJson(fuzzyTime: FuzzyTime): Object {
-    return {
-      time: fuzzyTime.getTime(),
-      granularity: fuzzyTime.getGranularity().getName()
-    };
+    if (fuzzyTime) {
+      return {
+        time: fuzzyTime.getTime(),
+        granularity: fuzzyTime.getGranularity().getName()
+      };
+    }
   }
 }
 

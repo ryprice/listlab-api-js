@@ -30,7 +30,8 @@ export {default as RecurrenceSchedule} from 'ququmber-api/RecurrenceSchedule';
 export {
   default as Task,
   dueComparator,
-  idComparator
+  idComparator,
+  completionTimeComparator
 } from 'ququmber-api/Task';
 export {default as TaskApiConfig} from 'ququmber-api/TaskApiConfig';
 export {default as TaskClient} from 'ququmber-api/TaskClient';

@@ -56,7 +56,22 @@ export const idComparator = (a: Task, b: Task) => {
   }
 };
 
+export const completionTimeComparator = (a: Task, b: Task) => {
+  if (!a.completionTime) {
+    return -1;
+  } else if (a.completionTime < b.completionTime) {
+    return -1;
+  } else if (a.completionTime === b.completionTime) {
+    return 0;
+  } else {
+    return 1;
+  }
+};
+
 export const dueComparator = (a: Task, b: Task) => {
+  if (!a.due) {
+    return -1;
+  }
   const compareResult = a.due.compareTo(b.due);
 
   if (compareResult !== 0) {
