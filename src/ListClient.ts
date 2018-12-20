@@ -139,7 +139,7 @@ export default class ListClient {
 
       return {
         lists: lists,
-        listShares: json.roleUsers.map((roleUser: any) => (
+        listShares: json.listRoleUsers.map((roleUser: any) => (
           new ListShare(listId, roleUser.userId, roleUserToType(roleUser))
         )),
         listRoles: json.listRoles.map(consumeListRole)

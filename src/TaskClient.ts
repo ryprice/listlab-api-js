@@ -58,7 +58,7 @@ export default class TaskClient {
 
       return {
         tasks: tasks,
-        taskShares: json.roleUsers.map((roleUser: any) => (
+        taskShares: json.listRoleUsers.map((roleUser: any) => (
           new TaskShare(task.taskId, roleUser.userId, roleUserToType(roleUser))
         )),
         taskRoles: json.taskRoles.map(consumeTaskRole)
