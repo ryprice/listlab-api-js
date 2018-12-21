@@ -126,34 +126,34 @@ export default class TaskClient {
     });
   }
 
-  postTask(task: Task): IPromise<Task[]> {
+  putTask(task: Task): IPromise<Task[]> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
       data: JSON.stringify(this.generateJson(task)),
       headers: {"Content-Type": "application/json"},
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return consumePayloadResult(json).tasks;
     });
   }
 
-  postRecurrence(recurrence: Recurrence): IPromise<Recurrence> {
+  putRecurrence(recurrence: Recurrence): IPromise<Recurrence> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
       data: JSON.stringify(this.generateRecurrenceJson(recurrence)),
       headers: {"Content-Type": "application/json"},
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => recurrence);
   }
 
-  putRecurrence(recurrence: Recurrence): IPromise<Recurrence> {
+  postRecurrence(recurrence: Recurrence): IPromise<Recurrence> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/recurrence`,
       data: JSON.stringify(this.generateRecurrenceJson(recurrence)),
       headers: {"Content-Type": "application/json"},
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => recurrence);
   }
@@ -167,28 +167,28 @@ export default class TaskClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
-  putTask(task: Task): IPromise<Payload> {
+  postTask(task: Task): IPromise<Payload> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
       data: JSON.stringify(this.generateJson(task)),
       headers: {"Content-Type": "application/json"},
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) =>
       consumePayloadResult(json)
     );
   }
 
-  putTasks(tasks: Task[]): void {
+  postTasks(tasks: Task[]): void {
     for (const task of tasks) {
-      this.putTask(task);
+      this.postTask(task);
     }
   }
 
   moveTaskBefore(taskId: number, beforeId: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&before=${beforeId}`,
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then((json) => {
       return consumePayloadResult(json);
@@ -198,7 +198,7 @@ export default class TaskClient {
   moveTaskAfter(taskId: number, afterId: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&after=${afterId}`,
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then((json) => {
       return consumePayloadResult(json);
@@ -208,7 +208,7 @@ export default class TaskClient {
   moveTaskToParent(taskId: number, parentId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&parent=${parentId}`,
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -233,7 +233,7 @@ export default class TaskClient {
   assignTask(taskId: number, ownerId: number): IPromise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/assign?taskId=${taskId}&ownerId=${ownerId}`,
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -241,7 +241,7 @@ export default class TaskClient {
   shareTask(taskId: number, userId: number, type: TaskRoleType): IPromise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?userId=${userId}&type=${generateTaskRoleTypeJson(type)}`,
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -257,7 +257,7 @@ export default class TaskClient {
   markSeen(taskId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${taskId}/seen`,
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -290,7 +290,7 @@ export default class TaskClient {
   private addTaskToList(taskId: number, listId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }

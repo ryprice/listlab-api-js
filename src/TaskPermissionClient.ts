@@ -22,7 +22,7 @@ export default class TaskPermissionClient {
   userKnowsSecret(taskId: number, secret: string): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?s=${secret}`,
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings)
       .then(
@@ -35,7 +35,7 @@ export default class TaskPermissionClient {
     const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/role?s=${secret}&type=${generateTaskRoleTypeJson(type)}`,
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeTaskRole);
   }

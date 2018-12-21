@@ -54,12 +54,12 @@ export default class ListClient {
     });
   }
 
-  putList(list: List): IPromise<List> {
+  postList(list: List): IPromise<List> {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
       data: JSON.stringify(this.generateJson(list)),
       headers: {"Content-Type": "application/json"},
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       const persistedId = this.consumeInsertResult(json);
@@ -71,7 +71,7 @@ export default class ListClient {
   createPublicList(newList?: List): IPromise<CreatePublicListResponse> {
     let ajaxSettings: any = {
       url: `${this.listServiceAddress}/create-public`,
-      method: "PUT",
+      method: "POST",
     };
     if (newList != null) {
       ajaxSettings = {
@@ -85,12 +85,12 @@ export default class ListClient {
     });
   }
 
-  postList(list: List): IPromise<List> {
+  putList(list: List): IPromise<List> {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
       data: JSON.stringify(this.generateJson(list)),
       headers: {"Content-Type": "application/json"},
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => list);
   }
@@ -98,7 +98,7 @@ export default class ListClient {
   moveList(listId: number, parentId: number): IPromise<List> {
     const ajaxSettings: any = {
       url: `${this.listServiceAddress}/${listId}/move?parentId=${parentId}`,
-      method: "POST"
+      method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -106,7 +106,7 @@ export default class ListClient {
   addShareToList(userId: number, listId: number, type: ListRoleType): IPromise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}&type=${generateListRoleTypeJson(type)}`,
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }

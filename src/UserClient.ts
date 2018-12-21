@@ -58,20 +58,20 @@ export default class UserClient {
     });
   }
 
-  postSettings(settings: {[key: string]: string}): IPromise<void> {
+  putSettings(settings: {[key: string]: string}): IPromise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/settings`,
-      method: "POST",
+      method: "PUT",
       data: JSON.stringify(settings),
       headers: {"Content-Type": "application/json"},
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => { });
   }
 
-  postUserDetails(user: UserDetails): IPromise<void> {
+  putUserDetails(user: UserDetails): IPromise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}`,
-      method: "POST",
+      method: "PUT",
       data: JSON.stringify(user),
       headers: {"Content-Type": "application/json"},
     };

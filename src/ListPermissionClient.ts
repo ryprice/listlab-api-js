@@ -22,7 +22,7 @@ export default class ListPermissionClient {
   userKnowsSecret(listId: number, secret: string): IPromise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/user?s=${secret}`,
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings)
       .then(
@@ -35,7 +35,7 @@ export default class ListPermissionClient {
     const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/role?s=${secret}&type=${generateListRoleTypeJson(type)}`,
-      method: "PUT"
+      method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeListRole);
   }
