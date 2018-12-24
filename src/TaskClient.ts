@@ -2,6 +2,7 @@ import {IPromise, resolve} from "q";
 import * as qs from 'qs';
 
 import authorizedRequest from "ququmber-api/authorizedRequest";
+import CreatePublicTaskResponse from "ququmber-api/CreatePublicTaskResponse";
 import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
 import FuzzyTime from "ququmber-api/FuzzyTime";
 import {consumePayloadResult} from "ququmber-api/InitClient";
@@ -301,6 +302,22 @@ export default class TaskClient {
     }
   }
 
+  createPublicTask(newTask?: Task): IPromise<CreatePublicTaskResponse> {
+    let ajaxSettings: any = {
+      url: `${this.taskServiceAddress}/create-public`,
+      method: "POST",
+    };
+    if (newTask != null) {
+      ajaxSettings = {
+        ...ajaxSettings,
+        headers: {"Content-Type": "application/json"},
+        data: JSON.stringify(this.generateJson(newTask))
+      };
+    }
+    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
+      return json as CreatePublicTaskResponse;
+    });
+  }
 
   generateJson(task: Task): Object {
     return {

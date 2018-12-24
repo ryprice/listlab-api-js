@@ -1,7 +1,6 @@
 import {IPromise, resolve} from "q";
 
 import authorizedRequest from "ququmber-api/authorizedRequest";
-import CreatePublicListResponse from 'ququmber-api/CreatePublicListResponse';
 import List from "ququmber-api/List";
 import {consumeListRole} from "ququmber-api/ListPermissionClient";
 import ListRoleType, {
@@ -65,23 +64,6 @@ export default class ListClient {
       const persistedId = this.consumeInsertResult(json);
       list.listId = persistedId;
       return list;
-    });
-  }
-
-  createPublicList(newList?: List): IPromise<CreatePublicListResponse> {
-    let ajaxSettings: any = {
-      url: `${this.listServiceAddress}/create-public`,
-      method: "POST",
-    };
-    if (newList != null) {
-      ajaxSettings = {
-        ...ajaxSettings,
-        headers: {"Content-Type": "application/json"},
-        data: JSON.stringify(this.generateJson(newList))
-      };
-    }
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return json as CreatePublicListResponse;
     });
   }
 
