@@ -77,6 +77,25 @@ export default class TaskClient {
     });
   }
 
+  private preTasks: Task[] = [];
+
+  precreateTasks(): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/tasks/precreate`,
+      method: "POST"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
+      this.preTasks = this.preTasks.concat(consumeTasks(json));
+    });
+  }
+
+  getPreTask(): Task {
+    if (this.preTasks.length < 4) {
+      this.precreateTasks();
+    }
+    return this.preTasks.shift();
+  }
+
   search(query: string): IPromise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/search?q=${query}`,
@@ -92,9 +111,9 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify({parentId: taskId})}`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then(
-      (json: any) => consumePayloadResult(json).tasks
-    );
+    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
+      return consumePayloadResult(json).tasks;
+    });
   }
 
   getTasksInProgress(): IPromise<Task[]> {
@@ -102,7 +121,9 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/tasks/inprogress`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => consumePayloadResult(json).tasks);
+    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
+      return consumePayloadResult(json).tasks;
+    });
   }
 
   getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): IPromise<Task[]> {

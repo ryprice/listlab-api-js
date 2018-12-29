@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {IPromise, Promise, resolve} from "q";
 import * as qs from "qs";
 
@@ -20,9 +21,12 @@ export default class UserClient {
   getDetails(): IPromise<AuthSession> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/details`,
-      method: "GET"
+      method: "GET",
+      headers: {
+        Authorization: this.config.AuthToken
+      }
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeUserDetails);
+    return axios(ajaxSettings).then(response => consumeUserDetails(response.data));
   }
 
   search(q: string): IPromise<User[]> {
