@@ -4,10 +4,12 @@ enum TaskRoleType {
 }
 
 export const consumeTaskRoleType = (json: any): TaskRoleType => {
-  if (json === 'read') {
-    return TaskRoleType.READ;
-  } else if (json === 'write'){
-    return TaskRoleType.WRITE;
+  if (typeof json === 'string' || json instanceof String) {
+    if (json.toLowerCase() === 'read') {
+      return TaskRoleType.READ;
+    } else if (json.toLowerCase() === 'write'){
+      return TaskRoleType.WRITE;
+    }
   }
   return null;
 };

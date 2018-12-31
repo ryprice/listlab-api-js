@@ -11,12 +11,6 @@ import Recurrence from "ququmber-api/Recurrence";
 import RecurrenceSchedule from "ququmber-api/RecurrenceSchedule";
 import Task from "ququmber-api/Task";
 import TaskApiConfig from "ququmber-api/TaskApiConfig";
-import {consumeTaskRole} from "ququmber-api/TaskPermissionClient";
-import TaskRoleType, {
-  consumeTaskRoleType,
-  generateTaskRoleTypeJson
-} from "ququmber-api/TaskRoleType";
-import TaskShare from "ququmber-api/TaskShare";
 
 export default class TaskClient {
 
@@ -44,27 +38,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/task/${id}/details`,
       method: "GET"
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      const tasks = consumeTasks(json.tasks);
-      const task = tasks[0];
-      const roleUserToType = (roleUser: any): TaskRoleType => {
-        let type = null;
-        if (roleUser.roleId === task.readRole) {
-          type = TaskRoleType.READ;
-        } else if (roleUser.roleId === task.writeRole) {
-          type = TaskRoleType.WRITE;
-        }
-        return type;
-      };
-
-      return {
-        tasks: tasks,
-        taskShares: json.listRoleUsers.map((roleUser: any) => (
-          new TaskShare(task.taskId, roleUser.userId, roleUserToType(roleUser))
-        )),
-        taskRoles: json.taskRoles.map(consumeTaskRole)
-      } as Payload;
-    });
+    return authorizedRequest(this.config, ajaxSettings).then(consumePayloadResult);
   }
 
   getTasks(): IPromise<Task[]> {
@@ -260,22 +234,6 @@ export default class TaskClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
-  shareTask(taskId: number, userId: number, type: TaskRoleType): IPromise<Task[]> {
-    const ajaxSettings = {
-      url: `${this.taskServiceAddress}/permission/${taskId}/user?userId=${userId}&type=${generateTaskRoleTypeJson(type)}`,
-      method: "POST"
-    };
-    return authorizedRequest(this.config, ajaxSettings);
-  }
-
-  unshareTask(taskId: number, userId: number): IPromise<Task[]> {
-    const ajaxSettings = {
-      url: `${this.taskServiceAddress}/permission/${taskId}/user?userId=${userId}`,
-      method: "DELETE"
-    };
-    return authorizedRequest(this.config, ajaxSettings);
-  }
-
   markSeen(taskId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${taskId}/seen`,
@@ -450,17 +408,4 @@ export const consumeRecurrences = (json: any[]): Recurrence[] => {
     recurrences.push(entity);
   }
   return recurrences;
-};
-
-export const consumeTaskShare = (json: any) => {
-  return new TaskShare(json.taskId, json.userId, consumeTaskRoleType(json.taskRoleType));
-};
-
-export const consumeTaskShares = (json: any[]): TaskShare[] => {
-  const taskShares = new Array<TaskShare>();
-  for (let i = 0; i < json.length; i++) {
-    const entity = this.consumeTaskShare(json[i]);
-    taskShares.push(entity);
-  }
-  return taskShares;
 };

@@ -5,7 +5,7 @@ import ListTask from "ququmber-api/ListTask";
 import Recurrence from "ququmber-api/Recurrence";
 import Task from "ququmber-api/Task";
 import TaskRole from "ququmber-api/TaskRole";
-import TaskShare from "ququmber-api/TaskShare";
+import TaskRoleUser from "ququmber-api/TaskRoleUser";
 import User from "ququmber-api/User";
 
 export default class Payload {
@@ -16,7 +16,7 @@ export default class Payload {
 
   public tasks: Task[];
   public taskRoles: TaskRole[];
-  public taskShares: TaskShare[];
+  public taskRoleUsers: TaskRoleUser[];
   public listTasks: ListTask[];
   public recurrences: Recurrence[];
 

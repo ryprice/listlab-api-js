@@ -57,7 +57,7 @@ export default class ListPermissionClient {
     return authorizedRequest(this.config, ajaxSettings).then(consumeListRole);
   }
 
-  deleteRoleFromList(listId: number, roleId: number): IPromise<ListRole> {
+  removeRoleFromList(listId: number, roleId: number): IPromise<ListRole> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/role?roleId=${roleId}`,
       method: "DELETE"

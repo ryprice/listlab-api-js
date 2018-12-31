@@ -9,4 +9,13 @@ export default class TaskRole {
   public secret: string;
 
   public type: TaskRoleType;
+
+  clone(): TaskRole {
+    const newTaskRole = new TaskRole();
+    newTaskRole.roleId = this.roleId;
+    newTaskRole.taskId = this.taskId;
+    newTaskRole.secret = this.secret;
+    newTaskRole.type = this.type;
+    return newTaskRole;
+  }
 }

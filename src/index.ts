@@ -40,7 +40,7 @@ export {default as TaskFilter} from 'ququmber-api/TaskFilter';
 export {default as TaskPermissionClient} from 'ququmber-api/TaskPermissionClient';
 export {default as TaskRole} from 'ququmber-api/TaskRole';
 export {default as TaskRoleType} from 'ququmber-api/TaskRoleType';
-export {default as TaskShare} from 'ququmber-api/TaskShare';
+export {default as TaskRoleUser} from 'ququmber-api/TaskRoleUser';
 export {default as User} from 'ququmber-api/User';
 export {default as UserClient} from 'ququmber-api/UserClient';
 export {default as UserDetails} from 'ququmber-api/UserDetails';

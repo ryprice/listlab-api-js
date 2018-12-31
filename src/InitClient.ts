@@ -7,9 +7,9 @@ import Payload from "ququmber-api/Payload";
 import TaskApiConfig from "ququmber-api/TaskApiConfig";
 import {
   consumeRecurrences,
-  consumeTasks,
-  consumeTaskShares
+  consumeTasks
 } from "ququmber-api/TaskClient";
+import {consumeTaskRole, consumeTaskRoleUser} from "ququmber-api/TaskPermissionClient";
 import {consumeUsers} from "ququmber-api/UserClient";
 
 export default class InitClient {
@@ -48,14 +48,17 @@ export const consumePayloadResult = (json: any): Payload => {
   if (json.lists) {
     payload.lists = consumeLists(json.lists);
   }
+  if (json.taskRoles) {
+    payload.taskRoles = json.taskRoles.map(consumeTaskRole);
+  }
+  if (json.taskRoleUsers) {
+      payload.taskRoleUsers = json.listRoleUsers.map(consumeTaskRoleUser);
+  }
   if (json.recurrences) {
     payload.recurrences = consumeRecurrences(json.recurrences);
   }
   if (json.users) {
     payload.users = consumeUsers(json.users);
-  }
-  if (json.taskShares) {
-    payload.taskShares = consumeTaskShares(json.taskShares);
   }
   return payload;
 };
