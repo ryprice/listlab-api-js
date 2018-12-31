@@ -7,6 +7,7 @@ export default class List {
   public parentId: number;
   public readRole: number;
   public writeRole: number;
+  public author: number;
 
   clone(): List {
     const clone = new List();
@@ -18,6 +19,7 @@ export default class List {
     clone.parentId = this.parentId;
     clone.readRole = this.readRole;
     clone.writeRole = this.writeRole;
+    clone.author = this.author;
     return clone;
   }
 }

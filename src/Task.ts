@@ -17,6 +17,7 @@ export default class Task {
   public completionTime: Date;
   public readRole: number;
   public writeRole: number;
+  public author: number;
 
   constructor() {
     this.name = "";
@@ -42,6 +43,7 @@ export default class Task {
     clone.completionTime = this.completionTime;
     clone.readRole = this.readRole;
     clone.writeRole = this.writeRole;
+    clone.author = this.author;
     return clone;
   }
 }

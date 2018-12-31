@@ -312,7 +312,8 @@ export default class TaskClient {
       creationTime: task.creationTime,
       completionTime: task.completionTime,
       readRole: task.readRole,
-      writeRole: task.writeRole
+      writeRole: task.writeRole,
+      author: task.author
     };
   }
 
@@ -362,6 +363,7 @@ export const consumeTask = (json: any) => {
   task.completionTime = json.completionTime && new Date(json.completionTime);
   task.readRole = json.readRole;
   task.writeRole = json.writeRole;
+  task.author = json.author;
   if (json.due) {
     task.due = consumeFuzzyTime(json.due);
   }

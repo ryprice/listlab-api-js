@@ -126,7 +126,8 @@ export default class ListClient {
       userId: list.userId,
       color: list.color,
       sortOrder: list.sortOrder,
-      parentId: list.parentId
+      parentId: list.parentId,
+      author: list.author
     };
   }
 
@@ -149,6 +150,7 @@ export const consumeList = (json: any): List => {
   list.parentId = json.parentId;
   list.readRole = json.readRole;
   list.writeRole = json.writeRole;
+  list.author = json.author;
   if (json.tasks) {
     this.consumeListTasks(list, json.tasks);
   }
