@@ -17,7 +17,7 @@ export {default as ListClient} from 'ququmber-api/ListClient';
 export {default as ListPermissionClient} from 'ququmber-api/ListPermissionClient';
 export {default as ListRole} from 'ququmber-api/ListRole';
 export {default as ListRoleType} from 'ququmber-api/ListRoleType';
-export {default as ListShare} from 'ququmber-api/ListShare';
+export {default as ListRoleUser} from 'ququmber-api/ListRoleUser';
 export {default as ListTask} from 'ququmber-api/ListTask';
 export {default as Notification} from 'ququmber-api/Notification';
 export {default as NotificationClient} from 'ququmber-api/NotificationClient';

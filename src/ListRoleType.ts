@@ -4,10 +4,12 @@ enum ListRoleType {
 }
 
 export const consumeListRoleType = (json: any): ListRoleType => {
-  if (json === 'read') {
-    return ListRoleType.READ;
-  } else if (json === 'write'){
-    return ListRoleType.WRITE;
+  if (typeof json === 'string' || json instanceof String) {
+    if (json.toLowerCase() === 'read') {
+      return ListRoleType.READ;
+    } else if (json.toLowerCase() === 'write'){
+      return ListRoleType.WRITE;
+    }
   }
   return null;
 };

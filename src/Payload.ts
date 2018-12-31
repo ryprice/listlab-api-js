@@ -1,6 +1,6 @@
 import List from "ququmber-api/List";
 import ListRole from 'ququmber-api/ListRole';
-import ListShare from "ququmber-api/ListShare";
+import ListRoleUser from "ququmber-api/ListRoleUser";
 import ListTask from "ququmber-api/ListTask";
 import Recurrence from "ququmber-api/Recurrence";
 import Task from "ququmber-api/Task";
@@ -9,13 +9,16 @@ import TaskShare from "ququmber-api/TaskShare";
 import User from "ququmber-api/User";
 
 export default class Payload {
+
+  public lists: List[];
+  public listRoles: ListRole[];
+  public listRoleUsers: ListRoleUser[];
+
   public tasks: Task[];
+  public taskRoles: TaskRole[];
   public taskShares: TaskShare[];
   public listTasks: ListTask[];
-  public lists: List[];
-  public users: User[];
   public recurrences: Recurrence[];
-  public listShares: ListShare[];
-  public listRoles: ListRole[];
-  public taskRoles: TaskRole[];
+
+  public users: User[];
 }

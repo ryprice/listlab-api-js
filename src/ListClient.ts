@@ -2,11 +2,10 @@ import {IPromise, resolve} from "q";
 
 import authorizedRequest from "ququmber-api/authorizedRequest";
 import List from "ququmber-api/List";
-import {consumeListRole} from "ququmber-api/ListPermissionClient";
-import ListRoleType, {
-  generateListRoleTypeJson
-} from "ququmber-api/ListRoleType";
-import ListShare from "ququmber-api/ListShare";
+import {
+  consumeListRole,
+  consumeListRoleUser,
+} from "ququmber-api/ListPermissionClient";
 import ListTask from "ququmber-api/ListTask";
 import Payload from "ququmber-api/Payload";
 import TaskApiConfig from "ququmber-api/TaskApiConfig";
@@ -85,46 +84,16 @@ export default class ListClient {
     return authorizedRequest(this.config, ajaxSettings);
   }
 
-  addShareToList(userId: number, listId: number, type: ListRoleType): IPromise<void> {
-    const ajaxSettings = {
-      url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}&type=${generateListRoleTypeJson(type)}`,
-      method: "POST"
-    };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
-  }
-
-  removeShareFromList(userId: number, listId: number): IPromise<void> {
-    const ajaxSettings = {
-      url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}`,
-      method: "DELETE"
-    };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
-  }
-
   getListDetails(listId: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}/details`,
       method: "GET"
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      const lists = consumeLists(json.lists);
-      const list = lists[0];
-      const roleUserToType = (roleUser: any): ListRoleType => {
-        let type = null;
-        if (roleUser.roleId === list.readRole) {
-          type = ListRoleType.READ;
-        } else if (roleUser.roleId === list.writeRole) {
-          type = ListRoleType.WRITE;
-        }
-        return type;
-      };
-
       return {
-        lists: lists,
-        listShares: json.listRoleUsers.map((roleUser: any) => (
-          new ListShare(listId, roleUser.userId, roleUserToType(roleUser))
-        )),
-        listRoles: json.listRoles.map(consumeListRole)
+        lists: consumeLists(json.lists),
+        listRoles: json.listRoles.map(consumeListRole),
+        listRoleUsers: json.listRoleUsers.map(consumeListRoleUser)
       } as Payload;
     });
   }
