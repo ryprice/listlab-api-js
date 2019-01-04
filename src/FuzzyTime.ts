@@ -40,10 +40,11 @@ export default class FuzzyTime {
     return FuzzyTime.getCurrent(FuzzyGranularity.FOREVER);
   }
 
-  public getParent(granularity?: FuzzyGranularity) {
-    if (!granularity) {
-      granularity = this.granularity.getNext(FuzzyTime.StandardGranularitySequence);
-    }
+  public getParent(nullableGranularity?: FuzzyGranularity) {
+    const granularity = (
+      nullableGranularity ||
+      this.granularity.getNext(FuzzyTime.StandardGranularitySequence)
+    );
     const parent = this.withGranularity(granularity);
     return parent;
   }
@@ -207,7 +208,12 @@ export default class FuzzyTime {
     let last = start;
     while (currentGranularity !== FuzzyGranularity.FOREVER && last.getTime() < endTime) {
       const nextGranularity = FuzzyTime.getNextGranularity(currentGranularity, sequence);
-      spread = spread.concat(this.generateSpreadForOneGranularity(last.getTime(), currentGranularity, nextGranularity, endTime));
+      spread = spread.concat(this.generateSpreadForOneGranularity(
+        last.getTime(),
+        currentGranularity,
+        nextGranularity,
+        endTime
+      ));
       last = spread[spread.length - 1].getNext().withGranularity(nextGranularity);
       currentGranularity = nextGranularity;
     }
@@ -215,7 +221,13 @@ export default class FuzzyTime {
     return spread;
   }
 
-  static generateDeepSpread(granularity: FuzzyGranularity, startTime: FuzzyTime, endTime: FuzzyTime, sequence: VgtSequence, limit: number): FuzzyTime[] {
+  static generateDeepSpread(
+    granularity: FuzzyGranularity,
+    startTime: FuzzyTime,
+    endTime: FuzzyTime,
+    sequence: VgtSequence,
+    limit: number
+  ): FuzzyTime[] {
     let currentGranularity = granularity;
     const spread = new Array<FuzzyTime>();
     while (currentGranularity !== FuzzyGranularity.FOREVER) {
@@ -232,7 +244,12 @@ export default class FuzzyTime {
     return spread;
   }
 
-  static generateSpreadForOneGranularity(startTime: Date, granularity: FuzzyGranularity, nextGranularity: FuzzyGranularity, endTime: Date): FuzzyTime[] {
+  static generateSpreadForOneGranularity(
+    startTime: Date,
+    granularity: FuzzyGranularity,
+    nextGranularity: FuzzyGranularity,
+    endTime: Date
+  ): FuzzyTime[] {
     let current = new FuzzyTime(new Date(startTime.getTime()), granularity);
     // Always add at least one unit for the given granularity
     const result = new Array<FuzzyTime>(current);

@@ -38,7 +38,9 @@ export default class UserClient {
   }
 
   getUsersById(ids: number[]): IPromise<User[]> {
-    if (ids.length < 1) return resolve([]);
+    if (ids.length < 1) {
+      return resolve([]);
+    }
     const ajaxSettings = {
       url: `${this.userServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: "GET"
@@ -55,8 +57,11 @@ export default class UserClient {
       return authorizedRequestRaw(this.config, ajaxSettings).then(
         () => resolve(true),
         ({response}) => {
-          if (response.status === 404) resolve(false);
-          else throw reject(response);
+          if (response.status === 404) {
+            resolve(false);
+          } else {
+            throw reject(response);
+          }
         }
       );
     });

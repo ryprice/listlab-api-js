@@ -51,7 +51,10 @@ export default class TaskPermissionClient {
 
   addUserToTask(userId: number, taskId: number, type: TaskRoleType): IPromise<void> {
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/permission/${taskId}/user?userId=${userId}&type=${generateTaskRoleTypeJson(type)}`,
+      url: (
+        `${this.taskServiceAddress}/permission/${taskId}/user` +
+        `?userId=${userId}&type=${generateTaskRoleTypeJson(type)}`
+      ),
       method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings);

@@ -34,7 +34,10 @@ export default class ListPermissionClient {
 
   addUserToList(userId: number, listId: number, type: ListRoleType): IPromise<void> {
     const ajaxSettings = {
-      url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}&type=${generateListRoleTypeJson(type)}`,
+      url: (
+        `${this.listServiceAddress}/permission/${listId}/user` +
+        `?userId=${userId}&type=${generateListRoleTypeJson(type)}`
+      ),
       method: "POST"
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});

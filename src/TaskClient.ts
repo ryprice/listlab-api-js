@@ -243,7 +243,9 @@ export default class TaskClient {
   }
 
   getTasksByIds(ids: number[]): IPromise<Task[]> {
-    if (ids.length < 1) return resolve([]);
+    if (ids.length < 1) {
+      return resolve([]);
+    }
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: "GET"

@@ -2,9 +2,10 @@ import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
 import FuzzyTime from "ququmber-api/FuzzyTime";
 
 export default (str: string): FuzzyTime => {
-    str = str.toLowerCase();
-    str = str.trim();
-    const words = str.split(" ");
+    let result = str;
+    result = result.toLowerCase();
+    result = result.trim();
+    const words = result.split(" ");
     if (words.length < 1) {
         return undefined;
     }

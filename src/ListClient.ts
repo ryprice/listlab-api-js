@@ -99,7 +99,9 @@ export default class ListClient {
   }
 
   getListsByIds(ids: number[]): IPromise<List[]> {
-    if (ids.length < 1) return resolve([]);
+    if (ids.length < 1) {
+      return resolve([]);
+    }
     const ajaxSettings = {
       url: `${this.listServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: "GET"

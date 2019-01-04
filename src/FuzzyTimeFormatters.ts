@@ -82,7 +82,11 @@ export const formatRelativeName = (time: FuzzyTime): string => {
             case FuzzyGranularity.DAY:
               return `${dayNames[timeTime.getUTCDay()]} ${(timeTime.getUTCMonth() + 1)}/${timeTime.getUTCDate()}`;
             case FuzzyGranularity.WEEK:
-                return monthNames[timeTime.getUTCMonth()] + " " + timeTime.getUTCDate() + "-" + new Date(timeTime.setUTCDate(timeTime.getUTCDate()+6)).getUTCDate();
+                return (
+                  monthNames[timeTime.getUTCMonth()] + " " +
+                  timeTime.getUTCDate() + "-" +
+                  new Date(timeTime.setUTCDate(timeTime.getUTCDate()+6)).getUTCDate()
+                );
             case FuzzyGranularity.MONTH:
                 return monthNames[timeTime.getUTCMonth()];
             case FuzzyGranularity.YEAR:

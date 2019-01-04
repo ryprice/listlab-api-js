@@ -9,6 +9,10 @@
     "triple-equals": [true, "allow-null-check"],
     "no-var-keyword": true,
     "ordered-imports": true,
-    "no-var-keyword": true
+    "no-var-keyword": true,
+    "no-parameter-reassignment": true,
+    "typedef-whitespace": true,
+    "curly": true,
+    "max-line-length": [true, 120]
   }
 }
