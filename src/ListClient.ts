@@ -78,11 +78,28 @@ export default class ListClient {
 
   moveList(listId: number, parentId: number): IPromise<List> {
     const ajaxSettings: any = {
-      url: `${this.listServiceAddress}/${listId}/move?parentId=${parentId}`,
+      url: `${this.listServiceAddress}/${listId}/move?parent=${parentId}`,
       method: "PUT"
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
+
+  moveListBefore(listId: number, beforeId: number): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.listServiceAddress}/${listId}/move?before=${beforeId}`,
+      method: "PUT"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+  }
+
+  moveListAfter(listId: number, afterId: number): IPromise<void> {
+    const ajaxSettings = {
+      url: `${this.listServiceAddress}/${listId}/move?after=${afterId}`,
+      method: "PUT"
+    };
+    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+  }
+
 
   getListDetails(listId: number): IPromise<Payload> {
     const ajaxSettings = {
