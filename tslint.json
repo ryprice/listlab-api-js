@@ -13,6 +13,7 @@
     "no-parameter-reassignment": true,
     "typedef-whitespace": true,
     "curly": true,
-    "max-line-length": [true, 120]
+    "max-line-length": [true, 120],
+    "quotemark": [true, "single", "jsx-double"]
   }
 }

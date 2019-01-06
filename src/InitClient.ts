@@ -1,16 +1,16 @@
-import {IPromise} from "q";
+import {IPromise} from 'q';
 
-import authorizedRequest from "ququmber-api/authorizedRequest";
-import {consumeLists} from "ququmber-api/ListClient";
-import ListTask from "ququmber-api/ListTask";
-import Payload from "ququmber-api/Payload";
-import TaskApiConfig from "ququmber-api/TaskApiConfig";
+import authorizedRequest from 'ququmber-api/authorizedRequest';
+import {consumeLists} from 'ququmber-api/ListClient';
+import ListTask from 'ququmber-api/ListTask';
+import Payload from 'ququmber-api/Payload';
+import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 import {
   consumeRecurrences,
   consumeTasks
-} from "ququmber-api/TaskClient";
-import {consumeTaskRole, consumeTaskRoleUser} from "ququmber-api/TaskPermissionClient";
-import {consumeUsers} from "ququmber-api/UserClient";
+} from 'ququmber-api/TaskClient';
+import {consumeTaskRole, consumeTaskRoleUser} from 'ququmber-api/TaskPermissionClient';
+import {consumeUsers} from 'ququmber-api/UserClient';
 
 export default class InitClient {
 
@@ -26,7 +26,7 @@ export default class InitClient {
   public init(): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.initServiceAddress}/init`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json) => consumePayloadResult(json));
   }

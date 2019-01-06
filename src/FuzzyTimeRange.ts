@@ -1,4 +1,4 @@
-import FuzzyTime from "./FuzzyTime";
+import FuzzyTime from './FuzzyTime';
 
 export default class FuzzyTimeRange {
 

@@ -1,13 +1,13 @@
-import {IPromise} from "q";
+import {IPromise} from 'q';
 
-import authorizedRequest from "ququmber-api/authorizedRequest";
-import TaskApiConfig from "ququmber-api/TaskApiConfig";
-import TaskRole from "ququmber-api/TaskRole";
+import authorizedRequest from 'ququmber-api/authorizedRequest';
+import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import TaskRole from 'ququmber-api/TaskRole';
 import TaskRoleType, {
   consumeTaskRoleType,
   generateTaskRoleTypeJson
-} from "ququmber-api/TaskRoleType";
-import TaskRoleUser from "ququmber-api/TaskRoleUser";
+} from 'ququmber-api/TaskRoleType';
+import TaskRoleUser from 'ququmber-api/TaskRoleUser';
 
 export default class TaskPermissionClient {
 
@@ -23,12 +23,12 @@ export default class TaskPermissionClient {
   userKnowsSecret(taskId: number, secret: string): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?s=${secret}`,
-      method: "POST"
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings)
       .then(
         (json) => { },
-        () => console.log("failed to auth to this task")
+        () => console.log('failed to auth to this task')
       );
   }
 
@@ -36,7 +36,7 @@ export default class TaskPermissionClient {
     const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?s=${secret}&type=${generateTaskRoleTypeJson(type)}`,
-      method: "POST"
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeTaskRole);
   }
@@ -44,7 +44,7 @@ export default class TaskPermissionClient {
   removeRoleFromTask(taskId: number, roleId: number): IPromise<TaskRole> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/role?roleId=${roleId}`,
-      method: "DELETE"
+      method: 'DELETE'
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -55,7 +55,7 @@ export default class TaskPermissionClient {
         `${this.taskServiceAddress}/permission/${taskId}/user` +
         `?userId=${userId}&type=${generateTaskRoleTypeJson(type)}`
       ),
-      method: "POST"
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -63,7 +63,7 @@ export default class TaskPermissionClient {
   removeUserFromTask(userId: number, taskId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?userId=${userId}`,
-      method: "DELETE"
+      method: 'DELETE'
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -71,7 +71,7 @@ export default class TaskPermissionClient {
   updateTaskRole(taskRole: TaskRole): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskRole.taskId}/role?roleId=${taskRole.roleId}`,
-      method: "PUT",
+      method: 'PUT',
       data: generateTaskRoleJson(taskRole)
     };
     return authorizedRequest(this.config, ajaxSettings);

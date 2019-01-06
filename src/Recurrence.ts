@@ -1,6 +1,6 @@
-import FuzzyTime from "ququmber-api/FuzzyTime";
-import RecurrenceSchedule from "ququmber-api/RecurrenceSchedule";
-import Task from "ququmber-api/Task";
+import FuzzyTime from 'ququmber-api/FuzzyTime';
+import RecurrenceSchedule from 'ququmber-api/RecurrenceSchedule';
+import Task from 'ququmber-api/Task';
 
 export default class Recurrence {
   public recurrenceId: number;

@@ -1,12 +1,12 @@
 import axios from 'axios';
-import {IPromise, Promise, resolve} from "q";
-import * as qs from "qs";
+import {IPromise, Promise, resolve} from 'q';
+import * as qs from 'qs';
 
-import authorizedRequest, {authorizedRequestRaw} from "ququmber-api/authorizedRequest";
-import AuthSession from "ququmber-api/AuthSession";
-import TaskApiConfig from "ququmber-api/TaskApiConfig";
-import User from "ququmber-api/User";
-import UserDetails from "ququmber-api/UserDetails";
+import authorizedRequest, {authorizedRequestRaw} from 'ququmber-api/authorizedRequest';
+import AuthSession from 'ququmber-api/AuthSession';
+import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import User from 'ququmber-api/User';
+import UserDetails from 'ququmber-api/UserDetails';
 
 export default class UserClient {
 
@@ -21,7 +21,7 @@ export default class UserClient {
   getDetails(): IPromise<AuthSession> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/details`,
-      method: "GET",
+      method: 'GET',
       headers: {
         Authorization: this.config.AuthToken
       }
@@ -32,7 +32,7 @@ export default class UserClient {
   search(q: string): IPromise<User[]> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/search?q=${q}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeUsers);
   }
@@ -43,7 +43,7 @@ export default class UserClient {
     }
     const ajaxSettings = {
       url: `${this.userServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeUsers);
   }
@@ -52,7 +52,7 @@ export default class UserClient {
     return Promise((resolve, reject) => {
       const ajaxSettings = {
         url: `${this.userServiceAddress}/byUsername/${username}`,
-        method: "GET"
+        method: 'GET'
       };
       return authorizedRequestRaw(this.config, ajaxSettings).then(
         () => resolve(true),
@@ -70,9 +70,9 @@ export default class UserClient {
   putSettings(settings: {[key: string]: string}): IPromise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/settings`,
-      method: "PUT",
+      method: 'PUT',
       data: JSON.stringify(settings),
-      headers: {"Content-Type": "application/json"},
+      headers: {'Content-Type': 'application/json'},
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => { });
   }
@@ -80,9 +80,9 @@ export default class UserClient {
   putUserDetails(user: UserDetails): IPromise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}`,
-      method: "PUT",
+      method: 'PUT',
       data: JSON.stringify(user),
-      headers: {"Content-Type": "application/json"},
+      headers: {'Content-Type': 'application/json'},
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => { });
   }
@@ -90,8 +90,8 @@ export default class UserClient {
   anonMergeFacebook(accessToken: string): IPromise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/anon-merge/facebook`,
-      method: "POST",
-      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       data: qs.stringify({accessToken})
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => { });
@@ -100,8 +100,8 @@ export default class UserClient {
   anonMergeGoogle(accessToken: string): IPromise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/anon-merge/google`,
-      method: "POST",
-      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       data: qs.stringify({accessToken})
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => { });

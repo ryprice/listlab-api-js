@@ -1,5 +1,5 @@
-import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
-import FuzzyTime, {unoffsetNow} from "ququmber-api/FuzzyTime";
+import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
+import FuzzyTime, {unoffsetNow} from 'ququmber-api/FuzzyTime';
 
 export default class Task {
   public taskId: number;
@@ -20,7 +20,7 @@ export default class Task {
   public author: number;
 
   constructor() {
-    this.name = "";
+    this.name = '';
     this.completed = false;
     this.seen = true;
     this.due = new FuzzyTime(new Date(unoffsetNow()), FuzzyGranularity.DAY);

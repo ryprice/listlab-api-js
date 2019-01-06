@@ -1,15 +1,15 @@
-import {IPromise, resolve} from "q";
+import {IPromise, resolve} from 'q';
 
-import authorizedRequest from "ququmber-api/authorizedRequest";
-import List from "ququmber-api/List";
+import authorizedRequest from 'ququmber-api/authorizedRequest';
+import List from 'ququmber-api/List';
 import {
   consumeListRole,
   consumeListRoleUser,
-} from "ququmber-api/ListPermissionClient";
-import ListTask from "ququmber-api/ListTask";
-import Payload from "ququmber-api/Payload";
-import TaskApiConfig from "ququmber-api/TaskApiConfig";
-import {consumeTasks} from "ququmber-api/TaskClient";
+} from 'ququmber-api/ListPermissionClient';
+import ListTask from 'ququmber-api/ListTask';
+import Payload from 'ququmber-api/Payload';
+import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import {consumeTasks} from 'ququmber-api/TaskClient';
 
 export default class ListClient {
 
@@ -25,7 +25,7 @@ export default class ListClient {
   public getList(listId: number): IPromise<List> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json) => {
       return consumeList(json);
@@ -35,7 +35,7 @@ export default class ListClient {
   getLists(): IPromise<List[]> {
     const ajaxSettings = {
       url: this.listServiceAddress,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return consumeLists(json);
@@ -45,7 +45,7 @@ export default class ListClient {
   deleteList(list: List): IPromise<List> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${list.listId}`,
-      method: "DELETE"
+      method: 'DELETE'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {
       return list;
@@ -56,8 +56,8 @@ export default class ListClient {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
       data: JSON.stringify(this.generateJson(list)),
-      headers: {"Content-Type": "application/json"},
-      method: "POST"
+      headers: {'Content-Type': 'application/json'},
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       const persistedId = this.consumeInsertResult(json);
@@ -70,8 +70,8 @@ export default class ListClient {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
       data: JSON.stringify(this.generateJson(list)),
-      headers: {"Content-Type": "application/json"},
-      method: "PUT"
+      headers: {'Content-Type': 'application/json'},
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => list);
   }
@@ -79,7 +79,7 @@ export default class ListClient {
   moveList(listId: number, parentId: number): IPromise<List> {
     const ajaxSettings: any = {
       url: `${this.listServiceAddress}/${listId}/move?parent=${parentId}`,
-      method: "PUT"
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -87,7 +87,7 @@ export default class ListClient {
   moveListBefore(listId: number, beforeId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}/move?before=${beforeId}`,
-      method: "PUT"
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }
@@ -95,7 +95,7 @@ export default class ListClient {
   moveListAfter(listId: number, afterId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}/move?after=${afterId}`,
-      method: "PUT"
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }
@@ -104,7 +104,7 @@ export default class ListClient {
   getListDetails(listId: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}/details`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return {
@@ -121,7 +121,7 @@ export default class ListClient {
     }
     const ajaxSettings = {
       url: `${this.listServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeLists);
   }

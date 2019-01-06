@@ -1,13 +1,13 @@
-import {IPromise} from "q";
+import {IPromise} from 'q';
 
-import authorizedRequest from "ququmber-api/authorizedRequest";
-import ListRole from "ququmber-api/ListRole";
+import authorizedRequest from 'ququmber-api/authorizedRequest';
+import ListRole from 'ququmber-api/ListRole';
 import ListRoleType, {
   consumeListRoleType,
   generateListRoleTypeJson
-} from "ququmber-api/ListRoleType";
-import ListRoleUser from "ququmber-api/ListRoleUser";
-import TaskApiConfig from "ququmber-api/TaskApiConfig";
+} from 'ququmber-api/ListRoleType';
+import ListRoleUser from 'ququmber-api/ListRoleUser';
+import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 
 export default class ListPermissionClient {
 
@@ -23,12 +23,12 @@ export default class ListPermissionClient {
   userKnowsSecret(listId: number, secret: string): IPromise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/user?s=${secret}`,
-      method: "POST"
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings)
       .then(
         (json) => { },
-        () => console.log("failed to auth to this list")
+        () => console.log('failed to auth to this list')
       );
   }
 
@@ -38,7 +38,7 @@ export default class ListPermissionClient {
         `${this.listServiceAddress}/permission/${listId}/user` +
         `?userId=${userId}&type=${generateListRoleTypeJson(type)}`
       ),
-      method: "POST"
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }
@@ -46,7 +46,7 @@ export default class ListPermissionClient {
   removeUserFromList(userId: number, listId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}`,
-      method: "DELETE"
+      method: 'DELETE'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }
@@ -55,7 +55,7 @@ export default class ListPermissionClient {
     const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/role?s=${secret}&type=${generateListRoleTypeJson(type)}`,
-      method: "POST"
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeListRole);
   }
@@ -63,7 +63,7 @@ export default class ListPermissionClient {
   removeRoleFromList(listId: number, roleId: number): IPromise<ListRole> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/role?roleId=${roleId}`,
-      method: "DELETE"
+      method: 'DELETE'
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -71,7 +71,7 @@ export default class ListPermissionClient {
   updateListRole(listRole: ListRole): IPromise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listRole.listId}/role?roleId=${listRole.roleId}`,
-      method: "PUT",
+      method: 'PUT',
       data: generateListRoleJson(listRole)
     };
     return authorizedRequest(this.config, ajaxSettings);

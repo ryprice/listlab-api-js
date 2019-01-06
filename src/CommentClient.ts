@@ -1,8 +1,8 @@
-import {IPromise} from "q";
+import {IPromise} from 'q';
 
-import authorizedRequest from "ququmber-api/authorizedRequest";
-import TaskApiConfig from "ququmber-api/TaskApiConfig";
-import TaskComment from "ququmber-api/TaskComment";
+import authorizedRequest from 'ququmber-api/authorizedRequest';
+import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import TaskComment from 'ququmber-api/TaskComment';
 
 export default class CommentClient {
 
@@ -17,7 +17,7 @@ export default class CommentClient {
   getCommentsForTask(taskId: number): IPromise<TaskComment[]> {
     const ajaxSettings = {
       url: `${this.commentServiceAddress}/task/${taskId}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeTaskComments);
   }
@@ -25,9 +25,9 @@ export default class CommentClient {
   postTaskComment(comment: TaskComment): IPromise<TaskComment> {
     const ajaxSettings = {
       url: `${this.commentServiceAddress}/task`,
-      method: "POST",
+      method: 'POST',
       data: JSON.stringify(comment),
-      headers: {"Content-Type": "application/json"},
+      headers: {'Content-Type': 'application/json'},
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeTaskComment);
   }
@@ -36,7 +36,7 @@ export default class CommentClient {
   deleteTaskComment(commentId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.commentServiceAddress}/taskComment/${commentId}`,
-      method: "DELETE",
+      method: 'DELETE',
     };
     return authorizedRequest(this.config, ajaxSettings);
   }

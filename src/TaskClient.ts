@@ -1,16 +1,16 @@
-import {IPromise, resolve} from "q";
+import {IPromise, resolve} from 'q';
 import * as qs from 'qs';
 
-import authorizedRequest from "ququmber-api/authorizedRequest";
-import CreatePublicTaskResponse from "ququmber-api/CreatePublicTaskResponse";
-import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
-import FuzzyTime from "ququmber-api/FuzzyTime";
-import {consumePayloadResult} from "ququmber-api/InitClient";
-import Payload from "ququmber-api/Payload";
-import Recurrence from "ququmber-api/Recurrence";
-import RecurrenceSchedule from "ququmber-api/RecurrenceSchedule";
-import Task from "ququmber-api/Task";
-import TaskApiConfig from "ququmber-api/TaskApiConfig";
+import authorizedRequest from 'ququmber-api/authorizedRequest';
+import CreatePublicTaskResponse from 'ququmber-api/CreatePublicTaskResponse';
+import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
+import FuzzyTime from 'ququmber-api/FuzzyTime';
+import {consumePayloadResult} from 'ququmber-api/InitClient';
+import Payload from 'ququmber-api/Payload';
+import Recurrence from 'ququmber-api/Recurrence';
+import RecurrenceSchedule from 'ququmber-api/RecurrenceSchedule';
+import Task from 'ququmber-api/Task';
+import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 
 export default class TaskClient {
 
@@ -26,7 +26,7 @@ export default class TaskClient {
   public getTask(id: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${id}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json) => {
       return consumePayloadResult(json);
@@ -36,7 +36,7 @@ export default class TaskClient {
   public getTaskDetails(id: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${id}/details`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumePayloadResult);
   }
@@ -44,7 +44,7 @@ export default class TaskClient {
   getTasks(): IPromise<Task[]> {
     const ajaxSettings = {
       url: this.taskServiceAddress,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return consumeTasks(json);
@@ -56,7 +56,7 @@ export default class TaskClient {
   precreateTasks(): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/precreate`,
-      method: "POST"
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       this.preTasks = this.preTasks.concat(consumeTasks(json));
@@ -73,7 +73,7 @@ export default class TaskClient {
   search(query: string): IPromise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/search?q=${query}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return consumeTasks(json);
@@ -83,7 +83,7 @@ export default class TaskClient {
   getTaskChildren(taskId: number): IPromise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify({parentId: taskId})}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return consumePayloadResult(json).tasks;
@@ -93,7 +93,7 @@ export default class TaskClient {
   getTasksInProgress(): IPromise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/inprogress`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return consumePayloadResult(json).tasks;
@@ -114,7 +114,7 @@ export default class TaskClient {
 
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       const payload = consumePayloadResult(json);
@@ -126,8 +126,8 @@ export default class TaskClient {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
       data: JSON.stringify(this.generateJson(task)),
-      headers: {"Content-Type": "application/json"},
-      method: "PUT"
+      headers: {'Content-Type': 'application/json'},
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
       return consumePayloadResult(json).tasks;
@@ -138,8 +138,8 @@ export default class TaskClient {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
       data: JSON.stringify(this.generateRecurrenceJson(recurrence)),
-      headers: {"Content-Type": "application/json"},
-      method: "PUT"
+      headers: {'Content-Type': 'application/json'},
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => recurrence);
   }
@@ -148,8 +148,8 @@ export default class TaskClient {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/recurrence`,
       data: JSON.stringify(this.generateRecurrenceJson(recurrence)),
-      headers: {"Content-Type": "application/json"},
-      method: "POST"
+      headers: {'Content-Type': 'application/json'},
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => recurrence);
   }
@@ -157,8 +157,8 @@ export default class TaskClient {
   deleteRecurrence(recurrence: Recurrence): IPromise<Recurrence> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
-      method: "DELETE",
-      headers: {"Content-Type": "application/json"}
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -167,8 +167,8 @@ export default class TaskClient {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
       data: JSON.stringify(this.generateJson(task)),
-      headers: {"Content-Type": "application/json"},
-      method: "POST"
+      headers: {'Content-Type': 'application/json'},
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) =>
       consumePayloadResult(json)
@@ -184,7 +184,7 @@ export default class TaskClient {
   moveTaskBefore(taskId: number, beforeId: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&before=${beforeId}`,
-      method: "PUT"
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json) => {
       return consumePayloadResult(json);
@@ -194,7 +194,7 @@ export default class TaskClient {
   moveTaskAfter(taskId: number, afterId: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&after=${afterId}`,
-      method: "PUT"
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json) => {
       return consumePayloadResult(json);
@@ -204,7 +204,7 @@ export default class TaskClient {
   moveTaskToParent(taskId: number, parentId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&parent=${parentId}`,
-      method: "PUT"
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -213,8 +213,8 @@ export default class TaskClient {
     const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${idsQuery}`,
-      method: "DELETE",
-      headers: {"Content-Type": "application/json"}
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => taskIds);
   }
@@ -229,7 +229,7 @@ export default class TaskClient {
   assignTask(taskId: number, ownerId: number): IPromise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/assign?taskId=${taskId}&ownerId=${ownerId}`,
-      method: "PUT"
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -237,7 +237,7 @@ export default class TaskClient {
   markSeen(taskId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${taskId}/seen`,
-      method: "PUT"
+      method: 'PUT'
     };
     return authorizedRequest(this.config, ajaxSettings);
   }
@@ -248,7 +248,7 @@ export default class TaskClient {
     }
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/byId?${ids.map(id => `id=${id}&`).join('')}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumeTasks);
   }
@@ -256,7 +256,7 @@ export default class TaskClient {
   getTasksInList(listId: number): IPromise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?listId=${listId}`,
-      method: "GET"
+      method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then(consumePayloadResult);
   }
@@ -264,7 +264,7 @@ export default class TaskClient {
   removeTaskFromList(taskId: number, listId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
-      method: "DELETE"
+      method: 'DELETE'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }
@@ -272,7 +272,7 @@ export default class TaskClient {
   private addTaskToList(taskId: number, listId: number): IPromise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
-      method: "POST"
+      method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }
@@ -286,12 +286,12 @@ export default class TaskClient {
   createPublicTask(newTask?: Task): IPromise<CreatePublicTaskResponse> {
     let ajaxSettings: any = {
       url: `${this.taskServiceAddress}/create-public`,
-      method: "POST",
+      method: 'POST',
     };
     if (newTask != null) {
       ajaxSettings = {
         ...ajaxSettings,
-        headers: {"Content-Type": "application/json"},
+        headers: {'Content-Type': 'application/json'},
         data: JSON.stringify(this.generateJson(newTask))
       };
     }
@@ -381,14 +381,14 @@ export const consumeFuzzyTime = (json: any) => {
 
 export const consumeFuzzyGranularity = (json: any) => {
   switch(json.toLowerCase()) {
-    case "minute": return FuzzyGranularity.MINUTE;
-    case "hour": return FuzzyGranularity.HOUR;
-    case "day": return FuzzyGranularity.DAY;
-    case "week": return FuzzyGranularity.WEEK;
-    case "month": return FuzzyGranularity.MONTH;
-    case "year": return FuzzyGranularity.YEAR;
-    case "forever": return FuzzyGranularity.FOREVER;
-    default: throw "Error in consumeTasks granularity unknown";
+    case 'minute': return FuzzyGranularity.MINUTE;
+    case 'hour': return FuzzyGranularity.HOUR;
+    case 'day': return FuzzyGranularity.DAY;
+    case 'week': return FuzzyGranularity.WEEK;
+    case 'month': return FuzzyGranularity.MONTH;
+    case 'year': return FuzzyGranularity.YEAR;
+    case 'forever': return FuzzyGranularity.FOREVER;
+    default: throw 'Error in consumeTasks granularity unknown';
   }
 };
 
