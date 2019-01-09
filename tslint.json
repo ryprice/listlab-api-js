@@ -1,19 +1,3 @@
 {
-  "rules": {
-    "class-name": false,
-    "indent": [true, "spaces"],
-    "no-trailing-whitespace": true,
-    "only-arrow-functions": true,
-    "ordered-imports": false,
-    "semicolon": true,
-    "triple-equals": [true, "allow-null-check"],
-    "no-var-keyword": true,
-    "ordered-imports": true,
-    "no-var-keyword": true,
-    "no-parameter-reassignment": true,
-    "typedef-whitespace": true,
-    "curly": true,
-    "max-line-length": [true, 120],
-    "quotemark": [true, "single", "jsx-double"]
-  }
+  "extends": "ququmber-build/tslint"
 }

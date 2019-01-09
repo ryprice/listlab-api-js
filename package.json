@@ -19,6 +19,7 @@
     "dts-generator": "^2.1.0",
     "dtsbundler-webpack-plugin": "^1.0.0",
     "file-system": "^2.2.2",
+    "ququmber-build": "file:../ququmber-build",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",
     "webpack": "^3.12.0",
