@@ -1,7 +1,7 @@
-import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
-import FuzzyTime, {unoffsetNow} from "ququmber-api/FuzzyTime";
-import FuzzyTimeRange from "ququmber-api/FuzzyTimeRange";
-import {dayNames, monthNames, shortMonthNames} from "ququmber-api/TimeStrings";
+import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
+import FuzzyTime, {unoffsetNow} from 'ququmber-api/FuzzyTime';
+import FuzzyTimeRange from 'ququmber-api/FuzzyTimeRange';
+import {dayNames, monthNames, shortMonthNames} from 'ququmber-api/TimeStrings';
 
 export const formatRelativeShortName = (time: FuzzyTime): string => {
     const now = new FuzzyTime(new Date(unoffsetNow()), time.getGranularity());
@@ -49,29 +49,29 @@ export const formatRelativeName = (time: FuzzyTime): string => {
     if (time.equals(now)) {
         switch (time.getGranularity()) {
             case FuzzyGranularity.DAY:
-                return "Today";
+                return 'Today';
             case FuzzyGranularity.FOREVER:
-                return "None";
+                return 'None';
             default:
-                return "This " + time.getGranularity().getName();
+                return 'This ' + time.getGranularity().getName();
         }
     }
     // If it's the next one
     if (time.equals(now.getNext())) {
         switch (time.getGranularity()) {
             case FuzzyGranularity.DAY:
-                return "Tomorrow";
+                return 'Tomorrow';
             default:
-                return "Next " + time.getGranularity().getName();
+                return 'Next ' + time.getGranularity().getName();
         }
     }
     // If it's the previous one
     if (time.equals(now.getPrev())) {
         switch (time.getGranularity()) {
             case FuzzyGranularity.DAY:
-                return "Yesterday";
+                return 'Yesterday';
             default:
-                return "Last " + time.getGranularity().getName();
+                return 'Last ' + time.getGranularity().getName();
         }
     }
 
@@ -83,8 +83,8 @@ export const formatRelativeName = (time: FuzzyTime): string => {
               return `${dayNames[timeTime.getUTCDay()]} ${(timeTime.getUTCMonth() + 1)}/${timeTime.getUTCDate()}`;
             case FuzzyGranularity.WEEK:
                 return (
-                  monthNames[timeTime.getUTCMonth()] + " " +
-                  timeTime.getUTCDate() + "-" +
+                  monthNames[timeTime.getUTCMonth()] + ' ' +
+                  timeTime.getUTCDate() + '-' +
                   new Date(timeTime.setUTCDate(timeTime.getUTCDate()+6)).getUTCDate()
                 );
             case FuzzyGranularity.MONTH:

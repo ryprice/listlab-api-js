@@ -1,5 +1,4 @@
-
-import FuzzyGranularity from "ququmber-api/FuzzyGranularity";
+import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
 
 export default class FuzzyTime {
 
@@ -151,7 +150,7 @@ export default class FuzzyTime {
         this.time = new Date(0);
         break;
       default:
-        throw "granularity not recognized";
+        throw 'granularity not recognized';
     }
   }
 
@@ -180,7 +179,7 @@ export default class FuzzyTime {
         break;
 
       default:
-        throw "granularity not recognized";
+        throw 'granularity not recognized';
     }
 
     return new FuzzyTime(offsetTime, this.getGranularity());
@@ -270,7 +269,7 @@ export default class FuzzyTime {
   public static getNextGranularity(granularity: FuzzyGranularity, sequence: VgtSequence): FuzzyGranularity {
     const currentIndex = sequence.indexOf(granularity);
     if (currentIndex < 0) {
-      throw "Given granularity not found in this sequence";
+      throw 'Given granularity not found in this sequence';
     } else if (currentIndex === sequence.length - 1) {
       return FuzzyGranularity.FOREVER;
     }
@@ -280,7 +279,7 @@ export default class FuzzyTime {
 
   public getFirstChild() {
     if (this.getGranularity() === FuzzyGranularity.DAY) {
-      throw "Cannot get children of days";
+      throw 'Cannot get children of days';
     }
     return this.withGranularity(this.getGranularity().getPrev(FuzzyTime.StandardGranularitySequence));
   }
