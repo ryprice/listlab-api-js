@@ -1,10 +1,10 @@
 import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
-import FuzzyTime, {unoffsetNow} from 'ququmber-api/FuzzyTime';
+import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'ququmber-api/FuzzyTime';
 import FuzzyTimeRange from 'ququmber-api/FuzzyTimeRange';
 import {dayNames, monthNames, shortMonthNames} from 'ququmber-api/TimeStrings';
 
 export const formatRelativeShortName = (time: FuzzyTime): string => {
-    const now = new FuzzyTime(new Date(unoffsetNow()), time.getGranularity());
+    const now = buildFuzzyTime(new Date(unoffsetNow()), time.getGranularity());
     const timeTime = time.getTime();
     const twoDigetYear = timeTime.getUTCFullYear().toString().substr(-2);
 
@@ -42,7 +42,7 @@ export const formatRelativeRangeShortName = (range: FuzzyTimeRange) => {
 
 
 export const formatRelativeName = (time: FuzzyTime): string => {
-    const now = new FuzzyTime(new Date(unoffsetNow()), time.getGranularity());
+    const now = buildFuzzyTime(new Date(unoffsetNow()), time.getGranularity());
     const timeTime = time.getTime();
 
     // If it's this one

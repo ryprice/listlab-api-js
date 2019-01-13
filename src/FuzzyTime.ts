@@ -1,5 +1,23 @@
 import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
 
+const instanceCache: {[key: string]: FuzzyTime} = {};
+
+const buildCacheKey = (time: FuzzyTime) => {
+  return time.getTime().getTime() + ',' + time.getGranularity().getKey();
+};
+
+export const buildFuzzyTime = (time: Date, granularity: FuzzyGranularity): FuzzyTime => {
+  const newInstance = new FuzzyTime(time, granularity);
+  const key = buildCacheKey(newInstance);
+  const cachedInstance = instanceCache[key];
+  if (!cachedInstance) {
+
+    instanceCache[key] = newInstance;
+    return newInstance;
+  }
+  return cachedInstance;
+};
+
 export default class FuzzyTime {
 
   private time: Date;
@@ -20,7 +38,7 @@ export default class FuzzyTime {
     if (granularity === this.granularity) {
       return this;
     }
-    return new FuzzyTime(this.time, granularity);
+    return buildFuzzyTime(this.time, granularity);
   }
 
   public getGranularity(): FuzzyGranularity {
@@ -32,7 +50,7 @@ export default class FuzzyTime {
   }
 
   public static getCurrent(granularity: FuzzyGranularity): FuzzyTime {
-    return new FuzzyTime(new Date(unoffsetNow()), granularity);
+    return buildFuzzyTime(new Date(unoffsetNow()), granularity);
   }
 
   public static getForever(): FuzzyTime {
@@ -182,7 +200,7 @@ export default class FuzzyTime {
         throw 'granularity not recognized';
     }
 
-    return new FuzzyTime(offsetTime, this.getGranularity());
+    return buildFuzzyTime(offsetTime, this.getGranularity());
   }
 
   private next: FuzzyTime = null;
@@ -249,14 +267,14 @@ export default class FuzzyTime {
     nextGranularity: FuzzyGranularity,
     endTime: Date
   ): FuzzyTime[] {
-    let current = new FuzzyTime(new Date(startTime.getTime()), granularity);
+    let current = buildFuzzyTime(new Date(startTime.getTime()), granularity);
     // Always add at least one unit for the given granularity
     const result = new Array<FuzzyTime>(current);
     let next: Date;
     if (nextGranularity === FuzzyGranularity.FOREVER) {
       next = endTime;
     } else {
-      next = (new FuzzyTime(new Date(current.getTime().getTime()), nextGranularity)).getNext().getTime();
+      next = (buildFuzzyTime(new Date(current.getTime().getTime()), nextGranularity)).getNext().getTime();
     }
     current = current.getNext();
     while (current.getTime() < next && current.getTime() < endTime) {

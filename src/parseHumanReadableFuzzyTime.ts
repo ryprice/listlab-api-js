@@ -1,5 +1,5 @@
 import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
-import FuzzyTime from 'ququmber-api/FuzzyTime';
+import FuzzyTime, {buildFuzzyTime} from 'ququmber-api/FuzzyTime';
 
 export default (str: string): FuzzyTime => {
     let result = str;
@@ -11,15 +11,15 @@ export default (str: string): FuzzyTime => {
     }
 
     if (words[0] === 'today') {
-        return new FuzzyTime(new Date(), FuzzyGranularity.DAY);
+        return buildFuzzyTime(new Date(), FuzzyGranularity.DAY);
     }
 
     if (words[0] === 'yesterday') {
-        return new FuzzyTime(new Date(), FuzzyGranularity.DAY).getPrev();
+        return buildFuzzyTime(new Date(), FuzzyGranularity.DAY).getPrev();
     }
 
     if (words[0] === 'tomorrow') {
-        return new FuzzyTime(new Date(), FuzzyGranularity.DAY).getNext();
+        return buildFuzzyTime(new Date(), FuzzyGranularity.DAY).getNext();
     }
 
     if (words[0] === 'this') {
@@ -43,7 +43,7 @@ const parse = (words: string[]) => {
         return undefined;
     }
 
-    let time = new FuzzyTime(new Date(), FuzzyGranularity.DAY);
+    let time = buildFuzzyTime(new Date(), FuzzyGranularity.DAY);
     if (words[0] === 'week') {
         time = time.withGranularity(FuzzyGranularity.WEEK);
         return time;

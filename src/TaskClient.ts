@@ -4,7 +4,7 @@ import * as qs from 'qs';
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import CreatePublicTaskResponse from 'ququmber-api/CreatePublicTaskResponse';
 import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
-import FuzzyTime from 'ququmber-api/FuzzyTime';
+import FuzzyTime, {buildFuzzyTime} from 'ququmber-api/FuzzyTime';
 import {consumePayloadResult} from 'ququmber-api/InitClient';
 import Payload from 'ququmber-api/Payload';
 import Recurrence from 'ququmber-api/Recurrence';
@@ -373,7 +373,7 @@ export const consumeTask = (json: any) => {
 };
 
 export const consumeFuzzyTime = (json: any) => {
-  return new FuzzyTime(
+  return buildFuzzyTime(
     new Date(json.time),
     consumeFuzzyGranularity(json.granularity)
   );
