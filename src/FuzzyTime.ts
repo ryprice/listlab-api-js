@@ -107,8 +107,16 @@ export default class FuzzyTime {
     const end = this.getNext().time;
     const otherStart = other.time;
     const otherEnd = other.getNext().time;
-    return (start <= otherStart && end > otherStart) ||
-      (end >= otherEnd && start < otherEnd);
+    return (
+      // this before and overlapping other
+      (start <= otherStart && end > otherStart) ||
+      // other before and overlapping this
+      (end >= otherEnd && start < otherEnd) ||
+      // this contains other
+      (start <= otherStart && end >= otherEnd) ||
+      // other contains this
+      (end <= otherEnd && start >= otherStart)
+    );
   }
 
   public equals(other: FuzzyTime): boolean {
