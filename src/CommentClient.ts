@@ -1,5 +1,3 @@
-import {IPromise} from 'q';
-
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 import TaskComment from 'ququmber-api/TaskComment';
@@ -14,7 +12,7 @@ export default class CommentClient {
     this.commentServiceAddress = config.CommentServiceAddress;
   }
 
-  getCommentsForTask(taskId: number): IPromise<TaskComment[]> {
+  async getCommentsForTask(taskId: number): Promise<TaskComment[]> {
     const ajaxSettings = {
       url: `${this.commentServiceAddress}/task/${taskId}`,
       method: 'GET'
@@ -22,7 +20,7 @@ export default class CommentClient {
     return authorizedRequest(this.config, ajaxSettings).then(consumeTaskComments);
   }
 
-  postTaskComment(comment: TaskComment): IPromise<TaskComment> {
+  async postTaskComment(comment: TaskComment): Promise<TaskComment> {
     const ajaxSettings = {
       url: `${this.commentServiceAddress}/task`,
       method: 'POST',
@@ -33,12 +31,12 @@ export default class CommentClient {
   }
 
 
-  deleteTaskComment(commentId: number): IPromise<void> {
+  async deleteTaskComment(commentId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.commentServiceAddress}/taskComment/${commentId}`,
       method: 'DELETE',
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 }
 

@@ -1,5 +1,3 @@
-import {IPromise} from 'q';
-
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 import TaskRole from 'ququmber-api/TaskRole';
@@ -20,36 +18,37 @@ export default class TaskPermissionClient {
     this.taskServiceAddress = config.TaskServiceAddress;
   }
 
-  userKnowsSecret(taskId: number, secret: string): IPromise<void> {
+  async userKnowsSecret(taskId: number, secret: string): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?s=${secret}`,
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings)
-      .then(
-        (json) => { },
-        () => console.log('failed to auth to this task')
-      );
+    try {
+      await authorizedRequest(this.config, ajaxSettings);
+    } catch {
+      () => console.log('failed to auth to this task');
+    }
   }
 
-  addRoleToTask(taskId: number, type: TaskRoleType): IPromise<TaskRole> {
+  async addRoleToTask(taskId: number, type: TaskRoleType): Promise<TaskRole> {
     const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?s=${secret}&type=${generateTaskRoleTypeJson(type)}`,
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeTaskRole);
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeTaskRole(json);
   }
 
-  removeRoleFromTask(taskId: number, roleId: number): IPromise<TaskRole> {
+  async removeRoleFromTask(taskId: number, roleId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/role?roleId=${roleId}`,
       method: 'DELETE'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  addUserToTask(userId: number, taskId: number, type: TaskRoleType): IPromise<void> {
+  async addUserToTask(userId: number, taskId: number, type: TaskRoleType): Promise<void> {
     const ajaxSettings = {
       url: (
         `${this.taskServiceAddress}/permission/${taskId}/user` +
@@ -57,24 +56,24 @@ export default class TaskPermissionClient {
       ),
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  removeUserFromTask(userId: number, taskId: number): IPromise<void> {
+  async removeUserFromTask(userId: number, taskId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?userId=${userId}`,
       method: 'DELETE'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  updateTaskRole(taskRole: TaskRole): IPromise<void> {
+  async updateTaskRole(taskRole: TaskRole): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskRole.taskId}/role?roleId=${taskRole.roleId}`,
       method: 'PUT',
       data: generateTaskRoleJson(taskRole)
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 }
 

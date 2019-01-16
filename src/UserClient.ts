@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {IPromise, Promise, resolve} from 'q';
 import * as qs from 'qs';
 
 import authorizedRequest, {authorizedRequestRaw} from 'ququmber-api/authorizedRequest';
@@ -18,7 +17,7 @@ export default class UserClient {
     this.userServiceAddress = config.UserServiceAddress;
   }
 
-  getDetails(): IPromise<AuthSession> {
+  async getDetails(): Promise<AuthSession> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/details`,
       method: 'GET',
@@ -26,85 +25,86 @@ export default class UserClient {
         Authorization: this.config.AuthToken
       }
     };
-    return axios(ajaxSettings).then(response => consumeUserDetails(response.data));
+    const response = await axios(ajaxSettings);
+    return consumeUserDetails(response.data);
   }
 
-  search(q: string): IPromise<User[]> {
+  async search(q: string): Promise<User[]> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/search?q=${q}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeUsers);
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeUsers(json);
   }
 
-  getUsersById(ids: number[]): IPromise<User[]> {
+  async getUsersById(ids: number[]): Promise<User[]> {
     if (ids.length < 1) {
-      return resolve([]);
+      return Promise.resolve([]);
     }
     const ajaxSettings = {
       url: `${this.userServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeUsers);
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeUsers(json);
   }
 
-  isUsernameTaken(username: string): IPromise<boolean> {
-    return Promise((resolve, reject) => {
-      const ajaxSettings = {
-        url: `${this.userServiceAddress}/byUsername/${username}`,
-        method: 'GET'
-      };
-      return authorizedRequestRaw(this.config, ajaxSettings).then(
-        () => resolve(true),
-        ({response}) => {
-          if (response.status === 404) {
-            resolve(false);
-          } else {
-            throw reject(response);
-          }
-        }
-      );
-    });
+  async isUsernameTaken(username: string): Promise<boolean> {
+    const ajaxSettings = {
+      url: `${this.userServiceAddress}/byUsername/${username}`,
+      method: 'GET'
+    };
+    try {
+      await authorizedRequestRaw(this.config, ajaxSettings);
+      return true;
+    } catch ({response}) {
+      if (response.status === 404) {
+        return false;
+      } else {
+        throw response;
+      }
+    }
   }
 
-  putSettings(settings: {[key: string]: string}): IPromise<void> {
+  async putSettings(settings: {[key: string]: string}): Promise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/settings`,
       method: 'PUT',
       data: JSON.stringify(settings),
       headers: {'Content-Type': 'application/json'},
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => { });
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  putUserDetails(user: UserDetails): IPromise<void> {
+  async putUserDetails(user: UserDetails): Promise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}`,
       method: 'PUT',
       data: JSON.stringify(user),
       headers: {'Content-Type': 'application/json'},
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => { });
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  anonMergeFacebook(accessToken: string): IPromise<void> {
+  async anonMergeFacebook(accessToken: string): Promise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/anon-merge/facebook`,
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       data: qs.stringify({accessToken})
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => { });
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  anonMergeGoogle(accessToken: string): IPromise<void> {
+  async anonMergeGoogle(accessToken: string): Promise<void> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/anon-merge/google`,
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       data: qs.stringify({accessToken})
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => { });
+    await authorizedRequest(this.config, ajaxSettings);
   }
 }
 

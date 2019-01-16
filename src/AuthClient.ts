@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {IPromise} from 'q';
 import * as qs from 'qs';
 
 import TaskApiConfig from 'ququmber-api/TaskApiConfig';
@@ -30,7 +29,7 @@ export default class AuthClient {
     window.location.href = `${this.config.WebAddress}`;
   }
 
-  public authWithFake(userId: number): IPromise<void> {
+  public async authWithFake(userId: number) {
     const ajaxSettings = {
       url: this.authServiceAddress + '/fake',
       method: 'POST',
@@ -44,7 +43,7 @@ export default class AuthClient {
     });
   }
 
-  public authWithGoogleIdToken(googleIdToken: string): IPromise<void> {
+  public async authWithGoogleIdToken(googleIdToken: string) {
     if (googleIdToken !== null) {
       const ajaxSettings = {
         url: `${this.authServiceAddress}/google`,
@@ -58,7 +57,7 @@ export default class AuthClient {
     }
   }
 
-  public authWithFacebookAccessToken(fbAccessToken: string): IPromise<any> {
+  public async authWithFacebookAccessToken(fbAccessToken: string) {
     if (fbAccessToken != null) {
       const ajaxSettings = {
         url: `${this.authServiceAddress}/facebook`,
@@ -72,7 +71,7 @@ export default class AuthClient {
     }
   }
 
-  public authWithAnonymous(): IPromise<void> {
+  public async authWithAnonymous() {
     const ajaxSettings = {
       url: `${this.authServiceAddress}/anonymous`,
       method: 'POST',

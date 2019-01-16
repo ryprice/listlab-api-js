@@ -1,5 +1,3 @@
-import {IPromise} from 'q';
-
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import Notification from 'ququmber-api/Notification';
 import TaskApiConfig from 'ququmber-api/TaskApiConfig';
@@ -11,22 +9,21 @@ export default class NotificationClient {
     this.config = config;
   }
 
-  getNotifications(): IPromise<Notification[]> {
+  async getNotifications(): Promise<Notification[]> {
     const ajaxSettings = {
       url: `${this.config.NotificationServiceAddress}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) =>
-      this.consumeNotifications(json)
-    );
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return this.consumeNotifications(json);
   }
 
-  markSeen(notificationId: number): IPromise<Notification[]> {
+  async markSeen(notificationId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.config.NotificationServiceAddress}/seen?notificationId=${notificationId}`,
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
   consumeNotification(json: any): Notification {

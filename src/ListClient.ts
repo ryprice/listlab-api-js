@@ -1,5 +1,3 @@
-import {IPromise, resolve} from 'q';
-
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import List from 'ququmber-api/List';
 import {
@@ -22,7 +20,7 @@ export default class ListClient {
     this.listServiceAddress = `${config.ListServiceAddress}`;
   }
 
-  public getList(listId: number): IPromise<List> {
+  async getList(listId: number): Promise<List> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}`,
       method: 'GET'
@@ -32,7 +30,7 @@ export default class ListClient {
     });
   }
 
-  getLists(): IPromise<List[]> {
+  async getLists(): Promise<List[]> {
     const ajaxSettings = {
       url: this.listServiceAddress,
       method: 'GET'
@@ -42,7 +40,7 @@ export default class ListClient {
     });
   }
 
-  deleteList(list: List): IPromise<List> {
+  async deleteList(list: List): Promise<List> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${list.listId}`,
       method: 'DELETE'
@@ -52,7 +50,7 @@ export default class ListClient {
     });
   }
 
-  postList(list: List): IPromise<List> {
+  async postList(list: List): Promise<List> {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
       data: JSON.stringify(this.generateJson(list)),
@@ -66,7 +64,7 @@ export default class ListClient {
     });
   }
 
-  putList(list: List): IPromise<List> {
+  async putList(list: List): Promise<List> {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
       data: JSON.stringify(this.generateJson(list)),
@@ -76,15 +74,15 @@ export default class ListClient {
     return authorizedRequest(this.config, ajaxSettings).then(() => list);
   }
 
-  moveList(listId: number, parentId: number): IPromise<List> {
+  async moveList(listId: number, parentId: number): Promise<void> {
     const ajaxSettings: any = {
       url: `${this.listServiceAddress}/${listId}/move?parent=${parentId}`,
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  moveListBefore(listId: number, beforeId: number): IPromise<void> {
+  async moveListBefore(listId: number, beforeId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}/move?before=${beforeId}`,
       method: 'PUT'
@@ -92,7 +90,7 @@ export default class ListClient {
     return authorizedRequest(this.config, ajaxSettings).then(() => {});
   }
 
-  moveListAfter(listId: number, afterId: number): IPromise<void> {
+  async moveListAfter(listId: number, afterId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}/move?after=${afterId}`,
       method: 'PUT'
@@ -101,7 +99,7 @@ export default class ListClient {
   }
 
 
-  getListDetails(listId: number): IPromise<Payload> {
+  async getListDetails(listId: number): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}/details`,
       method: 'GET'
@@ -115,15 +113,16 @@ export default class ListClient {
     });
   }
 
-  getListsByIds(ids: number[]): IPromise<List[]> {
+  async getListsByIds(ids: number[]): Promise<List[]> {
     if (ids.length < 1) {
-      return resolve([]);
+      return Promise.resolve([]);
     }
     const ajaxSettings = {
       url: `${this.listServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeLists);
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeLists(json);
   }
 
   constructEmptyEntity(): List {
@@ -176,7 +175,7 @@ export const consumeList = (json: any): List => {
   return list;
 };
 
-export const consumeLists = (json: any[]): List[] => {
+export const consumeLists = (json: any): List[] => {
   const lists = new Array<List>();
   for (let i = 0; i < json.length; i++) {
     const list = this.consumeList(json[i]);

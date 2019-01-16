@@ -1,4 +1,3 @@
-import {IPromise, resolve} from 'q';
 import * as qs from 'qs';
 
 import authorizedRequest from 'ququmber-api/authorizedRequest';
@@ -23,44 +22,42 @@ export default class TaskClient {
     this.config = config;
   }
 
-  public getTask(id: number): IPromise<Payload> {
+  async getTask(id: number): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${id}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json) => {
-      return consumePayloadResult(json);
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json);
   }
 
-  public getTaskDetails(id: number): IPromise<Payload> {
+  async getTaskDetails(id: number): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${id}/details`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumePayloadResult);
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json);
   }
 
-  getTasks(): IPromise<Task[]> {
+  async getTasks(): Promise<Task[]> {
     const ajaxSettings = {
       url: this.taskServiceAddress,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return consumeTasks(json);
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeTasks(json);
   }
 
   private preTasks: Task[] = [];
 
-  precreateTasks(): IPromise<void> {
+  async precreateTasks(): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/precreate`,
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      this.preTasks = this.preTasks.concat(consumeTasks(json));
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    this.preTasks = this.preTasks.concat(consumeTasks(json));
   }
 
   getPreTask(): Task {
@@ -70,43 +67,40 @@ export default class TaskClient {
     return this.preTasks.shift();
   }
 
-  search(query: string): IPromise<Task[]> {
+  async search(query: string): Promise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/search?q=${query}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return consumeTasks(json);
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeTasks(json);
   }
 
-  getTaskChildren(taskId: number): IPromise<Task[]> {
+  async getTaskChildren(taskId: number): Promise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify({parentId: taskId})}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return consumePayloadResult(json).tasks;
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json).tasks;
   }
 
-  getTasksInProgress(): IPromise<Task[]> {
+  async getTasksInProgress(): Promise<Task[]> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/inprogress`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return consumePayloadResult(json).tasks;
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json).tasks;
   }
 
-  getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): IPromise<Task[]> {
+  async getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): Promise<Task[]> {
     const data: any = {};
     if (from) {
       data.from = from.getTime().toISOString();
     }
     if (to) {
-      data.to = to.getTime().toISOString();
+      data.to = to.getNext().getTime().toISOString();
     }
     if (limit) {
       data.limit = limit;
@@ -116,63 +110,62 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      const payload = consumePayloadResult(json);
-      return payload.tasks;
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    const payload = consumePayloadResult(json);
+    return payload.tasks;
   }
 
-  putTask(task: Task): IPromise<Task[]> {
+  async putTask(task: Task): Promise<Task[]> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
       data: JSON.stringify(this.generateJson(task)),
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return consumePayloadResult(json).tasks;
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json).tasks;
   }
 
-  putRecurrence(recurrence: Recurrence): IPromise<Recurrence> {
+  async putRecurrence(recurrence: Recurrence): Promise<Recurrence> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
       data: JSON.stringify(this.generateRecurrenceJson(recurrence)),
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => recurrence);
+    await authorizedRequest(this.config, ajaxSettings);
+    return recurrence;
   }
 
-  postRecurrence(recurrence: Recurrence): IPromise<Recurrence> {
+  async postRecurrence(recurrence: Recurrence): Promise<Recurrence> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/recurrence`,
       data: JSON.stringify(this.generateRecurrenceJson(recurrence)),
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => recurrence);
+    await authorizedRequest(this.config, ajaxSettings);
+    return recurrence;
   }
 
-  deleteRecurrence(recurrence: Recurrence): IPromise<Recurrence> {
+  async deleteRecurrence(recurrence: Recurrence): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  postTask(task: Task): IPromise<Payload> {
+  async postTask(task: Task): Promise<Payload> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
       data: JSON.stringify(this.generateJson(task)),
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) =>
-      consumePayloadResult(json)
-    );
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json);
   }
 
   postTasks(tasks: Task[]): void {
@@ -181,109 +174,110 @@ export default class TaskClient {
     }
   }
 
-  moveTaskBefore(taskId: number, beforeId: number): IPromise<Payload> {
+  async moveTaskBefore(taskId: number, beforeId: number): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&before=${beforeId}`,
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json) => {
-      return consumePayloadResult(json);
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json);
   }
 
-  moveTaskAfter(taskId: number, afterId: number): IPromise<Payload> {
+  async moveTaskAfter(taskId: number, afterId: number): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&after=${afterId}`,
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json) => {
-      return consumePayloadResult(json);
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json);
   }
 
-  moveTaskToParent(taskId: number, parentId: number): IPromise<void> {
+  async moveTaskToParent(taskId: number, parentId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&parent=${parentId}`,
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  deleteTasks(taskIds: number[]): IPromise<number[]> {
+  async deleteTasks(taskIds: number[]): Promise<number[]> {
     const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${idsQuery}`,
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => taskIds);
+    await authorizedRequest(this.config, ajaxSettings);
+    return taskIds;
   }
 
-  getParent(task: Task): IPromise<Payload> {
+  async getParent(task: Task): Promise<Payload> {
     if (task.parentId > 0) {
       return this.getTask(task.parentId);
     }
-    return resolve(null);
+    return Promise.resolve(null);
   }
 
-  assignTask(taskId: number, ownerId: number): IPromise<Task[]> {
+  async assignTask(taskId: number, ownerId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/assign?taskId=${taskId}&ownerId=${ownerId}`,
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  markSeen(taskId: number): IPromise<void> {
+  async markSeen(taskId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${taskId}/seen`,
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  getTasksByIds(ids: number[]): IPromise<Task[]> {
+  async getTasksByIds(ids: number[]): Promise<Task[]> {
     if (ids.length < 1) {
-      return resolve([]);
+      return Promise.resolve([]);
     }
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeTasks);
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeTasks(json);
   }
 
-  getTasksInList(listId: number): IPromise<Payload> {
+  async getTasksInList(listId: number): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?listId=${listId}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumePayloadResult);
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json);
   }
 
-  removeTaskFromList(taskId: number, listId: number): IPromise<void> {
+  async removeTaskFromList(taskId: number, listId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
       method: 'DELETE'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  private addTaskToList(taskId: number, listId: number): IPromise<void> {
+  private async addTaskToList(taskId: number, listId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  addTasksToList(tasks: number[], listId: number): void {
+  async addTasksToList(tasks: number[], listId: number): Promise<void> {
     for (const task of tasks) {
-      this.addTaskToList(task, listId);
+      await this.addTaskToList(task, listId);
     }
   }
 
-  createPublicTask(newTask?: Task): IPromise<CreatePublicTaskResponse> {
+  async createPublicTask(newTask?: Task): Promise<CreatePublicTaskResponse> {
     let ajaxSettings: any = {
       url: `${this.taskServiceAddress}/create-public`,
       method: 'POST',
@@ -295,9 +289,8 @@ export default class TaskClient {
         data: JSON.stringify(this.generateJson(newTask))
       };
     }
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      return json as CreatePublicTaskResponse;
-    });
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return json as CreatePublicTaskResponse;
   }
 
   generateJson(task: Task): Object {
@@ -340,7 +333,7 @@ export default class TaskClient {
   }
 }
 
-export const consumeTasks = (json: any[]): Task[] => {
+export const consumeTasks = (json: any): Task[] => {
   const tasks = new Array<Task>();
   for (let i = 0; i < json.length; i++) {
     const entity = this.consumeTask(json[i]);
@@ -405,7 +398,7 @@ export const consumeRecurrence = (json: any) => {
   return recurrence;
 };
 
-export const consumeRecurrences = (json: any[]): Recurrence[] => {
+export const consumeRecurrences = (json: any): Recurrence[] => {
   const recurrences = new Array<Recurrence>();
   for (let i = 0; i < json.length; i++) {
     const entity = this.consumeRecurrence(json[i]);

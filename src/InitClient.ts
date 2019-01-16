@@ -1,5 +1,3 @@
-import {IPromise} from 'q';
-
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import {consumeLists} from 'ququmber-api/ListClient';
 import ListTask from 'ququmber-api/ListTask';
@@ -23,12 +21,13 @@ export default class InitClient {
     this.initServiceAddress = `${config.TaskServiceAddress}/todoweb`;
   }
 
-  public init(): IPromise<Payload> {
+  public async init(): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.initServiceAddress}/init`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json) => consumePayloadResult(json));
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumePayloadResult(json);
   }
 }
 

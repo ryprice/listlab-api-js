@@ -1,5 +1,3 @@
-import {IPromise} from 'q';
-
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import ListRole from 'ququmber-api/ListRole';
 import ListRoleType, {
@@ -20,19 +18,19 @@ export default class ListPermissionClient {
     this.listServiceAddress = config.ListServiceAddress;
   }
 
-  userKnowsSecret(listId: number, secret: string): IPromise<void> {
+  async userKnowsSecret(listId: number, secret: string): Promise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/user?s=${secret}`,
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings)
-      .then(
-        (json) => { },
-        () => console.log('failed to auth to this list')
-      );
+    try {
+      await authorizedRequest(this.config, ajaxSettings);
+    } catch {
+      console.log('failed to auth to this list');
+    }
   }
 
-  addUserToList(userId: number, listId: number, type: ListRoleType): IPromise<void> {
+  async addUserToList(userId: number, listId: number, type: ListRoleType): Promise<void> {
     const ajaxSettings = {
       url: (
         `${this.listServiceAddress}/permission/${listId}/user` +
@@ -40,41 +38,42 @@ export default class ListPermissionClient {
       ),
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  removeUserFromList(userId: number, listId: number): IPromise<void> {
+  async removeUserFromList(userId: number, listId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}`,
       method: 'DELETE'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  addRoleToList(listId: number, type: ListRoleType): IPromise<ListRole> {
+  async addRoleToList(listId: number, type: ListRoleType): Promise<ListRole> {
     const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/role?s=${secret}&type=${generateListRoleTypeJson(type)}`,
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeListRole);
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeListRole(json);
   }
 
-  removeRoleFromList(listId: number, roleId: number): IPromise<ListRole> {
+  async removeRoleFromList(listId: number, roleId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/role?roleId=${roleId}`,
       method: 'DELETE'
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  updateListRole(listRole: ListRole): IPromise<void> {
+  async updateListRole(listRole: ListRole): Promise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listRole.listId}/role?roleId=${listRole.roleId}`,
       method: 'PUT',
       data: generateListRoleJson(listRole)
     };
-    return authorizedRequest(this.config, ajaxSettings);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 }
 
