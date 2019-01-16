@@ -2,31 +2,30 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse
 } from 'axios';
-import {IPromise} from 'q';
 
 import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 
-export const authorizedRequest = <T>(
+export const authorizedRequest = async <T>(
   config: TaskApiConfig,
   ajaxSettings: AxiosRequestConfig
-): IPromise<T> => {
+): Promise<T> => {
   if (ajaxSettings.headers === undefined) {
     ajaxSettings.headers = {};
   }
   ajaxSettings.headers['Authorization'] = config.AuthToken;
   const returnXHR = axios.create({}).request<T>(ajaxSettings);
-  return returnXHR.then(
-    (response: any) => response.data,
-    (response: any) => {
-      config.handleHttpError && config.handleHttpError(response);
-    }
-  );
+  try {
+    const response = await returnXHR;
+    return response.data;
+  } catch (response) {
+    config.handleHttpError && config.handleHttpError(response);
+  }
 };
 
 export const authorizedRequestRaw = <T>(
   config: TaskApiConfig,
   ajaxSettings: AxiosRequestConfig
-): IPromise<AxiosResponse<T>> => {
+): Promise<AxiosResponse<T>> => {
   if (ajaxSettings.headers === undefined) {
     ajaxSettings.headers = {};
   }
