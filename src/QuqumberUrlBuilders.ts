@@ -1,11 +1,19 @@
 import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 
+export const buildListUrl = (listId: number, config: TaskApiConfig) => {
+  return `${config.AppAddress}/l/${listId}`;
+};
+
+export const buildTaskUrl = (taskId: number, config: TaskApiConfig) => {
+  return `${config.AppAddress}/t/${taskId}`;
+};
+
 export const buildPublicListUrl = (
   listId: number,
   secret: string,
   config: TaskApiConfig
 ) => {
-  return `${config.AppAddress}/l/${listId}?s=${secret}`;
+  return `${buildListUrl(listId, config)}?s=${secret}`;
 };
 
 export const buildPublicTaskUrl = (
@@ -13,5 +21,5 @@ export const buildPublicTaskUrl = (
   secret: string,
   config: TaskApiConfig
 ) => {
-  return `${config.AppAddress}/t/${taskId}?s=${secret}`;
+  return `${buildTaskUrl(taskId, config)}?s=${secret}`;
 };
