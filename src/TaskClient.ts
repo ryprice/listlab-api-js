@@ -174,22 +174,20 @@ export default class TaskClient {
     }
   }
 
-  async moveTaskBefore(taskId: number, beforeId: number): Promise<Payload> {
+  async moveTaskBefore(taskId: number, beforeId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&before=${beforeId}`,
       method: 'PUT'
     };
-    const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
-  async moveTaskAfter(taskId: number, afterId: number): Promise<Payload> {
+  async moveTaskAfter(taskId: number, afterId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&after=${afterId}`,
       method: 'PUT'
     };
-    const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json);
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
   async moveTaskToParent(taskId: number, parentId: number): Promise<void> {
