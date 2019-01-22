@@ -29,7 +29,6 @@ export {default as Recurrence} from 'ququmber-api/Recurrence';
 export {default as RecurrenceSchedule} from 'ququmber-api/RecurrenceSchedule';
 export {
   default as Task,
-  dueComparator,
   idComparator,
   completionTimeComparator
 } from 'ququmber-api/Task';

@@ -18,6 +18,7 @@ export default class Task {
   public readRole: number;
   public writeRole: number;
   public author: number;
+  public parentOrder: number;
 
   constructor() {
     this.name = '';
@@ -44,6 +45,7 @@ export default class Task {
     clone.readRole = this.readRole;
     clone.writeRole = this.writeRole;
     clone.author = this.author;
+    clone.parentOrder = this.parentOrder;
     return clone;
   }
 }
@@ -67,24 +69,5 @@ export const completionTimeComparator = (a: Task, b: Task) => {
     return 0;
   } else {
     return 1;
-  }
-};
-
-export const dueComparator = (a: Task, b: Task) => {
-  if (!a.due) {
-    return -1;
-  }
-  const compareResult = a.due.compareTo(b.due);
-
-  if (compareResult !== 0) {
-    return compareResult;
-  } else {
-    if (a.dueOrder < b.dueOrder) {
-      return -1;
-    } else if (a.dueOrder === b.dueOrder) {
-      return 0;
-    } else {
-      return 1;
-    }
   }
 };
