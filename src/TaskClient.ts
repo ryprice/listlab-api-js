@@ -8,6 +8,7 @@ import {consumePayloadResult} from 'ququmber-api/InitClient';
 import Payload from 'ququmber-api/Payload';
 import Recurrence from 'ququmber-api/Recurrence';
 import RecurrenceSchedule from 'ququmber-api/RecurrenceSchedule';
+import RequestQueue from 'ququmber-api/RequestQueue';
 import Task from 'ququmber-api/Task';
 import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 
@@ -17,9 +18,12 @@ export default class TaskClient {
 
   private taskServiceAddress: string;
 
+  private requestQueue: RequestQueue;
+
   constructor(config: TaskApiConfig) {
     this.taskServiceAddress = config.TaskServiceAddress;
     this.config = config;
+    this.requestQueue = new RequestQueue(this.config);
   }
 
   async getTask(id: number): Promise<Payload> {
@@ -122,7 +126,7 @@ export default class TaskClient {
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
-    const json = await authorizedRequest(this.config, ajaxSettings);
+    const json = await this.requestQueue.queue(ajaxSettings);
     return consumePayloadResult(json).tasks;
   }
 
@@ -133,7 +137,7 @@ export default class TaskClient {
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
     return recurrence;
   }
 
@@ -144,7 +148,7 @@ export default class TaskClient {
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
     return recurrence;
   }
 
@@ -154,7 +158,7 @@ export default class TaskClient {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async postTask(task: Task): Promise<Payload> {
@@ -164,7 +168,7 @@ export default class TaskClient {
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
-    const json = await authorizedRequest(this.config, ajaxSettings);
+    const json = await this.requestQueue.queue(ajaxSettings);
     return consumePayloadResult(json);
   }
 
@@ -179,7 +183,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/move?taskId=${taskId}&before=${beforeId}`,
       method: 'PUT'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async moveTaskAfter(taskId: number, afterId: number): Promise<void> {
@@ -187,7 +191,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/move?taskId=${taskId}&after=${afterId}`,
       method: 'PUT'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async moveTaskToParent(taskId: number, parentId: number): Promise<void> {
@@ -195,7 +199,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/move?taskId=${taskId}&parent=${parentId}`,
       method: 'PUT'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async moveTaskToParentBefore(taskId: number, parentId: number, before: number): Promise<void> {
@@ -204,7 +208,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/move?${query}`,
       method: 'PUT'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async moveTaskToParentAfter(taskId: number, parentId: number, after: number): Promise<void> {
@@ -213,7 +217,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/move?${query}`,
       method: 'PUT'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async deleteTasks(taskIds: number[]): Promise<number[]> {
@@ -223,7 +227,7 @@ export default class TaskClient {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
     return taskIds;
   }
 
