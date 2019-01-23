@@ -176,7 +176,7 @@ export default class TaskClient {
 
   async moveTaskBefore(taskId: number, beforeId: number): Promise<void> {
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&before=${beforeId}`,
+      url: `${this.taskServiceAddress}/move?taskId=${taskId}&before=${beforeId}`,
       method: 'PUT'
     };
     await authorizedRequest(this.config, ajaxSettings);
@@ -184,7 +184,7 @@ export default class TaskClient {
 
   async moveTaskAfter(taskId: number, afterId: number): Promise<void> {
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&after=${afterId}`,
+      url: `${this.taskServiceAddress}/move?taskId=${taskId}&after=${afterId}`,
       method: 'PUT'
     };
     await authorizedRequest(this.config, ajaxSettings);
@@ -192,7 +192,25 @@ export default class TaskClient {
 
   async moveTaskToParent(taskId: number, parentId: number): Promise<void> {
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/tasks/move?taskId=${taskId}&parent=${parentId}`,
+      url: `${this.taskServiceAddress}/move?taskId=${taskId}&parent=${parentId}`,
+      method: 'PUT'
+    };
+    await authorizedRequest(this.config, ajaxSettings);
+  }
+
+  async moveTaskToParentBefore(taskId: number, parentId: number, before: number): Promise<void> {
+    const query = qs.stringify({taskId, parent: parentId, before});
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/move?${query}`,
+      method: 'PUT'
+    };
+    await authorizedRequest(this.config, ajaxSettings);
+  }
+
+  async moveTaskToParentAfter(taskId: number, parentId: number, after: number): Promise<void> {
+    const query = qs.stringify({taskId, parent: parentId, after});
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/move?${query}`,
       method: 'PUT'
     };
     await authorizedRequest(this.config, ajaxSettings);
@@ -306,7 +324,8 @@ export default class TaskClient {
       completionTime: task.completionTime,
       readRole: task.readRole,
       writeRole: task.writeRole,
-      author: task.author
+      author: task.author,
+      parentOrder: task.parentOrder
     };
   }
 
@@ -357,6 +376,7 @@ export const consumeTask = (json: any) => {
   task.readRole = json.readRole;
   task.writeRole = json.writeRole;
   task.author = json.author;
+  task.parentOrder = json.parentOrder;
   if (json.due) {
     task.due = consumeFuzzyTime(json.due);
   }
