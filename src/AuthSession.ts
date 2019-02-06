@@ -14,7 +14,7 @@ export default class AuthSession {
     clone.userId = this.userId;
     clone.name = this.name;
     clone.email = this.email;
-    clone.settings = this.settings;
+    clone.settings = this.settings || {};
     clone.facebookId = this.facebookId;
     clone.googleId = this.googleId;
     clone.username = this.username;

@@ -5,23 +5,10 @@ import {dayNames, monthNames, shortMonthNames} from 'ququmber-api/TimeStrings';
 
 export const formatRelativeShortName = (time: FuzzyTime): string => {
   const now = buildFuzzyTime(new Date(unoffsetNow()), time.getGranularity());
-  const timeTime = time.getTime();
-  const twoDigetYear = timeTime.getUTCFullYear().toString().substr(-2);
-
   if (time.equals(now) || time.equals(now.getNext()) || time.equals(now.getPrev())) {
     return formatRelativeName(time);
   }
-
-  switch (time.getGranularity()) {
-    case FuzzyGranularity.DAY:
-      return `${timeTime.getUTCMonth() + 1}/${timeTime.getUTCDate()}/${twoDigetYear}`;
-    case FuzzyGranularity.WEEK:
-      return `Week ${timeTime.getUTCMonth() + 1}/${timeTime.getUTCDate()}/${twoDigetYear}`;
-    case FuzzyGranularity.MONTH:
-      return `${shortMonthNames[timeTime.getUTCMonth()]} ${timeTime.getUTCFullYear().toString()}`;
-    case FuzzyGranularity.YEAR:
-      return timeTime.getUTCFullYear().toString();
-  }
+  return formatShortName(time);
 };
 
 export const formatRelativeRangeShortName = (range: FuzzyTimeRange) => {
@@ -95,4 +82,19 @@ export const formatRelativeName = (time: FuzzyTime): string => {
   }
 
   return timeTime.toString();
+};
+
+export const formatShortName = (time: FuzzyTime) => {
+  const timeTime = time.getTime();
+  const twoDigetYear = timeTime.getUTCFullYear().toString().substr(-2);
+  switch (time.getGranularity()) {
+    case FuzzyGranularity.DAY:
+      return `${timeTime.getUTCMonth() + 1}/${timeTime.getUTCDate()}/${twoDigetYear}`;
+    case FuzzyGranularity.WEEK:
+      return `Week ${timeTime.getUTCMonth() + 1}/${timeTime.getUTCDate()}/${twoDigetYear}`;
+    case FuzzyGranularity.MONTH:
+      return `${shortMonthNames[timeTime.getUTCMonth()]} ${timeTime.getUTCFullYear().toString()}`;
+    case FuzzyGranularity.YEAR:
+      return timeTime.getUTCFullYear().toString();
+  }
 };

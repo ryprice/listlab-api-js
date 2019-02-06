@@ -1,3 +1,4 @@
+import FuzzyGranularity from './FuzzyGranularity';
 import FuzzyTime from './FuzzyTime';
 
 export default class FuzzyTimeRange {
@@ -43,5 +44,24 @@ export default class FuzzyTimeRange {
       return this.setEnd(time);
     }
     return this;
+  }
+
+  public contains(time: FuzzyTime): boolean {
+    if (
+      this.start.getGranularity() === FuzzyGranularity.FOREVER &&
+      this.end.getGranularity() === FuzzyGranularity.FOREVER
+    ) {
+      return true;
+    } else if (this.start.getGranularity() === FuzzyGranularity.FOREVER) {
+      return this.end.compareTo(time) < 1;
+    } else if (this.start.getGranularity() === FuzzyGranularity.FOREVER) {
+      return this.start.compareTo(time) > 1;
+    } else {
+      return (
+        (this.start.compareTo(time) > 1 && this.end.compareTo(time) < 1) ||
+        this.start.contains(time) ||
+        this.end.contains(time)
+      );
+    }
   }
 }
