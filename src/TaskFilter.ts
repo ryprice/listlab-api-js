@@ -34,4 +34,20 @@ export default class TaskFilter {
       parentId
     });
   }
+
+  public isEmpty(): boolean {
+    return (
+      !this.listId &&
+      !this.parentId &&
+      this.completed == null &&
+      (!this.query || this.query.length < 1) &&
+      this.inProgress == null &&
+      this.seen == null &&
+      (
+        this.range == null ||
+        this.range.getStart() == null ||
+        this.range.getEnd() == null
+      )
+    );
+  }
 }
