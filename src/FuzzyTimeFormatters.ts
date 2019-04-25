@@ -5,7 +5,11 @@ import {dayNames, monthNames, shortMonthNames} from 'ququmber-api/TimeStrings';
 
 export const formatRelativeShortName = (time: FuzzyTime): string => {
   const now = buildFuzzyTime(new Date(unoffsetNow()), time.getGranularity());
-  if (time.equals(now) || time.equals(now.getNext()) || time.equals(now.getPrev())) {
+  if (
+    time.equals(now) ||
+    time.equals(now.getNext()) ||
+    time.equals(now.getPrev())
+  ) {
     return formatRelativeName(time);
   }
   return formatShortName(time);
@@ -20,9 +24,9 @@ export const formatRelativeRangeShortName = (range: FuzzyTimeRange) => {
     }
     return `${formatRelativeShortName(start)} - ${formatRelativeShortName(end)}`;
   } else if (start) {
-    return `Before ${formatRelativeShortName(end)}`;
-  } else if (end) {
     return `After ${formatRelativeShortName(start)}`;
+  } else if (end) {
+    return `Before ${formatRelativeShortName(end)}`;
   }
   return '';
 };
