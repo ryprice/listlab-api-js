@@ -53,7 +53,7 @@ export const consumeTaskComment = (json: any): TaskComment => {
 export const consumeTaskComments = (json: any): TaskComment[] => {
   const comments = new Array<TaskComment>();
   for (let i = 0; i < json.length; i++) {
-    const entity = this.consumeTaskComment(json[i]);
+    const entity = consumeTaskComment(json[i]);
     comments.push(entity);
   }
   return comments;

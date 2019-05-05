@@ -119,7 +119,7 @@ export const consumeUser = (json: any): User => {
 export const consumeUsers = (json: any): User[] => {
   const users = new Array<User>();
   for (let i = 0; i < json.length; i++) {
-    const entity = this.consumeUser(json[i]);
+    const entity = consumeUser(json[i]);
     users.push(entity);
   }
   return users;

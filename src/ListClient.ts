@@ -170,7 +170,7 @@ export const consumeList = (json: any): List => {
   list.writeRole = json.writeRole;
   list.author = json.author;
   if (json.tasks) {
-    this.consumeListTasks(list, json.tasks);
+    consumeListTasks(list.listId, json.tasks);
   }
   return list;
 };
@@ -178,7 +178,7 @@ export const consumeList = (json: any): List => {
 export const consumeLists = (json: any): List[] => {
   const lists = new Array<List>();
   for (let i = 0; i < json.length; i++) {
-    const list = this.consumeList(json[i]);
+    const list = consumeList(json[i]);
     lists.push(list);
   }
 

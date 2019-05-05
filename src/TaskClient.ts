@@ -357,7 +357,7 @@ export default class TaskClient {
 export const consumeTasks = (json: any): Task[] => {
   const tasks = new Array<Task>();
   for (let i = 0; i < json.length; i++) {
-    const entity = this.consumeTask(json[i]);
+    const entity = consumeTask(json[i]);
     tasks.push(entity);
   }
   return tasks;
@@ -423,7 +423,7 @@ export const consumeRecurrence = (json: any) => {
 export const consumeRecurrences = (json: any): Recurrence[] => {
   const recurrences = new Array<Recurrence>();
   for (let i = 0; i < json.length; i++) {
-    const entity = this.consumeRecurrence(json[i]);
+    const entity = consumeRecurrence(json[i]);
     recurrences.push(entity);
   }
   return recurrences;
