@@ -3,16 +3,16 @@ import * as qs from 'qs';
 
 import authorizedRequest, {authorizedRequestRaw} from 'ququmber-api/authorizedRequest';
 import AuthSession from 'ququmber-api/AuthSession';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import User from 'ququmber-api/User';
 import UserDetails from 'ququmber-api/UserDetails';
 
 export default class UserClient {
 
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
   private userServiceAddress: string;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.config = config;
     this.userServiceAddress = config.UserServiceAddress;
   }

@@ -1,14 +1,14 @@
 import axios from 'axios';
 import * as qs from 'qs';
 
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export default class AuthClient {
 
   private authServiceAddress: string;
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
 
-  public constructor(config: TaskApiConfig) {
+  public constructor(config: QuqumberApiConfig) {
     this.config = config;
     this.authServiceAddress = config.AuthServiceAddress;
     if (this.isAuthenticated()) {

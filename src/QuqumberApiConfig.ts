@@ -1,4 +1,4 @@
-export default class TaskApiConfig {
+export default class QuqumberApiConfig {
   public WebAddress: string;
   public AppAddress: string;
   public TaskServiceAddress: string;

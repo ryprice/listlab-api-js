@@ -1,7 +1,7 @@
 import {AxiosRequestConfig} from 'axios';
 
 import authorizedRequest from 'ququmber-api/authorizedRequest';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 interface RequestQueueObject {
   resolve: (response: any) => void;
@@ -13,13 +13,13 @@ interface RequestQueueObject {
 // performing requests in serial
 export default class RequestQueue {
 
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
 
   private requestQueue: RequestQueueObject[] = [];
 
   private isRunning = false;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.config = config;
   }
 

@@ -32,7 +32,7 @@ export {
   idComparator,
   completionTimeComparator
 } from 'ququmber-api/Task';
-export {default as TaskApiConfig} from 'ququmber-api/TaskApiConfig';
+export {default as QuqumberApiConfig} from 'ququmber-api/QuqumberApiConfig';
 export {default as TaskClient} from 'ququmber-api/TaskClient';
 export {default as TaskComment} from 'ququmber-api/TaskComment';
 export {default as TaskFilter} from 'ququmber-api/TaskFilter';

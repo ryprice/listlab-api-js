@@ -1,13 +1,13 @@
 import authorizedRequest from 'ququmber-api/authorizedRequest';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import TaskComment from 'ququmber-api/TaskComment';
 
 export default class CommentClient {
 
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
   private commentServiceAddress: string;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.config = config;
     this.commentServiceAddress = config.CommentServiceAddress;
   }

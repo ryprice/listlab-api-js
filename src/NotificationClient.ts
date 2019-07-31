@@ -1,11 +1,11 @@
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import Notification from 'ququmber-api/Notification';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export default class NotificationClient {
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.config = config;
   }
 

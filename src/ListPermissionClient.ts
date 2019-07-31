@@ -5,15 +5,15 @@ import ListRoleType, {
   generateListRoleTypeJson
 } from 'ququmber-api/ListRoleType';
 import ListRoleUser from 'ququmber-api/ListRoleUser';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export default class ListPermissionClient {
 
   private listServiceAddress: string;
 
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.config = config;
     this.listServiceAddress = config.ListServiceAddress;
   }

@@ -6,16 +6,16 @@ import {
 } from 'ququmber-api/ListPermissionClient';
 import ListTask from 'ququmber-api/ListTask';
 import Payload from 'ququmber-api/Payload';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import {consumeTasks} from 'ququmber-api/TaskClient';
 
 export default class ListClient {
 
   private listServiceAddress: string;
 
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.config = config;
     this.listServiceAddress = `${config.ListServiceAddress}`;
   }

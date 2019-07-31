@@ -6,21 +6,21 @@ import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
 import FuzzyTime, {buildFuzzyTime} from 'ququmber-api/FuzzyTime';
 import {consumePayloadResult} from 'ququmber-api/InitClient';
 import Payload from 'ququmber-api/Payload';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import Recurrence from 'ququmber-api/Recurrence';
 import RecurrenceSchedule from 'ququmber-api/RecurrenceSchedule';
 import RequestQueue from 'ququmber-api/RequestQueue';
 import Task from 'ququmber-api/Task';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
 
 export default class TaskClient {
 
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
 
   private taskServiceAddress: string;
 
   private requestQueue: RequestQueue;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.taskServiceAddress = config.TaskServiceAddress;
     this.config = config;
     this.requestQueue = new RequestQueue(this.config);

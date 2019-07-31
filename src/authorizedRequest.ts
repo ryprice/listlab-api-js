@@ -3,10 +3,10 @@ import axios, {
   AxiosResponse
 } from 'axios';
 
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export const authorizedRequest = async <T>(
-  config: TaskApiConfig,
+  config: QuqumberApiConfig,
   ajaxSettings: AxiosRequestConfig
 ): Promise<T> => {
   if (ajaxSettings.headers === undefined) {
@@ -23,7 +23,7 @@ export const authorizedRequest = async <T>(
 };
 
 export const authorizedRequestRaw = <T>(
-  config: TaskApiConfig,
+  config: QuqumberApiConfig,
   ajaxSettings: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => {
   if (ajaxSettings.headers === undefined) {

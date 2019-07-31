@@ -2,7 +2,7 @@ import authorizedRequest from 'ququmber-api/authorizedRequest';
 import {consumeLists} from 'ququmber-api/ListClient';
 import ListTask from 'ququmber-api/ListTask';
 import Payload from 'ququmber-api/Payload';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import {
   consumeRecurrences,
   consumeTasks
@@ -14,9 +14,9 @@ export default class InitClient {
 
   private initServiceAddress: string;
 
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.config = config;
     this.initServiceAddress = `${config.TaskServiceAddress}/todoweb`;
   }

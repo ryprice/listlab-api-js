@@ -1,5 +1,5 @@
 import authorizedRequest from 'ququmber-api/authorizedRequest';
-import TaskApiConfig from 'ququmber-api/TaskApiConfig';
+import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import TaskRole from 'ququmber-api/TaskRole';
 import TaskRoleType, {
   consumeTaskRoleType,
@@ -11,9 +11,9 @@ export default class TaskPermissionClient {
 
   private taskServiceAddress: string;
 
-  private config: TaskApiConfig;
+  private config: QuqumberApiConfig;
 
-  constructor(config: TaskApiConfig) {
+  constructor(config: QuqumberApiConfig) {
     this.config = config;
     this.taskServiceAddress = config.TaskServiceAddress;
   }
