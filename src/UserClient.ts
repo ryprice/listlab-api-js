@@ -113,6 +113,7 @@ export const consumeUser = (json: any): User => {
   user.userId = json.userId;
   user.name = json.name;
   user.username = json.username;
+  user.isAnonymous = json.name === null;
   return user;
 };
 
