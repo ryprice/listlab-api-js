@@ -9,9 +9,9 @@ import TaskRoleUser from 'ququmber-api/TaskRoleUser';
 
 export default class TaskPermissionClient {
 
-  private taskServiceAddress: string;
+  private readonly taskServiceAddress: string;
 
-  private config: QuqumberApiConfig;
+  private readonly config: QuqumberApiConfig;
 
   constructor(config: QuqumberApiConfig) {
     this.config = config;

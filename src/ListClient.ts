@@ -11,9 +11,9 @@ import {consumeTasks} from 'ququmber-api/TaskClient';
 
 export default class ListClient {
 
-  private listServiceAddress: string;
+  private readonly listServiceAddress: string;
 
-  private config: QuqumberApiConfig;
+  private readonly config: QuqumberApiConfig;
 
   constructor(config: QuqumberApiConfig) {
     this.config = config;

@@ -3,7 +3,7 @@ import Notification from 'ququmber-api/Notification';
 import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export default class NotificationClient {
-  private config: QuqumberApiConfig;
+  private readonly config: QuqumberApiConfig;
 
   constructor(config: QuqumberApiConfig) {
     this.config = config;

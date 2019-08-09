@@ -14,25 +14,16 @@ import Task from 'ququmber-api/Task';
 
 export default class TaskClient {
 
-  private config: QuqumberApiConfig;
+  private readonly config: QuqumberApiConfig;
 
-  private taskServiceAddress: string;
+  private readonly taskServiceAddress: string;
 
-  private requestQueue: RequestQueue;
+  private readonly requestQueue: RequestQueue;
 
   constructor(config: QuqumberApiConfig) {
     this.taskServiceAddress = config.TaskServiceAddress;
     this.config = config;
     this.requestQueue = new RequestQueue(this.config);
-  }
-
-  async getTask(id: number): Promise<Payload> {
-    const ajaxSettings = {
-      url: `${this.taskServiceAddress}/task/${id}`,
-      method: 'GET'
-    };
-    const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json);
   }
 
   async getTaskDetails(id: number): Promise<Payload> {
@@ -229,13 +220,6 @@ export default class TaskClient {
     };
     await this.requestQueue.queue(ajaxSettings);
     return taskIds;
-  }
-
-  async getParent(task: Task): Promise<Payload> {
-    if (task.parentId > 0) {
-      return this.getTask(task.parentId);
-    }
-    return Promise.resolve(null);
   }
 
   async assignTask(taskId: number, ownerId: number): Promise<void> {

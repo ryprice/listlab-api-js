@@ -13,9 +13,9 @@ interface RequestQueueObject {
 // performing requests in serial
 export default class RequestQueue {
 
-  private config: QuqumberApiConfig;
+  private readonly config: QuqumberApiConfig;
 
-  private requestQueue: RequestQueueObject[] = [];
+  private readonly requestQueue: RequestQueueObject[] = [];
 
   private isRunning = false;
 

@@ -22,7 +22,7 @@ export default class FuzzyTime {
 
   private time: Date;
 
-  private granularity: FuzzyGranularity;
+  private readonly granularity: FuzzyGranularity;
 
   constructor(time: Date, granularity: FuzzyGranularity) {
     this.time = new Date(time.getTime());

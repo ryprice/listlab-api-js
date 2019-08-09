@@ -5,8 +5,8 @@ import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export default class AuthClient {
 
-  private authServiceAddress: string;
-  private config: QuqumberApiConfig;
+  private readonly authServiceAddress: string;
+  private readonly config: QuqumberApiConfig;
 
   public constructor(config: QuqumberApiConfig) {
     this.config = config;

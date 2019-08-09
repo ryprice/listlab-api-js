@@ -1,8 +1,8 @@
 import {VgtSequence} from 'ququmber-api/FuzzyTime';
 
 export default class FuzzyGranularity {
-  private name: string;
-  private key: number;
+  private readonly name: string;
+  private readonly key: number;
 
   constructor(name: string, key: number) {
     this.name = name;
@@ -25,7 +25,7 @@ export default class FuzzyGranularity {
   public static YEAR = new FuzzyGranularity('Year', 6);
   public static FOREVER = new FuzzyGranularity('Forever', 7);
 
-  private static sizeStack: FuzzyGranularity[] = [
+  private static readonly sizeStack: FuzzyGranularity[] = [
     FuzzyGranularity.MINUTE,
     FuzzyGranularity.HOUR,
     FuzzyGranularity.DAY,

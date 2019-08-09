@@ -9,8 +9,9 @@ import UserDetails from 'ququmber-api/UserDetails';
 
 export default class UserClient {
 
-  private config: QuqumberApiConfig;
-  private userServiceAddress: string;
+  private readonly config: QuqumberApiConfig;
+
+  private readonly userServiceAddress: string;
 
   constructor(config: QuqumberApiConfig) {
     this.config = config;

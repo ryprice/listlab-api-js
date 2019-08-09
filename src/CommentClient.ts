@@ -4,8 +4,8 @@ import TaskComment from 'ququmber-api/TaskComment';
 
 export default class CommentClient {
 
-  private config: QuqumberApiConfig;
-  private commentServiceAddress: string;
+  private readonly config: QuqumberApiConfig;
+  private readonly commentServiceAddress: string;
 
   constructor(config: QuqumberApiConfig) {
     this.config = config;

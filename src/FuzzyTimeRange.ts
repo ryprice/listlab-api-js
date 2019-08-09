@@ -3,9 +3,9 @@ import FuzzyTime from './FuzzyTime';
 
 export default class FuzzyTimeRange {
 
-  private start: FuzzyTime;
+  private readonly start: FuzzyTime;
 
-  private end: FuzzyTime;
+  private readonly end: FuzzyTime;
 
   constructor(start: FuzzyTime, end: FuzzyTime) {
     if (start && end && start.compareTo(end) > 0) {

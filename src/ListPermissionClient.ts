@@ -9,9 +9,9 @@ import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export default class ListPermissionClient {
 
-  private listServiceAddress: string;
+  private readonly listServiceAddress: string;
 
-  private config: QuqumberApiConfig;
+  private readonly config: QuqumberApiConfig;
 
   constructor(config: QuqumberApiConfig) {
     this.config = config;

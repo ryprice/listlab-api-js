@@ -12,9 +12,9 @@ import {consumeUsers} from 'ququmber-api/UserClient';
 
 export default class InitClient {
 
-  private initServiceAddress: string;
+  private readonly initServiceAddress: string;
 
-  private config: QuqumberApiConfig;
+  private readonly config: QuqumberApiConfig;
 
   constructor(config: QuqumberApiConfig) {
     this.config = config;
