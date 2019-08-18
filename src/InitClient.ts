@@ -18,12 +18,12 @@ export default class InitClient {
 
   constructor(config: QuqumberApiConfig) {
     this.config = config;
-    this.initServiceAddress = `${config.TaskServiceAddress}/todoweb`;
+    this.initServiceAddress = `${config.TaskServiceAddress}/init`;
   }
 
   public async init(): Promise<Payload> {
     const ajaxSettings = {
-      url: `${this.initServiceAddress}/init`,
+      url: `${this.initServiceAddress}/app`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
