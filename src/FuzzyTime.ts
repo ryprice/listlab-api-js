@@ -227,6 +227,23 @@ export default class FuzzyTime {
     return this.prev;
   }
 
+  private deepNext: FuzzyTime = null;
+  public getDeepNext(): FuzzyTime {
+    if (!this.deepNext) {
+      this.deepNext = FuzzyTime.generateDeepSpread(
+        FuzzyGranularity.DAY,
+        this,
+        // If granularity is not DAY, .getNext Should be enough to produce
+        // the necessary range. But if DAY, we need two days since deep spread
+        // is start inclusive, end exclusive.
+        this.getNext().getNext(),
+        FuzzyTime.StandardGranularitySequence,
+        2
+      )[1];
+    }
+    return this.deepNext;
+  }
+
   static generateSpread(start: FuzzyTime, endTime: Date, sequence: VgtSequence): FuzzyTime[] {
     let currentGranularity = start.getGranularity();
     let spread = new Array<FuzzyTime>();
@@ -246,6 +263,10 @@ export default class FuzzyTime {
     return spread;
   }
 
+  /**
+   * Generates an ordered  spread of all fuzzy dates at any level from
+   * startTime (inclusive) to endTime (exclusive)
+   */
   static generateDeepSpread(
     granularity: FuzzyGranularity,
     startTime: FuzzyTime,
