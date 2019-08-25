@@ -1,10 +1,7 @@
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import ListRole from 'ququmber-api/ListRole';
-import ListRoleType, {
-  consumeListRoleType,
-  generateListRoleTypeJson
-} from 'ququmber-api/ListRoleType';
-import ListRoleUser from 'ququmber-api/ListRoleUser';
+import ListRoleType, {generateListRoleTypeJson} from 'ququmber-api/ListRoleType';
+import {consumeListRole, generateListRoleJson} from 'ququmber-api/listSerialization';
 import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export default class ListPermissionClient {
@@ -76,24 +73,3 @@ export default class ListPermissionClient {
     await authorizedRequest(this.config, ajaxSettings);
   }
 }
-
-export const consumeListRole = (json: any): ListRole => {
-  const listRole = new ListRole();
-  listRole.roleId = json.roleId;
-  listRole.listId = json.listId;
-  listRole.secret = json.secret;
-  listRole.type = consumeListRoleType(json.type);
-  return listRole;
-};
-
-export const consumeListRoleUser = (json: any): ListRoleUser => {
-  const listRoleUser = new ListRoleUser(json.roleId, json.userId);
-  return listRoleUser;
-};
-
-export const generateListRoleJson = (listRole: ListRole): Object => ({
-  roleId: listRole.roleId,
-  listId: listRole.listId,
-  type: listRole.type,
-  secret: listRole.secret
-});

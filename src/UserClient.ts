@@ -6,6 +6,7 @@ import AuthSession from 'ququmber-api/AuthSession';
 import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import User from 'ququmber-api/User';
 import UserDetails from 'ququmber-api/UserDetails';
+import {consumeUserDetails, consumeUsers} from 'ququmber-api/userSerialization';
 
 export default class UserClient {
 
@@ -108,35 +109,3 @@ export default class UserClient {
     await authorizedRequest(this.config, ajaxSettings);
   }
 }
-
-export const consumeUser = (json: any): User => {
-  const user = new User();
-  user.userId = json.userId;
-  user.name = json.name;
-  user.username = json.username;
-  user.isAnonymous = json.isAnonymous;
-  return user;
-};
-
-export const consumeUsers = (json: any): User[] => {
-  const users = new Array<User>();
-  for (let i = 0; i < json.length; i++) {
-    const entity = consumeUser(json[i]);
-    users.push(entity);
-  }
-  return users;
-};
-
-export const consumeUserDetails = (json: any): AuthSession => {
-  const userDetails = new AuthSession();
-  userDetails.userId = json.userId;
-  userDetails.name = json.name;
-  userDetails.email = json.email;
-  userDetails.settings = json.settings;
-  userDetails.facebookId = json.facebookId;
-  userDetails.googleId = json.googleId;
-  userDetails.username = json.username;
-  userDetails.pendingEmail = json.pendingEmail;
-  userDetails.isAnonymous = json.isAnonymous;
-  return userDetails;
-};

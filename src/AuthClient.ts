@@ -87,7 +87,6 @@ export default class AuthClient {
     this.setCookie('todoAuthToken', token);
     if (token) {
       this.config.AuthToken = token;
-      console.log('Auth token is: ' + token);
     }
   }
 

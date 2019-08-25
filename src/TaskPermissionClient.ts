@@ -1,11 +1,12 @@
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import TaskRole from 'ququmber-api/TaskRole';
-import TaskRoleType, {
-  consumeTaskRoleType,
+import {
+  consumeTaskRole,
+  generateTaskRoleJson,
   generateTaskRoleTypeJson
-} from 'ququmber-api/TaskRoleType';
-import TaskRoleUser from 'ququmber-api/TaskRoleUser';
+} from 'ququmber-api/taskRoleSerialization';
+import TaskRoleType from 'ququmber-api/TaskRoleType';
 
 export default class TaskPermissionClient {
 
@@ -76,23 +77,3 @@ export default class TaskPermissionClient {
     await authorizedRequest(this.config, ajaxSettings);
   }
 }
-
-export const consumeTaskRole = (json: any): TaskRole => {
-  const taskRole = new TaskRole();
-  taskRole.roleId = json.roleId;
-  taskRole.taskId = json.taskId;
-  taskRole.secret = json.secret;
-  taskRole.type = consumeTaskRoleType(json.type);
-  return taskRole;
-};
-
-export const consumeTaskRoleUser = (json: any): TaskRoleUser => {
-  return new TaskRoleUser(json.roleId, json.userId);
-};
-
-export const generateTaskRoleJson = (taskRole: TaskRole): Object => ({
-  roleId: taskRole.roleId,
-  taskId: taskRole.taskId,
-  type: taskRole.type,
-  secret: taskRole.secret
-});

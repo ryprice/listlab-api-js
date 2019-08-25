@@ -1,5 +1,6 @@
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import Notification from 'ququmber-api/Notification';
+import {consumeNotifications} from 'ququmber-api/notificationSerialization';
 import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 
 export default class NotificationClient {
@@ -15,7 +16,7 @@ export default class NotificationClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return this.consumeNotifications(json);
+    return consumeNotifications(json);
   }
 
   async markSeen(notificationId: number): Promise<void> {
@@ -24,24 +25,5 @@ export default class NotificationClient {
       method: 'PUT'
     };
     await authorizedRequest(this.config, ajaxSettings);
-  }
-
-  consumeNotification(json: any): Notification {
-    const notification = new Notification();
-    notification.notificationId = json.notificationId;
-    notification.userId = json.userId;
-    notification.data = json.data;
-    notification.seen = json.seen;
-    notification.type = json.type;
-    return notification;
-  }
-
-  consumeNotifications(json: any): Notification[] {
-    const notifications = new Array<Notification>();
-    for (let i = 0; i < json.length; i++) {
-      const entity = this.consumeNotification(json[i]);
-      notifications.push(entity);
-    }
-    return notifications;
   }
 }

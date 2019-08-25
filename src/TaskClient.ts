@@ -2,16 +2,21 @@ import * as qs from 'qs';
 
 import authorizedRequest from 'ququmber-api/authorizedRequest';
 import CreatePublicTaskResponse from 'ququmber-api/CreatePublicTaskResponse';
-import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
-import FuzzyTime, {buildFuzzyTime} from 'ququmber-api/FuzzyTime';
-import {consumePayloadResult} from 'ququmber-api/InitClient';
+import FuzzyTime from 'ququmber-api/FuzzyTime';
+import {
+  consumeFuzzyGranularity,
+  consumeFuzzyTime,
+  generateFuzzyTimeJson
+} from 'ququmber-api/fuzzyTimeSerialization';
 import MaybeUser from 'ququmber-api/MaybeUser';
 import Payload from 'ququmber-api/Payload';
+import {consumePayloadResult} from 'ququmber-api/payloadSerialization';
 import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import Recurrence from 'ququmber-api/Recurrence';
 import RecurrenceSchedule from 'ququmber-api/RecurrenceSchedule';
 import RequestQueue from 'ququmber-api/RequestQueue';
 import Task from 'ququmber-api/Task';
+import {consumeTasks, generateTaskJson} from 'ququmber-api/taskSerialization';
 
 export default class TaskClient {
 
@@ -114,7 +119,7 @@ export default class TaskClient {
   async putTask(task: Task): Promise<Task[]> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
-      data: JSON.stringify(this.generateJson(task)),
+      data: JSON.stringify(generateTaskJson(task)),
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
@@ -156,7 +161,7 @@ export default class TaskClient {
   async postTask(task: Task): Promise<Payload> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
-      data: JSON.stringify(this.generateJson(task)),
+      data: JSON.stringify(generateTaskJson(task)),
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
@@ -298,31 +303,11 @@ export default class TaskClient {
       ajaxSettings = {
         ...ajaxSettings,
         headers: {'Content-Type': 'application/json'},
-        data: JSON.stringify(this.generateJson(newTask))
+        data: JSON.stringify(generateTaskJson(newTask))
       };
     }
     const json = await authorizedRequest(this.config, ajaxSettings);
     return json as CreatePublicTaskResponse;
-  }
-
-  generateJson(task: Task): Object {
-    return {
-      taskId: task.taskId,
-      name: task.name,
-      due: generateFuzzyTimeJson(task.due),
-      owner: generateMaybeUserJson(task.owner),
-      parentId: task.parentId,
-      completed: task.completed,
-      dueOrder: task.dueOrder,
-      seen: task.seen,
-      recurrenceId: task.recurrenceId,
-      creationTime: task.creationTime,
-      completionTime: task.completionTime,
-      readRole: task.readRole,
-      writeRole: task.writeRole,
-      author: task.author,
-      parentOrder: task.parentOrder
-    };
   }
 
   generateRecurrenceJson(recurrence: Recurrence): Object {
@@ -336,85 +321,6 @@ export default class TaskClient {
     };
   }
 }
-
-const generateFuzzyTimeJson = (fuzzyTime: FuzzyTime): Object => {
-  if (fuzzyTime) {
-    return {
-      time: fuzzyTime.getTime(),
-      granularity: fuzzyTime.getGranularity().getName()
-    };
-  }
-};
-
-const generateMaybeUserJson = (maybeUser: MaybeUser): Object => {
-  if (maybeUser) {
-    return {
-      userId: maybeUser.userId,
-      name: maybeUser.name,
-    };
-  }
-};
-
-export const consumeTasks = (json: any): Task[] => {
-  const tasks = new Array<Task>();
-  for (let i = 0; i < json.length; i++) {
-    const entity = consumeTask(json[i]);
-    tasks.push(entity);
-  }
-  return tasks;
-};
-
-export const consumeTask = (json: any) => {
-  const task = new Task();
-  task.taskId = json.taskId;
-  task.name = json.name;
-  task.owner = consumeMaybeUser(json.owner);
-  task.completed = json.completed;
-  task.parentId = json.parentId;
-  task.childCount = json.childCount ? json.childCount : 0;
-  task.incompleteChildCount = json.incompleteChildCount ? json.incompleteChildCount : 0;
-  task.dueOrder = json.dueOrder;
-  task.seen = json.seen;
-  task.recurrenceId = json.recurrenceId;
-  task.creationTime = json.creationTime && new Date(json.creationTime);
-  task.completionTime = json.completionTime && new Date(json.completionTime);
-  task.readRole = json.readRole;
-  task.writeRole = json.writeRole;
-  task.author = json.author;
-  task.parentOrder = json.parentOrder;
-  if (json.due) {
-    task.due = consumeFuzzyTime(json.due);
-  }
-  return task;
-};
-
-export const consumeFuzzyTime = (json: any) => {
-  return buildFuzzyTime(
-    new Date(json.time),
-    consumeFuzzyGranularity(json.granularity)
-  );
-};
-
-export const consumeMaybeUser = (json: any) => {
-  if (json) {
-    return new MaybeUser(json.userId, json.name);
-  } else {
-    return new MaybeUser(null, null);
-  }
-};
-
-export const consumeFuzzyGranularity = (json: any) => {
-  switch(json.toLowerCase()) {
-    case 'minute': return FuzzyGranularity.MINUTE;
-    case 'hour': return FuzzyGranularity.HOUR;
-    case 'day': return FuzzyGranularity.DAY;
-    case 'week': return FuzzyGranularity.WEEK;
-    case 'month': return FuzzyGranularity.MONTH;
-    case 'year': return FuzzyGranularity.YEAR;
-    case 'forever': return FuzzyGranularity.FOREVER;
-    default: throw 'Error in consumeTasks granularity unknown';
-  }
-};
 
 export const consumeRecurrence = (json: any) => {
   const recurrence = new Recurrence();
