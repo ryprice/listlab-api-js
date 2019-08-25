@@ -5,6 +5,7 @@ import CreatePublicTaskResponse from 'ququmber-api/CreatePublicTaskResponse';
 import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
 import FuzzyTime, {buildFuzzyTime} from 'ququmber-api/FuzzyTime';
 import {consumePayloadResult} from 'ququmber-api/InitClient';
+import MaybeUser from 'ququmber-api/MaybeUser';
 import Payload from 'ququmber-api/Payload';
 import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
 import Recurrence from 'ququmber-api/Recurrence';
@@ -222,9 +223,16 @@ export default class TaskClient {
     return taskIds;
   }
 
-  async assignTask(taskId: number, ownerId: number): Promise<void> {
+  async assignTask(taskId: number, maybeUser: MaybeUser): Promise<void> {
+    const data: any = {taskId};
+    if (maybeUser.userId) {
+      data.ownerId = maybeUser.userId;
+    }
+    if (maybeUser.name) {
+      data.ownerName = maybeUser.name;
+    }
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/tasks/assign?taskId=${taskId}&ownerId=${ownerId}`,
+      url: `${this.taskServiceAddress}/tasks/assign?${qs.stringify(data)}`,
       method: 'PUT'
     };
     await authorizedRequest(this.config, ajaxSettings);
@@ -301,8 +309,8 @@ export default class TaskClient {
     return {
       taskId: task.taskId,
       name: task.name,
-      due: this.generateFuzzyTimeJson(task.due),
-      userId: task.userId,
+      due: generateFuzzyTimeJson(task.due),
+      owner: generateMaybeUserJson(task.owner),
       parentId: task.parentId,
       completed: task.completed,
       dueOrder: task.dueOrder,
@@ -321,22 +329,31 @@ export default class TaskClient {
     return {
       recurrenceId: recurrence.recurrenceId,
       baseTaskId: recurrence.baseTaskId,
-      from: this.generateFuzzyTimeJson(recurrence.schedule.from),
-      to: this.generateFuzzyTimeJson(recurrence.schedule.to),
+      from: generateFuzzyTimeJson(recurrence.schedule.from),
+      to: generateFuzzyTimeJson(recurrence.schedule.to),
       period: recurrence.schedule.period.getName(),
       selected: recurrence.schedule.selected
     };
   }
-
-  generateFuzzyTimeJson(fuzzyTime: FuzzyTime): Object {
-    if (fuzzyTime) {
-      return {
-        time: fuzzyTime.getTime(),
-        granularity: fuzzyTime.getGranularity().getName()
-      };
-    }
-  }
 }
+
+const generateFuzzyTimeJson = (fuzzyTime: FuzzyTime): Object => {
+  if (fuzzyTime) {
+    return {
+      time: fuzzyTime.getTime(),
+      granularity: fuzzyTime.getGranularity().getName()
+    };
+  }
+};
+
+const generateMaybeUserJson = (maybeUser: MaybeUser): Object => {
+  if (maybeUser) {
+    return {
+      userId: maybeUser.userId,
+      name: maybeUser.name,
+    };
+  }
+};
 
 export const consumeTasks = (json: any): Task[] => {
   const tasks = new Array<Task>();
@@ -351,7 +368,7 @@ export const consumeTask = (json: any) => {
   const task = new Task();
   task.taskId = json.taskId;
   task.name = json.name;
-  task.userId = json.userId;
+  task.owner = consumeMaybeUser(json.owner);
   task.completed = json.completed;
   task.parentId = json.parentId;
   task.childCount = json.childCount ? json.childCount : 0;
@@ -376,6 +393,14 @@ export const consumeFuzzyTime = (json: any) => {
     new Date(json.time),
     consumeFuzzyGranularity(json.granularity)
   );
+};
+
+export const consumeMaybeUser = (json: any) => {
+  if (json) {
+    return new MaybeUser(json.userId, json.name);
+  } else {
+    return new MaybeUser(null, null);
+  }
 };
 
 export const consumeFuzzyGranularity = (json: any) => {

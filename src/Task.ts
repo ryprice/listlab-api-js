@@ -1,10 +1,11 @@
 import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
 import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'ququmber-api/FuzzyTime';
+import MaybeUser from 'ququmber-api/MaybeUser';
 
 export default class Task {
   public taskId: number;
   public parentId: number;
-  public userId: number;
+  public owner: MaybeUser;
   public name: string;
   public due: FuzzyTime;
   public completed: boolean;
@@ -25,13 +26,14 @@ export default class Task {
     this.completed = false;
     this.seen = true;
     this.due = buildFuzzyTime(new Date(unoffsetNow()), FuzzyGranularity.DAY);
+    this.owner = new MaybeUser(null, null);
   }
 
   clone(): Task {
     const clone = new Task();
     clone.taskId = this.taskId;
     clone.parentId = this.parentId;
-    clone.userId = this.userId;
+    clone.owner = this.owner;
     clone.name = this.name;
     clone.due = this.due;
     clone.completed = this.completed;
