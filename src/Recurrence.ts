@@ -1,4 +1,4 @@
-import FuzzyTime from 'ququmber-api/FuzzyTime';
+import {StandardGranularitySequence} from 'ququmber-api/FuzzyGranularity';
 import RecurrenceSchedule from 'ququmber-api/RecurrenceSchedule';
 import Task from 'ququmber-api/Task';
 
@@ -17,7 +17,7 @@ export default class Recurrence {
         const task = baseTask.clone();
         task.taskId = null;
         task.recurrenceId = this.recurrenceId;
-        task.due = cur.withGranularity(cur.getGranularity().getPrev(FuzzyTime.StandardGranularitySequence)).offset(i);
+        task.due = cur.withGranularity(cur.getGranularity().getPrev(StandardGranularitySequence)).offset(i);
         tasks.push(task);
       });
       cur = cur.getNext();

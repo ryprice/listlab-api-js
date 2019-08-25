@@ -3,7 +3,7 @@ export {default as authorizedRequest} from 'ququmber-api/authorizedRequest';
 export {default as AuthClient} from 'ququmber-api/AuthClient';
 export {default as AuthSession} from 'ququmber-api/AuthSession';
 export {default as CommentClient} from 'ququmber-api/CommentClient';
-export {default as FuzzyGranularity} from 'ququmber-api/FuzzyGranularity';
+export {default as FuzzyGranularity, StandardGranularitySequence} from 'ququmber-api/FuzzyGranularity';
 export {default as FuzzyTime} from 'ququmber-api/FuzzyTime';
 export {
   formatRelativeName,
@@ -19,6 +19,7 @@ export {default as ListRole} from 'ququmber-api/ListRole';
 export {default as ListRoleType} from 'ququmber-api/ListRoleType';
 export {default as ListRoleUser} from 'ququmber-api/ListRoleUser';
 export {default as ListTask} from 'ququmber-api/ListTask';
+export {default as MaybeUser} from 'ququmber-api/MaybeUser';
 export {default as Notification} from 'ququmber-api/Notification';
 export {default as NotificationClient} from 'ququmber-api/NotificationClient';
 export {default as NotificationTypes} from 'ququmber-api/NotificationTypes';

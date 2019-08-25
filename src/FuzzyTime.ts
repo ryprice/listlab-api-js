@@ -1,4 +1,7 @@
-import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
+import FuzzyGranularity, {
+  FuzzyGranularitySequence,
+  StandardGranularitySequence
+} from 'ququmber-api/FuzzyGranularity';
 
 const instanceCache: {[key: string]: FuzzyTime} = {};
 
@@ -60,7 +63,7 @@ export default class FuzzyTime {
   public getParent(nullableGranularity?: FuzzyGranularity) {
     const granularity = (
       nullableGranularity ||
-      this.granularity.getNext(FuzzyTime.StandardGranularitySequence)
+      this.granularity.getNext(StandardGranularitySequence)
     );
     const parent = this.withGranularity(granularity);
     return parent;
@@ -237,14 +240,14 @@ export default class FuzzyTime {
         // the necessary range. But if DAY, we need two days since deep spread
         // is start inclusive, end exclusive.
         this.getNext().getNext(),
-        FuzzyTime.StandardGranularitySequence,
+        StandardGranularitySequence,
         2
       )[1];
     }
     return this.deepNext;
   }
 
-  static generateSpread(start: FuzzyTime, endTime: Date, sequence: VgtSequence): FuzzyTime[] {
+  static generateSpread(start: FuzzyTime, endTime: Date, sequence: FuzzyGranularitySequence): FuzzyTime[] {
     let currentGranularity = start.getGranularity();
     let spread = new Array<FuzzyTime>();
     let last = start;
@@ -271,7 +274,7 @@ export default class FuzzyTime {
     granularity: FuzzyGranularity,
     startTime: FuzzyTime,
     endTime: FuzzyTime,
-    sequence: VgtSequence,
+    sequence: FuzzyGranularitySequence,
     limit: number
   ): FuzzyTime[] {
     let currentGranularity = granularity;
@@ -313,7 +316,10 @@ export default class FuzzyTime {
     return result;
   }
 
-  public static getNextGranularity(granularity: FuzzyGranularity, sequence: VgtSequence): FuzzyGranularity {
+  public static getNextGranularity(
+    granularity: FuzzyGranularity,
+    sequence: FuzzyGranularitySequence
+  ): FuzzyGranularity {
     const currentIndex = sequence.indexOf(granularity);
     if (currentIndex < 0) {
       throw 'Given granularity not found in this sequence';
@@ -328,19 +334,10 @@ export default class FuzzyTime {
     if (this.getGranularity() === FuzzyGranularity.DAY) {
       throw 'Cannot get children of days';
     }
-    return this.withGranularity(this.getGranularity().getPrev(FuzzyTime.StandardGranularitySequence));
+    return this.withGranularity(this.getGranularity().getPrev(StandardGranularitySequence));
   }
-
-  public static StandardGranularitySequence = new Array<FuzzyGranularity>(
-    FuzzyGranularity.DAY,
-    FuzzyGranularity.WEEK,
-    FuzzyGranularity.MONTH,
-    FuzzyGranularity.YEAR,
-    FuzzyGranularity.FOREVER
-  );
 }
 
-export interface VgtSequence extends Array<FuzzyGranularity> { }
 
 const timezoneOffset = new Date().getTimezoneOffset();
 

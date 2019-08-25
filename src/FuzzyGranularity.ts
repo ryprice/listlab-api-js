@@ -1,5 +1,3 @@
-import {VgtSequence} from 'ququmber-api/FuzzyTime';
-
 export default class FuzzyGranularity {
   private readonly name: string;
   private readonly key: number;
@@ -60,7 +58,7 @@ export default class FuzzyGranularity {
     return 0;
   }
 
-  public getNext(sequence: VgtSequence) {
+  public getNext(sequence: FuzzyGranularitySequence) {
     const idx = sequence.indexOf(this) + 1;
     if (sequence.length > idx) {
       return sequence[idx];
@@ -68,10 +66,20 @@ export default class FuzzyGranularity {
     return FuzzyGranularity.FOREVER;
   }
 
-  public getPrev(sequence: VgtSequence) {
+  public getPrev(sequence: FuzzyGranularitySequence) {
     const idx = sequence.indexOf(this) - 1;
     if (sequence.length >= 0) {
       return sequence[idx];
     }
   }
 }
+
+export type FuzzyGranularitySequence = Array<FuzzyGranularity>;
+
+export const StandardGranularitySequence = new Array<FuzzyGranularity>(
+  FuzzyGranularity.DAY,
+  FuzzyGranularity.WEEK,
+  FuzzyGranularity.MONTH,
+  FuzzyGranularity.YEAR,
+  FuzzyGranularity.FOREVER
+);
