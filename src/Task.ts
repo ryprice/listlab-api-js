@@ -73,3 +73,15 @@ export const completionTimeComparator = (a: Task, b: Task) => {
     return 1;
   }
 };
+
+export const dueComparator = (a: Task, b: Task) => {
+  if (!a.due) {
+    return -1;
+  } else if (a.due < b.due) {
+    return -1;
+  } else if (a.due === b.due) {
+    return 0;
+  } else {
+    return 1;
+  }
+};
