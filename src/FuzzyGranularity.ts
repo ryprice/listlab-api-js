@@ -15,13 +15,13 @@ export default class FuzzyGranularity {
     return this.key;
   }
 
-  public static MINUTE = new FuzzyGranularity('Minute', 1);
-  public static HOUR = new FuzzyGranularity('Hour', 2);
-  public static DAY = new FuzzyGranularity('Day', 3);
-  public static WEEK = new FuzzyGranularity('Week', 4);
-  public static MONTH = new FuzzyGranularity('Month', 5);
-  public static YEAR = new FuzzyGranularity('Year', 6);
-  public static FOREVER = new FuzzyGranularity('Forever', 7);
+  public static MINUTE = new FuzzyGranularity('Minute', 0);
+  public static HOUR = new FuzzyGranularity('Hour', 1);
+  public static DAY = new FuzzyGranularity('Day', 2);
+  public static WEEK = new FuzzyGranularity('Week', 3);
+  public static MONTH = new FuzzyGranularity('Month', 4);
+  public static YEAR = new FuzzyGranularity('Year', 5);
+  public static FOREVER = new FuzzyGranularity('Forever', 6);
 
   private static readonly sizeStack: FuzzyGranularity[] = [
     FuzzyGranularity.MINUTE,
