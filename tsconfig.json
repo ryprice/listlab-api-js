@@ -8,10 +8,10 @@
     "target": "es6",
     "moduleResolution": "node",
     "noEmit": false,
-    "baseUrl": "./src/",
+    "baseUrl": ".",
     "rootDir": "./src/",
     "paths": {
-      "ququmber-api/*": ["./*"]
+      "ququmber-api/*": ["src/*"]
     },
     "noUnusedLocals": true
   },
