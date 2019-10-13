@@ -34,7 +34,7 @@ export default class TaskPermissionClient {
   async addRoleToTask(taskId: number, type: TaskRoleType): Promise<TaskRole> {
     const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/permission/${taskId}/user?s=${secret}&type=${generateTaskRoleTypeJson(type)}`,
+      url: `${this.taskServiceAddress}/permission/${taskId}/role?s=${secret}&type=${generateTaskRoleTypeJson(type)}`,
       method: 'POST'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
