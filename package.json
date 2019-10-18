@@ -2,7 +2,6 @@
   "name": "ququmber-api",
   "version": "1.0.0",
   "description": "JavaScript client for Ququmber APIs.",
-  "main": "lib/index.js",
   "dependencies": {
     "@types/qs": "^6.5.3",
     "axios": "^0.18.1",

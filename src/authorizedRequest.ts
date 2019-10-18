@@ -19,6 +19,7 @@ export const authorizedRequest = async <T>(
     return response.data;
   } catch (response) {
     config.handleHttpError && config.handleHttpError(response);
+    throw response;
   }
 };
 
