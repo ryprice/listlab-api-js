@@ -13,7 +13,8 @@ export const generateListJson = (list: List) => ({
   color: list.color,
   sortOrder: list.sortOrder,
   parentId: list.parentId,
-  author: list.author
+  author: list.author,
+  creationTime: list.creationTime,
 });
 
 export const consumeList = (json: any): List => {
@@ -27,6 +28,7 @@ export const consumeList = (json: any): List => {
   list.readRole = json.readRole;
   list.writeRole = json.writeRole;
   list.author = json.author;
+  list.creationTime = json.creationTime && new Date(json.creationTime);
   if (json.tasks) {
     consumeListTasks(list.listId, json.tasks);
   }
