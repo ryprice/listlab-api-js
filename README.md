@@ -1,5 +1,5 @@
 # ququmber-api-js
-JavaScript client library for all Ququmber REST endpoints and Ququmber data models.
+JavaScript client library for all ListLab REST endpoints and ListLab data models.
 
 Sample usage to create a task and list:
 ```javascript
@@ -22,18 +22,18 @@ Production configuration should look like this:
 ```javascript
 // Environment context
 Env: 'prod'
-RootDomain: 'ququmber.com',
+RootDomain: 'listlab.io',
 
 // Web addresses
-AppAddress: 'http://app.ququmber.com',
-WebAddress: 'http://www.ququmber.com',
+AppAddress: 'http://app.listlab.io',
+WebAddress: 'http://www.listlab.io',
 
 // Microservice addresses
-AuthServiceAddress: 'http://api.ququmber.com/sts',
-CommentServiceAddress: 'http://api.ququmber.com/comments',
-ListServiceAddress: 'http://api.ququmber.com/lists',
-NotificationServiceAddress: 'http://api.ququmber.com/notifications',
-TaskServiceAddress: 'http://api.ququmber.com/tasks',
-UserServiceAddress: 'http://api.ququmber.com/users',
+AuthServiceAddress: 'http://api.listlab.io/sts',
+CommentServiceAddress: 'http://api.listlab.io/comments',
+ListServiceAddress: 'http://api.listlab.io/lists',
+NotificationServiceAddress: 'http://api.listlab.io/notifications',
+TaskServiceAddress: 'http://api.listlab.io/tasks',
+UserServiceAddress: 'http://api.listlab.io/users',
 
 ```

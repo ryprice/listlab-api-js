@@ -1,7 +1,7 @@
 {
   "name": "ququmber-api",
   "version": "1.0.0",
-  "description": "JavaScript client for Ququmber APIs.",
+  "description": "JavaScript client for ListLab APIs.",
   "dependencies": {
     "@types/qs": "^6.5.3",
     "axios": "^0.18.1",
