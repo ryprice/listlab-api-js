@@ -16,7 +16,7 @@
     "dts-generator": "^2.1.0",
     "dtsbundler-webpack-plugin": "^1.0.0",
     "file-system": "^2.2.2",
-    "ququmber-build": "file:../ququmber-build",
+    "listlab-build": "file:../listlab-build",
     "tslint": "^5.16.0",
     "typescript": "^3.4.5",
     "webpack": "^4.39.3",
