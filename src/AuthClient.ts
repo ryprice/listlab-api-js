@@ -1,14 +1,14 @@
 import axios from 'axios';
 import * as qs from 'qs';
 
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 
 export default class AuthClient {
 
   private readonly authServiceAddress: string;
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
-  public constructor(config: QuqumberApiConfig) {
+  public constructor(config: ListlabApiConfig) {
     this.config = config;
     this.authServiceAddress = config.AuthServiceAddress;
     if (this.isAuthenticated()) {

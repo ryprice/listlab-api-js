@@ -1,15 +1,15 @@
-import authorizedRequest from 'ququmber-api/authorizedRequest';
-import Payload from 'ququmber-api/Payload';
-import {consumePayloadResult} from 'ququmber-api/payloadSerialization';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
+import authorizedRequest from 'listlab-api/authorizedRequest';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import Payload from 'listlab-api/Payload';
+import {consumePayloadResult} from 'listlab-api/payloadSerialization';
 
 export default class InitClient {
 
   private readonly initServiceAddress: string;
 
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.config = config;
     this.initServiceAddress = `${config.TaskServiceAddress}/init`;
   }

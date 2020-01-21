@@ -1,6 +1,6 @@
-import AuthSession from 'ququmber-api/AuthSession';
-import MaybeUser from 'ququmber-api/MaybeUser';
-import User from 'ququmber-api/User';
+import AuthSession from 'listlab-api/AuthSession';
+import MaybeUser from 'listlab-api/MaybeUser';
+import User from 'listlab-api/User';
 
 export const consumeUser = (json: any): User => {
   const user = new User();

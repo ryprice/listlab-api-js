@@ -3,10 +3,10 @@ import axios, {
   AxiosResponse
 } from 'axios';
 
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 
 export const authorizedRequest = async <T>(
-  config: QuqumberApiConfig,
+  config: ListlabApiConfig,
   ajaxSettings: AxiosRequestConfig
 ): Promise<T> => {
   if (ajaxSettings.headers === undefined) {
@@ -24,7 +24,7 @@ export const authorizedRequest = async <T>(
 };
 
 export const authorizedRequestRaw = <T>(
-  config: QuqumberApiConfig,
+  config: ListlabApiConfig,
   ajaxSettings: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => {
   if (ajaxSettings.headers === undefined) {

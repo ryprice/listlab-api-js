@@ -1,4 +1,4 @@
-import Notification from 'ququmber-api/Notification';
+import Notification from 'listlab-api/Notification';
 
 export const consumeNotification = (json: any): Notification => {
   const notification = new Notification();

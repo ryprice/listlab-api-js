@@ -1,10 +1,10 @@
-import List from 'ququmber-api/List';
-import ListRole from 'ququmber-api/ListRole';
-import {consumeListRoleType} from 'ququmber-api/ListRoleType';
-import ListRoleUser from 'ququmber-api/ListRoleUser';
-import ListTask from 'ququmber-api/ListTask';
-import Payload from 'ququmber-api/Payload';
-import {consumeTasks} from 'ququmber-api/taskSerialization';
+import List from 'listlab-api/List';
+import ListRole from 'listlab-api/ListRole';
+import {consumeListRoleType} from 'listlab-api/ListRoleType';
+import ListRoleUser from 'listlab-api/ListRoleUser';
+import ListTask from 'listlab-api/ListTask';
+import Payload from 'listlab-api/Payload';
+import {consumeTasks} from 'listlab-api/taskSerialization';
 
 export const generateListJson = (list: List) => ({
   listId: list.listId,

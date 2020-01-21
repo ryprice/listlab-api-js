@@ -1,7 +1,7 @@
-import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
-import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'ququmber-api/FuzzyTime';
-import FuzzyTimeRange from 'ququmber-api/FuzzyTimeRange';
-import {dayNames, monthNames, shortMonthNames} from 'ququmber-api/TimeStrings';
+import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
+import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'listlab-api/FuzzyTime';
+import FuzzyTimeRange from 'listlab-api/FuzzyTimeRange';
+import {dayNames, monthNames, shortMonthNames} from 'listlab-api/TimeStrings';
 
 export const formatRelativeShortName = (time: FuzzyTime): string => {
   const now = buildFuzzyTime(new Date(unoffsetNow()), time.getGranularity());

@@ -1,14 +1,14 @@
-import authorizedRequest from 'ququmber-api/authorizedRequest';
-import {consumeTaskComment, consumeTaskComments} from 'ququmber-api/commentSerialization';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
-import TaskComment from 'ququmber-api/TaskComment';
+import authorizedRequest from 'listlab-api/authorizedRequest';
+import {consumeTaskComment, consumeTaskComments} from 'listlab-api/commentSerialization';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import TaskComment from 'listlab-api/TaskComment';
 
 export default class CommentClient {
 
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
   private readonly commentServiceAddress: string;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.config = config;
     this.commentServiceAddress = config.CommentServiceAddress;
   }

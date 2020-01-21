@@ -11,7 +11,7 @@
     "baseUrl": ".",
     "rootDir": "./src/",
     "paths": {
-      "ququmber-api/*": ["src/*"]
+      "listlab-api/*": ["src/*"]
     },
     "noUnusedLocals": true
   },

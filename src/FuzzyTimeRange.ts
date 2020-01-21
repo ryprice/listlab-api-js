@@ -1,5 +1,5 @@
-import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
-import FuzzyTime from 'ququmber-api/FuzzyTime';
+import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
+import FuzzyTime from 'listlab-api/FuzzyTime';
 
 export default class FuzzyTimeRange {
 

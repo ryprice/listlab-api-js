@@ -1,20 +1,20 @@
-import authorizedRequest from 'ququmber-api/authorizedRequest';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
-import TaskRole from 'ququmber-api/TaskRole';
+import authorizedRequest from 'listlab-api/authorizedRequest';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import TaskRole from 'listlab-api/TaskRole';
 import {
   consumeTaskRole,
   generateTaskRoleJson,
   generateTaskRoleTypeJson
-} from 'ququmber-api/taskRoleSerialization';
-import TaskRoleType from 'ququmber-api/TaskRoleType';
+} from 'listlab-api/taskRoleSerialization';
+import TaskRoleType from 'listlab-api/TaskRoleType';
 
 export default class TaskPermissionClient {
 
   private readonly taskServiceAddress: string;
 
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.config = config;
     this.taskServiceAddress = config.TaskServiceAddress;
   }

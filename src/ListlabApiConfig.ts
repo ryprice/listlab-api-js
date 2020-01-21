@@ -1,4 +1,4 @@
-export default class QuqumberApiConfig {
+export default class ListlabApiConfig {
   public WebAddress: string;
   public AppAddress: string;
   public TaskServiceAddress: string;

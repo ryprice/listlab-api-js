@@ -1,12 +1,12 @@
-import authorizedRequest from 'ququmber-api/authorizedRequest';
-import Notification from 'ququmber-api/Notification';
-import {consumeNotifications} from 'ququmber-api/notificationSerialization';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
+import authorizedRequest from 'listlab-api/authorizedRequest';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import Notification from 'listlab-api/Notification';
+import {consumeNotifications} from 'listlab-api/notificationSerialization';
 
 export default class NotificationClient {
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.config = config;
   }
 

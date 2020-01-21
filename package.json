@@ -1,5 +1,5 @@
 {
-  "name": "ququmber-api",
+  "name": "listlab-api",
   "version": "1.0.0",
   "description": "JavaScript client for ListLab APIs.",
   "dependencies": {
@@ -28,14 +28,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryprice/QuqumberWeb.git"
+    "url": "git+https://github.com/ryprice/listlab-api.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ryprice/QuqumberWeb/issues"
+    "url": "https://github.com/ryprice/listlab-api/issues"
   },
-  "homepage": "https://github.com/ryprice/QuqumberWeb#readme",
+  "homepage": "https://github.com/ryprice/listlab-api#readme",
   "types": "lib/index.d.ts"
 }

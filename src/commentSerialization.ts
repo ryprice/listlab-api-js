@@ -1,4 +1,4 @@
-import TaskComment from 'ququmber-api/TaskComment';
+import TaskComment from 'listlab-api/TaskComment';
 
 export const consumeTaskComment = (json: any): TaskComment => {
   const comment = new TaskComment();

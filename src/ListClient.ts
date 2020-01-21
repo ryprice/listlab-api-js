@@ -1,16 +1,16 @@
-import authorizedRequest from 'ququmber-api/authorizedRequest';
-import List from 'ququmber-api/List';
-import {consumeList, consumeLists, generateListJson} from 'ququmber-api/listSerialization';
-import {consumePayloadResult} from 'ququmber-api/payloadSerialization';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
+import authorizedRequest from 'listlab-api/authorizedRequest';
+import List from 'listlab-api/List';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import {consumeList, consumeLists, generateListJson} from 'listlab-api/listSerialization';
+import {consumePayloadResult} from 'listlab-api/payloadSerialization';
 
 export default class ListClient {
 
   private readonly listServiceAddress: string;
 
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.config = config;
     this.listServiceAddress = `${config.ListServiceAddress}`;
   }

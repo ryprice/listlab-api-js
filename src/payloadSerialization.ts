@@ -2,13 +2,13 @@ import {
   consumeListRole,
   consumeListRoleUser,
   consumeLists
-} from 'ququmber-api/listSerialization';
-import ListTask from 'ququmber-api/ListTask';
-import Payload from 'ququmber-api/Payload';
-import {consumeRecurrences} from 'ququmber-api/TaskClient';
-import {consumeTaskRole, consumeTaskRoleUser} from 'ququmber-api/taskRoleSerialization';
-import {consumeTasks} from 'ququmber-api/taskSerialization';
-import {consumeUsers} from 'ququmber-api/userSerialization';
+} from 'listlab-api/listSerialization';
+import ListTask from 'listlab-api/ListTask';
+import Payload from 'listlab-api/Payload';
+import {consumeRecurrences} from 'listlab-api/TaskClient';
+import {consumeTaskRole, consumeTaskRoleUser} from 'listlab-api/taskRoleSerialization';
+import {consumeTasks} from 'listlab-api/taskSerialization';
+import {consumeUsers} from 'listlab-api/userSerialization';
 
 export const consumePayloadResult = (json: any): Payload => {
   const payload = new Payload();

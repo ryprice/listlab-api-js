@@ -1,4 +1,4 @@
-import AuthSession from 'ququmber-api/AuthSession';
+import AuthSession from 'listlab-api/AuthSession';
 
 class UserDetails extends AuthSession { }
 export default UserDetails;

@@ -1,9 +1,9 @@
 import {
   consumeFuzzyTime,
   generateFuzzyTimeJson
-} from 'ququmber-api/fuzzyTimeSerialization';
-import Task from 'ququmber-api/Task';
-import {consumeMaybeUser, generateMaybeUserJson} from 'ququmber-api/userSerialization';
+} from 'listlab-api/fuzzyTimeSerialization';
+import Task from 'listlab-api/Task';
+import {consumeMaybeUser, generateMaybeUserJson} from 'listlab-api/userSerialization';
 
 export const generateTaskJson = (task: Task): Object => {
   return {

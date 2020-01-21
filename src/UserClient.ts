@@ -1,20 +1,20 @@
 import axios from 'axios';
 import * as qs from 'qs';
 
-import authorizedRequest, {authorizedRequestRaw} from 'ququmber-api/authorizedRequest';
-import AuthSession from 'ququmber-api/AuthSession';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
-import User from 'ququmber-api/User';
-import UserDetails from 'ququmber-api/UserDetails';
-import {consumeUserDetails, consumeUsers} from 'ququmber-api/userSerialization';
+import authorizedRequest, {authorizedRequestRaw} from 'listlab-api/authorizedRequest';
+import AuthSession from 'listlab-api/AuthSession';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import User from 'listlab-api/User';
+import UserDetails from 'listlab-api/UserDetails';
+import {consumeUserDetails, consumeUsers} from 'listlab-api/userSerialization';
 
 export default class UserClient {
 
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
   private readonly userServiceAddress: string;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.config = config;
     this.userServiceAddress = config.UserServiceAddress;
   }

@@ -1,16 +1,16 @@
-import authorizedRequest from 'ququmber-api/authorizedRequest';
-import ListRole from 'ququmber-api/ListRole';
-import ListRoleType, {generateListRoleTypeJson} from 'ququmber-api/ListRoleType';
-import {consumeListRole, generateListRoleJson} from 'ququmber-api/listSerialization';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
+import authorizedRequest from 'listlab-api/authorizedRequest';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import ListRole from 'listlab-api/ListRole';
+import ListRoleType, {generateListRoleTypeJson} from 'listlab-api/ListRoleType';
+import {consumeListRole, generateListRoleJson} from 'listlab-api/listSerialization';
 
 export default class ListPermissionClient {
 
   private readonly listServiceAddress: string;
 
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.config = config;
     this.listServiceAddress = config.ListServiceAddress;
   }

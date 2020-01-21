@@ -1,6 +1,6 @@
-import {StandardGranularitySequence} from 'ququmber-api/FuzzyGranularity';
-import RecurrenceSchedule from 'ququmber-api/RecurrenceSchedule';
-import Task from 'ququmber-api/Task';
+import {StandardGranularitySequence} from 'listlab-api/FuzzyGranularity';
+import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
+import Task from 'listlab-api/Task';
 
 export default class Recurrence {
   public recurrenceId: number;

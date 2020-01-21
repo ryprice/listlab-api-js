@@ -1,6 +1,6 @@
-import TaskRole from 'ququmber-api/TaskRole';
-import TaskRoleType from 'ququmber-api/TaskRoleType';
-import TaskRoleUser from 'ququmber-api/TaskRoleUser';
+import TaskRole from 'listlab-api/TaskRole';
+import TaskRoleType from 'listlab-api/TaskRoleType';
+import TaskRoleUser from 'listlab-api/TaskRoleUser';
 
 export const consumeTaskRole = (json: any): TaskRole => {
   const taskRole = new TaskRole();

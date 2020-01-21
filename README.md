@@ -1,4 +1,4 @@
-# ququmber-api-js
+# listlab-api-js
 JavaScript client library for all ListLab REST endpoints and ListLab data models.
 
 Sample usage to create a task and list:

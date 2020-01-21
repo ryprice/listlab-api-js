@@ -1,4 +1,4 @@
-import TaskRoleType from 'ququmber-api/TaskRoleType';
+import TaskRoleType from 'listlab-api/TaskRoleType';
 
 export default class TaskRole {
 

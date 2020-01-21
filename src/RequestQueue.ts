@@ -1,7 +1,7 @@
 import {AxiosRequestConfig} from 'axios';
 
-import authorizedRequest from 'ququmber-api/authorizedRequest';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
+import authorizedRequest from 'listlab-api/authorizedRequest';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 
 interface RequestQueueObject {
   resolve: (response: any) => void;
@@ -13,13 +13,13 @@ interface RequestQueueObject {
 // performing requests in serial
 export default class RequestQueue {
 
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
   private readonly requestQueue: RequestQueueObject[] = [];
 
   private isRunning = false;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.config = config;
   }
 

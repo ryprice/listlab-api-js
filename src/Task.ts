@@ -1,6 +1,6 @@
-import FuzzyGranularity from 'ququmber-api/FuzzyGranularity';
-import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'ququmber-api/FuzzyTime';
-import MaybeUser from 'ququmber-api/MaybeUser';
+import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
+import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'listlab-api/FuzzyTime';
+import MaybeUser from 'listlab-api/MaybeUser';
 
 export default class Task {
   public taskId: number;

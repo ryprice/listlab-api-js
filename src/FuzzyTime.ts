@@ -1,7 +1,7 @@
 import FuzzyGranularity, {
   FuzzyGranularitySequence,
   StandardGranularitySequence
-} from 'ququmber-api/FuzzyGranularity';
+} from 'listlab-api/FuzzyGranularity';
 
 const instanceCache: {[key: string]: FuzzyTime} = {};
 

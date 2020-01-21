@@ -1,17 +1,17 @@
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 
-export const buildListUrl = (listId: number, config: QuqumberApiConfig) => {
+export const buildListUrl = (listId: number, config: ListlabApiConfig) => {
   return `${config.AppAddress}/l/${listId}`;
 };
 
-export const buildTaskUrl = (taskId: number, config: QuqumberApiConfig) => {
+export const buildTaskUrl = (taskId: number, config: ListlabApiConfig) => {
   return `${config.AppAddress}/t/${taskId}`;
 };
 
 export const buildPublicListUrl = (
   listId: number,
   secret: string,
-  config: QuqumberApiConfig
+  config: ListlabApiConfig
 ) => {
   return `${buildListUrl(listId, config)}?s=${secret}`;
 };
@@ -19,7 +19,7 @@ export const buildPublicListUrl = (
 export const buildPublicTaskUrl = (
   taskId: number,
   secret: string,
-  config: QuqumberApiConfig
+  config: ListlabApiConfig
 ) => {
   return `${buildTaskUrl(taskId, config)}?s=${secret}`;
 };

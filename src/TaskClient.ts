@@ -1,32 +1,32 @@
 import * as qs from 'qs';
 
-import authorizedRequest from 'ququmber-api/authorizedRequest';
-import CreatePublicTaskResponse from 'ququmber-api/CreatePublicTaskResponse';
-import FuzzyTime from 'ququmber-api/FuzzyTime';
+import authorizedRequest from 'listlab-api/authorizedRequest';
+import CreatePublicTaskResponse from 'listlab-api/CreatePublicTaskResponse';
+import FuzzyTime from 'listlab-api/FuzzyTime';
 import {
   consumeFuzzyGranularity,
   consumeFuzzyTime,
   generateFuzzyTimeJson
-} from 'ququmber-api/fuzzyTimeSerialization';
-import MaybeUser from 'ququmber-api/MaybeUser';
-import Payload from 'ququmber-api/Payload';
-import {consumePayloadResult} from 'ququmber-api/payloadSerialization';
-import QuqumberApiConfig from 'ququmber-api/QuqumberApiConfig';
-import Recurrence from 'ququmber-api/Recurrence';
-import RecurrenceSchedule from 'ququmber-api/RecurrenceSchedule';
-import RequestQueue from 'ququmber-api/RequestQueue';
-import Task from 'ququmber-api/Task';
-import {consumeTasks, generateTaskJson} from 'ququmber-api/taskSerialization';
+} from 'listlab-api/fuzzyTimeSerialization';
+import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import MaybeUser from 'listlab-api/MaybeUser';
+import Payload from 'listlab-api/Payload';
+import {consumePayloadResult} from 'listlab-api/payloadSerialization';
+import Recurrence from 'listlab-api/Recurrence';
+import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
+import RequestQueue from 'listlab-api/RequestQueue';
+import Task from 'listlab-api/Task';
+import {consumeTasks, generateTaskJson} from 'listlab-api/taskSerialization';
 
 export default class TaskClient {
 
-  private readonly config: QuqumberApiConfig;
+  private readonly config: ListlabApiConfig;
 
   private readonly taskServiceAddress: string;
 
   private readonly requestQueue: RequestQueue;
 
-  constructor(config: QuqumberApiConfig) {
+  constructor(config: ListlabApiConfig) {
     this.taskServiceAddress = config.TaskServiceAddress;
     this.config = config;
     this.requestQueue = new RequestQueue(this.config);

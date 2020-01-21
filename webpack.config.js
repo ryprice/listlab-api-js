@@ -15,11 +15,11 @@ DtsGeneratorPlugin.prototype.apply = function(compiler) {
 
     compilation.plugin("optimize", function() {
       dtsGenerator({
-          name: 'ququmber-api',
+          name: 'listlab-api',
           project: './',
-          main: 'ququmber-api/index',
+          main: 'listlab-api/index',
           excludes: ['./typings/**/*.d.ts'],
-          out: 'dist/ququmber-api.d.ts'
+          out: 'dist/listlab-api.d.ts'
       })
     });
   });
@@ -34,7 +34,7 @@ module.exports = {
     entry: "./src/index.ts",
 
     output: {
-        filename: "ququmber-api.js",
+        filename: "listlab-api.js",
         path: __dirname + "/dist",
         libraryTarget: "amd"
     },
