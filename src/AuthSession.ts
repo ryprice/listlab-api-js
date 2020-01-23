@@ -8,6 +8,7 @@ export default class AuthSession {
   public googleId: string;
   public username: string;
   public pendingEmail: string;
+  public gates: {[key: string]: string};
 
   clone(): AuthSession {
     const clone = new AuthSession();
@@ -19,6 +20,7 @@ export default class AuthSession {
     clone.googleId = this.googleId;
     clone.username = this.username;
     clone.pendingEmail = this.pendingEmail;
+    clone.gates = this.gates || {};
     return clone;
   }
 }

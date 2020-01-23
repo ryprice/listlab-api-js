@@ -31,6 +31,7 @@ export const consumeUserDetails = (json: any): AuthSession => {
   userDetails.username = json.username;
   userDetails.pendingEmail = json.pendingEmail;
   userDetails.isAnonymous = json.isAnonymous;
+  userDetails.gates = json.gates;
   return userDetails;
 };
 
