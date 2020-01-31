@@ -43,6 +43,7 @@ export const consumeTask = (json: any) => {
   task.parentId = json.parentId;
   task.childCount = json.childCount ? json.childCount : 0;
   task.incompleteChildCount = json.incompleteChildCount ? json.incompleteChildCount : 0;
+  task.isShared = json.isShared;
   task.dueOrder = json.dueOrder;
   task.seen = json.seen;
   task.recurrenceId = json.recurrenceId;

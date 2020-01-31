@@ -11,6 +11,7 @@ export default class Task {
   public completed: boolean;
   public childCount: number;
   public incompleteChildCount: number;
+  public isShared: boolean;
   public dueOrder: number;
   public seen: boolean;
   public recurrenceId: number;
@@ -38,6 +39,7 @@ export default class Task {
     clone.due = this.due;
     clone.completed = this.completed;
     clone.childCount = this.childCount;
+    clone.isShared = this.isShared;
     clone.incompleteChildCount = this.incompleteChildCount;
     clone.dueOrder = this.dueOrder;
     clone.seen = this.seen;
