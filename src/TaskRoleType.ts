@@ -21,5 +21,15 @@ export const generateTaskRoleTypeJson = (type: TaskRoleType) => {
   }
 };
 
+export const mostPermissiveTaskRoleType = (types: TaskRoleType[]) => {
+  if (types.indexOf(TaskRoleType.WRITE) > -1) {
+    return TaskRoleType.WRITE;
+  }
+  if (types.indexOf(TaskRoleType.READ) > -1) {
+    return TaskRoleType.WRITE;
+  }
+  return null;
+};
+
 
 export default TaskRoleType;

@@ -21,6 +21,8 @@ export default class Task {
   public writeRole: number;
   public author: number;
   public parentOrder: number;
+  public canRead: boolean;
+  public canWrite: boolean;
 
   constructor() {
     this.name = '';

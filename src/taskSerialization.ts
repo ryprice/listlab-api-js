@@ -53,6 +53,8 @@ export const consumeTask = (json: any) => {
   task.writeRole = json.writeRole;
   task.author = json.author;
   task.parentOrder = json.parentOrder;
+  task.canRead = json.canRead;
+  task.canWrite = json.canWrite;
   if (json.due) {
     task.due = consumeFuzzyTime(json.due);
   }
