@@ -1,8 +1,10 @@
+import CRDTOrderDoc from 'listlab-api/CRDTOrderDoc';
 import {
   consumeFuzzyTime,
   generateFuzzyTimeJson
 } from 'listlab-api/fuzzyTimeSerialization';
 import Task from 'listlab-api/Task';
+import TaskParentOrderTuple from 'listlab-api/TaskParentOrderTuple';
 import {consumeMaybeUser, generateMaybeUserJson} from 'listlab-api/userSerialization';
 
 export const generateTaskJson = (task: Task): Object => {
@@ -21,7 +23,6 @@ export const generateTaskJson = (task: Task): Object => {
     readRole: task.readRole,
     writeRole: task.writeRole,
     author: task.author,
-    parentOrder: task.parentOrder
   };
 };
 
@@ -52,11 +53,21 @@ export const consumeTask = (json: any) => {
   task.readRole = json.readRole;
   task.writeRole = json.writeRole;
   task.author = json.author;
-  task.parentOrder = json.parentOrder;
   task.canRead = json.canRead;
   task.canWrite = json.canWrite;
   if (json.due) {
     task.due = consumeFuzzyTime(json.due);
   }
   return task;
+};
+
+export const consumeTaskParentOrders = (json: any): TaskParentOrderTuple[] => {
+  const tuples = new Array<TaskParentOrderTuple>();
+  for (let i = 0; i < json.length; i++) {
+    tuples.push({
+      taskId: json[i].taskId,
+      doc: CRDTOrderDoc.create<number>(json[i].doc, (a,b) => a === b)
+    });
+  }
+  return tuples;
 };

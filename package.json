@@ -4,19 +4,26 @@
   "description": "JavaScript client for ListLab APIs.",
   "dependencies": {
     "@types/qs": "^6.5.3",
+    "@types/immutable": "^3.8.7",
     "axios": "^0.18.1",
-    "qs": "^6.7.0"
+    "qs": "^6.7.0",
+    "immutable": "^3.8.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/plugin-transform-modules-amd": "^7.5.0",
     "@babel/preset-stage-2": "^7.0.0",
+    "@types/chai": "^4.2.9",
+    "@types/mocha": "^7.0.1",
     "awesome-typescript-loader": "^3.5.0",
+    "chai": "^4.2.0",
     "dts-generator": "^2.1.0",
     "dtsbundler-webpack-plugin": "^1.0.0",
     "file-system": "^2.2.2",
     "listlab-build": "file:../listlab-build",
+    "mocha": "^7.0.1",
+    "ts-node": "^8.6.2",
     "tslint": "^5.16.0",
     "typescript": "^3.4.5",
     "webpack": "^4.39.3",
@@ -24,7 +31,7 @@
   },
   "scripts": {
     "build": "tsc -d --declarationDir lib --outDir lib && tslint -p .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
   "repository": {
     "type": "git",

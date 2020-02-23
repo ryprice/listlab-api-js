@@ -7,7 +7,7 @@ import ListTask from 'listlab-api/ListTask';
 import Payload from 'listlab-api/Payload';
 import {consumeRecurrences} from 'listlab-api/TaskClient';
 import {consumeTaskRole, consumeTaskRoleUser} from 'listlab-api/taskRoleSerialization';
-import {consumeTasks} from 'listlab-api/taskSerialization';
+import {consumeTaskParentOrders, consumeTasks} from 'listlab-api/taskSerialization';
 import {consumeUsers} from 'listlab-api/userSerialization';
 
 export const consumePayloadResult = (json: any): Payload => {
@@ -36,7 +36,10 @@ export const consumePayloadResult = (json: any): Payload => {
     payload.taskRoles = json.taskRoles.map(consumeTaskRole);
   }
   if (json.taskRoleUsers) {
-      payload.taskRoleUsers = json.taskRoleUsers.map(consumeTaskRoleUser);
+    payload.taskRoleUsers = json.taskRoleUsers.map(consumeTaskRoleUser);
+  }
+  if (json.taskParentOrders) {
+    payload.taskParentOrders = consumeTaskParentOrders(json.taskParentOrders);
   }
   if (json.recurrences) {
     payload.recurrences = consumeRecurrences(json.recurrences);

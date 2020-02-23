@@ -60,6 +60,7 @@ module.exports = {
     externals: {
         "q": "q",
         "axios": "axios",
-        "qs": "qs"
+        "qs": "qs",
+        "immutable": "immutable",
     },
 };

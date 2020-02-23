@@ -51,7 +51,6 @@ export default class Task {
     clone.readRole = this.readRole;
     clone.writeRole = this.writeRole;
     clone.author = this.author;
-    clone.parentOrder = this.parentOrder;
     return clone;
   }
 }

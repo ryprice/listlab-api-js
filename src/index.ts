@@ -3,6 +3,7 @@ export {default as authorizedRequest} from 'listlab-api/authorizedRequest';
 export {default as AuthClient} from 'listlab-api/AuthClient';
 export {default as AuthSession} from 'listlab-api/AuthSession';
 export {default as CommentClient} from 'listlab-api/CommentClient';
+export {default as CRDTOrderDoc} from 'listlab-api/CRDTOrderDoc';
 export {default as FuzzyGranularity, StandardGranularitySequence} from 'listlab-api/FuzzyGranularity';
 export {default as FuzzyTime} from 'listlab-api/FuzzyTime';
 export {
@@ -37,6 +38,7 @@ export {default as ListlabApiConfig} from 'listlab-api/ListlabApiConfig';
 export {default as TaskClient} from 'listlab-api/TaskClient';
 export {default as TaskComment} from 'listlab-api/TaskComment';
 export {default as TaskFilter} from 'listlab-api/TaskFilter';
+export {default as TaskParentOrderTuple} from 'listlab-api/TaskParentOrderTuple';
 export {default as TaskPermissionClient} from 'listlab-api/TaskPermissionClient';
 export {default as TaskRole} from 'listlab-api/TaskRole';
 export {default as TaskRoleType} from 'listlab-api/TaskRoleType';
