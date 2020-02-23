@@ -1,3 +1,4 @@
+import CRDTOrderDoc from 'listlab-api/CRDTOrderDoc';
 import {
   consumeListRole,
   consumeListRoleUser,
@@ -40,6 +41,12 @@ export const consumePayloadResult = (json: any): Payload => {
   }
   if (json.taskParentOrders) {
     payload.taskParentOrders = consumeTaskParentOrders(json.taskParentOrders);
+  }
+  if (json.taskRootOrder) {
+    payload.taskRootOrder = CRDTOrderDoc.create<number>(
+      json.taskRootOrder,
+      (a: number, b: number) => a === b
+    );
   }
   if (json.recurrences) {
     payload.recurrences = consumeRecurrences(json.recurrences);

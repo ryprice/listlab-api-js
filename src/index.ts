@@ -37,6 +37,7 @@ export {
 export {default as ListlabApiConfig} from 'listlab-api/ListlabApiConfig';
 export {default as TaskClient} from 'listlab-api/TaskClient';
 export {default as TaskComment} from 'listlab-api/TaskComment';
+export {default as TaskDueOrderTuple} from 'listlab-api/TaskDueOrderTuple';
 export {default as TaskFilter} from 'listlab-api/TaskFilter';
 export {default as TaskParentOrderTuple} from 'listlab-api/TaskParentOrderTuple';
 export {default as TaskPermissionClient} from 'listlab-api/TaskPermissionClient';

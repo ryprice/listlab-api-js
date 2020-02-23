@@ -1,3 +1,4 @@
+import CRDTOrderDoc from 'listlab-api/CRDTOrderDoc';
 import List from 'listlab-api/List';
 import ListRole from 'listlab-api/ListRole';
 import ListRoleUser from 'listlab-api/ListRoleUser';
@@ -21,6 +22,7 @@ export default class Payload {
   public listTasks?: ListTask[] = [];
   public recurrences?: Recurrence[] = [];
   public taskParentOrders?: TaskParentOrderTuple[] = [];
+  public taskRootOrder?: CRDTOrderDoc<number>;
 
   public users?: User[] = [];
 }
