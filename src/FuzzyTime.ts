@@ -34,7 +34,13 @@ export default class FuzzyTime {
   }
 
   public toString() {
-    return this.time.toString() + this.granularity.getName();
+    return this.time.toString() + this.granularity.getKey();
+  }
+
+  public static fromString(str: string) {
+    const time = new Date(str.substr(0, str.length - 1));
+    const granularity = FuzzyGranularity.fromKey(Number(str.substr(str.length - 1, str.length)));
+    return buildFuzzyTime(time, granularity);
   }
 
   public withGranularity(granularity: FuzzyGranularity) {

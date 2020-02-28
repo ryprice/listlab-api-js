@@ -15,6 +15,25 @@ export default class FuzzyGranularity {
     return this.key;
   }
 
+  public static fromKey(key: number) {
+    switch(key) {
+      case 0:
+        return this.MINUTE;
+      case 1:
+        return this.HOUR;
+      case 2:
+        return this.DAY;
+      case 3:
+        return this.WEEK;
+      case 4:
+        return this.MONTH;
+      case 5:
+        return this.YEAR;
+      case 6:
+        return this.FOREVER;
+    }
+  }
+
   public static MINUTE = new FuzzyGranularity('Minute', 0);
   public static HOUR = new FuzzyGranularity('Hour', 1);
   public static DAY = new FuzzyGranularity('Day', 2);
