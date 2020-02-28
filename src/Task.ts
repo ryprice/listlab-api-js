@@ -43,7 +43,6 @@ export default class Task {
     clone.childCount = this.childCount;
     clone.isShared = this.isShared;
     clone.incompleteChildCount = this.incompleteChildCount;
-    clone.dueOrder = this.dueOrder;
     clone.seen = this.seen;
     clone.recurrenceId = this.recurrenceId;
     clone.creationTime = this.creationTime;

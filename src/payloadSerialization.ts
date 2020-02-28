@@ -8,7 +8,7 @@ import ListTask from 'listlab-api/ListTask';
 import Payload from 'listlab-api/Payload';
 import {consumeRecurrences} from 'listlab-api/TaskClient';
 import {consumeTaskRole, consumeTaskRoleUser} from 'listlab-api/taskRoleSerialization';
-import {consumeTaskParentOrders, consumeTasks} from 'listlab-api/taskSerialization';
+import {consumeTaskDueOrders, consumeTaskParentOrders, consumeTasks} from 'listlab-api/taskSerialization';
 import {consumeUsers} from 'listlab-api/userSerialization';
 
 export const consumePayloadResult = (json: any): Payload => {
@@ -47,6 +47,9 @@ export const consumePayloadResult = (json: any): Payload => {
       json.taskRootOrder,
       (a: number, b: number) => a === b
     );
+  }
+  if (json.taskDueOrders) {
+    payload.taskDueOrders = consumeTaskDueOrders(json.taskDueOrders);
   }
   if (json.recurrences) {
     payload.recurrences = consumeRecurrences(json.recurrences);

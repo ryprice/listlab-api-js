@@ -4,6 +4,7 @@ import {
   generateFuzzyTimeJson
 } from 'listlab-api/fuzzyTimeSerialization';
 import Task from 'listlab-api/Task';
+import TaskDueOrderTuple from 'listlab-api/TaskDueOrderTuple';
 import TaskParentOrderTuple from 'listlab-api/TaskParentOrderTuple';
 import {consumeMaybeUser, generateMaybeUserJson} from 'listlab-api/userSerialization';
 
@@ -15,7 +16,6 @@ export const generateTaskJson = (task: Task): Object => {
     owner: generateMaybeUserJson(task.owner),
     parentId: task.parentId,
     completed: task.completed,
-    dueOrder: task.dueOrder,
     seen: task.seen,
     recurrenceId: task.recurrenceId,
     creationTime: task.creationTime,
@@ -45,7 +45,6 @@ export const consumeTask = (json: any) => {
   task.childCount = json.childCount ? json.childCount : 0;
   task.incompleteChildCount = json.incompleteChildCount ? json.incompleteChildCount : 0;
   task.isShared = json.isShared;
-  task.dueOrder = json.dueOrder;
   task.seen = json.seen;
   task.recurrenceId = json.recurrenceId;
   task.creationTime = json.creationTime && new Date(json.creationTime);
@@ -66,6 +65,18 @@ export const consumeTaskParentOrders = (json: any): TaskParentOrderTuple[] => {
   for (let i = 0; i < json.length; i++) {
     tuples.push({
       taskId: json[i].taskId,
+      doc: CRDTOrderDoc.create<number>(json[i].doc, (a,b) => a === b)
+    });
+  }
+  return tuples;
+};
+
+export const consumeTaskDueOrders = (json: any): TaskDueOrderTuple[] => {
+  const tuples = new Array<TaskDueOrderTuple>();
+  for (let i = 0; i < json.length; i++) {
+    tuples.push({
+      due: consumeFuzzyTime(json[i].due),
+      userId: 0,
       doc: CRDTOrderDoc.create<number>(json[i].doc, (a,b) => a === b)
     });
   }
