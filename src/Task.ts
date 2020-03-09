@@ -12,7 +12,6 @@ export default class Task {
   public childCount: number;
   public incompleteChildCount: number;
   public isShared: boolean;
-  public dueOrder: number;
   public seen: boolean;
   public recurrenceId: number;
   public creationTime: Date;
@@ -20,7 +19,6 @@ export default class Task {
   public readRole: number;
   public writeRole: number;
   public author: number;
-  public parentOrder: number;
   public canRead: boolean;
   public canWrite: boolean;
 
@@ -30,6 +28,8 @@ export default class Task {
     this.seen = true;
     this.due = buildFuzzyTime(new Date(unoffsetNow()), FuzzyGranularity.DAY);
     this.owner = new MaybeUser(null, null);
+    this.childCount = 0;
+    this.incompleteChildCount = 0;
   }
 
   clone(): Task {
@@ -50,6 +50,8 @@ export default class Task {
     clone.readRole = this.readRole;
     clone.writeRole = this.writeRole;
     clone.author = this.author;
+    clone.canRead = this.canRead;
+    clone.canWrite = this.canWrite;
     return clone;
   }
 }
