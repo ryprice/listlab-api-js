@@ -8,6 +8,7 @@ export default class TaskFilter {
   public readonly query: string;
   public readonly inProgress: boolean;
   public readonly seen: boolean;
+  public readonly taskIds: number[];
 
   constructor(init?: {[P in keyof TaskFilter]?: TaskFilter[P]}) {
     if (init) {
@@ -18,6 +19,7 @@ export default class TaskFilter {
       this.query = init.query;
       this.inProgress = init.inProgress;
       this.seen = init.seen;
+      this.taskIds = init.taskIds;
     }
   }
 
@@ -47,7 +49,8 @@ export default class TaskFilter {
         this.range == null ||
         this.range.getStart() == null ||
         this.range.getEnd() == null
-      )
+      ) &&
+      !this.taskIds
     );
   }
 }
