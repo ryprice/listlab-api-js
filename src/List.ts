@@ -9,6 +9,7 @@ export default class List {
   public writeRole: number;
   public author: number;
   public creationTime: Date;
+  public archived: boolean;
 
   clone(): List {
     const clone = new List();
@@ -22,6 +23,7 @@ export default class List {
     clone.writeRole = this.writeRole;
     clone.author = this.author;
     clone.creationTime = this.creationTime;
+    clone.archived = this.archived;
     return clone;
   }
 }

@@ -76,6 +76,22 @@ export default class ListClient {
     await authorizedRequest(this.config, ajaxSettings);
   }
 
+  async archiveList(listId: number): Promise<void> {
+    const ajaxSettings: any = {
+      url: `${this.listServiceAddress}/${listId}/archive`,
+      method: 'PUT'
+    };
+    await authorizedRequest(this.config, ajaxSettings);
+  }
+
+  async unarchiveList(listId: number): Promise<void> {
+    const ajaxSettings: any = {
+      url: `${this.listServiceAddress}/${listId}/unarchive`,
+      method: 'PUT'
+    };
+    await authorizedRequest(this.config, ajaxSettings);
+  }
+
   async moveListBefore(listId: number, beforeId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/${listId}/move?before=${beforeId}`,
