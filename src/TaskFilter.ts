@@ -53,4 +53,17 @@ export default class TaskFilter {
       !this.taskIds
     );
   }
+
+  public equals(other: TaskFilter): boolean {
+    return (
+      this.listId === other.listId &&
+      this.range === other.range &&
+      this.parentId === other.parentId &&
+      this.completed === other.completed &&
+      this.query === other.query &&
+      this.inProgress === other.inProgress &&
+      this.seen === other.seen &&
+      this.taskIds === other.taskIds
+    );
+  }
 }
