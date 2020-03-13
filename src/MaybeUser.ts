@@ -22,7 +22,7 @@ export default class MaybeUser {
       this.name != null && this.name.length > 0 &&
       other.name != null && other.name.length > 0
     ) {
-        return this.name === other.name;
+      return this.name === other.name;
     } else {
       return (
         !this.userId &&

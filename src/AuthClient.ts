@@ -2,10 +2,12 @@ import axios from 'axios';
 import * as qs from 'qs';
 
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import ListLabSession from 'listlab-api/ListLabSession';
 
 export default class AuthClient {
 
   private readonly authServiceAddress: string;
+
   private readonly config: ListlabApiConfig;
 
   public constructor(config: ListlabApiConfig) {
@@ -38,9 +40,7 @@ export default class AuthClient {
       },
       data: qs.stringify({userId: userId})
     };
-    return axios(ajaxSettings).then((response: any) => {
-      this.parseAuthResult(response);
-    });
+    return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
   }
 
   public async authWithGoogleIdToken(googleIdToken: string) {
@@ -51,9 +51,7 @@ export default class AuthClient {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         data: qs.stringify({idToken: googleIdToken}),
       };
-      return axios(ajaxSettings).then((response: any) => {
-        this.parseAuthResult(response);
-      });
+      return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
     }
   }
 
@@ -65,9 +63,7 @@ export default class AuthClient {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         data: qs.stringify({accessToken: fbAccessToken})
       };
-      return axios(ajaxSettings).then((response: any) => {
-        this.parseAuthResult(response);
-      });
+      return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
     }
   }
 
@@ -77,9 +73,7 @@ export default class AuthClient {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     };
-    return axios(ajaxSettings).then((response: any) => {
-      this.parseAuthResult(response);
-    });
+    return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
   }
 
   private parseAuthResult(response: any) {
@@ -88,6 +82,10 @@ export default class AuthClient {
     if (token) {
       this.config.AuthToken = token;
     }
+    const tokenObj = new ListLabSession();
+    tokenObj.token = token;
+    tokenObj.userId = response.data.userId;
+    return tokenObj;
   }
 
   private getCookie(key: string) {

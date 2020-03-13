@@ -2,7 +2,6 @@ import axios from 'axios';
 import * as qs from 'qs';
 
 import authorizedRequest, {authorizedRequestRaw} from 'listlab-api/authorizedRequest';
-import AuthSession from 'listlab-api/AuthSession';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import User from 'listlab-api/User';
 import UserDetails from 'listlab-api/UserDetails';
@@ -19,7 +18,7 @@ export default class UserClient {
     this.userServiceAddress = config.UserServiceAddress;
   }
 
-  async getDetails(): Promise<AuthSession> {
+  async getDetails(): Promise<UserDetails> {
     const ajaxSettings = {
       url: `${this.userServiceAddress}/details`,
       method: 'GET',

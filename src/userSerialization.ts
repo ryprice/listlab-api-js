@@ -1,6 +1,6 @@
-import AuthSession from 'listlab-api/AuthSession';
 import MaybeUser from 'listlab-api/MaybeUser';
 import User from 'listlab-api/User';
+import UserDetails from 'listlab-api/UserDetails';
 
 export const consumeUser = (json: any): User => {
   const user = new User();
@@ -20,8 +20,8 @@ export const consumeUsers = (json: any): User[] => {
   return users;
 };
 
-export const consumeUserDetails = (json: any): AuthSession => {
-  const userDetails = new AuthSession();
+export const consumeUserDetails = (json: any): UserDetails => {
+  const userDetails = new UserDetails();
   userDetails.userId = json.userId;
   userDetails.name = json.name;
   userDetails.email = json.email;

@@ -9,7 +9,6 @@
     "moduleResolution": "node",
     "noEmit": false,
     "baseUrl": ".",
-    "rootDir": "./src/",
     "paths": {
       "listlab-api/*": ["src/*"]
     },
