@@ -37,3 +37,6 @@ TaskServiceAddress: 'http://api.listlab.io/tasks',
 UserServiceAddress: 'http://api.listlab.io/users',
 
 ```
+
+To build, `npm run build`.
+To run unit tests, `npm run test`.

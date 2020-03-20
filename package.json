@@ -35,14 +35,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryprice/listlab-api.git"
+    "url": "git+https://github.com/ryprice/listlab-api-js.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ryprice/listlab-api/issues"
-  },
-  "homepage": "https://github.com/ryprice/listlab-api#readme",
+  "license": "LGPL",
+  "homepage": "https://github.com/ryprice/listlab-api-js#readme",
   "types": "lib/index.d.ts"
 }
