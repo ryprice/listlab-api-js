@@ -3,6 +3,7 @@ import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import ListRole from 'listlab-api/ListRole';
 import ListRoleType, {generateListRoleTypeJson} from 'listlab-api/ListRoleType';
 import {consumeListRole, generateListRoleJson} from 'listlab-api/listSerialization';
+import randomToken from 'listlab-api/utils/randomToken';
 
 export default class ListPermissionClient {
 
@@ -47,7 +48,7 @@ export default class ListPermissionClient {
   }
 
   async addRoleToList(listId: number, type: ListRoleType): Promise<ListRole> {
-    const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
+    const secret = randomToken(64);
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listId}/role?s=${secret}&type=${generateListRoleTypeJson(type)}`,
       method: 'POST'

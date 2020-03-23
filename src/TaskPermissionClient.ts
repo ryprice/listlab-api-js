@@ -7,6 +7,7 @@ import {
   generateTaskRoleTypeJson
 } from 'listlab-api/taskRoleSerialization';
 import TaskRoleType from 'listlab-api/TaskRoleType';
+import randomToken from 'listlab-api/utils/randomToken';
 
 export default class TaskPermissionClient {
 
@@ -32,7 +33,7 @@ export default class TaskPermissionClient {
   }
 
   async addRoleToTask(taskId: number, type: TaskRoleType): Promise<TaskRole> {
-    const secret = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 40);
+    const secret = randomToken(64);
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskId}/role?s=${secret}&type=${generateTaskRoleTypeJson(type)}`,
       method: 'POST'
