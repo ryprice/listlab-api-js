@@ -7,7 +7,7 @@ export default (str: string): FuzzyTime => {
   result = result.trim();
   const words = result.split(' ');
   if (words.length < 1) {
-      return undefined;
+    return undefined;
   }
 
   if (words[0] === 'today') {

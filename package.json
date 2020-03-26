@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "JavaScript client for ListLab APIs.",
   "dependencies": {
-    "@types/qs": "^6.5.3",
     "@types/immutable": "^3.8.7",
+    "@types/qs": "^6.5.3",
     "axios": "^0.18.1",
-    "qs": "^6.7.0",
-    "immutable": "^3.8.1"
+    "immutable": "^3.8.1",
+    "qs": "^6.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -16,10 +16,16 @@
     "@babel/preset-stage-2": "^7.0.0",
     "@types/chai": "^4.2.9",
     "@types/mocha": "^7.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
     "awesome-typescript-loader": "^3.5.0",
     "chai": "^4.2.0",
     "dts-generator": "^2.1.0",
     "dtsbundler-webpack-plugin": "^1.0.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
     "file-system": "^2.2.2",
     "listlab-build": "file:../listlab-build",
     "mocha": "^7.0.1",
@@ -30,8 +36,9 @@
     "webpack-cli": "^3.3.7"
   },
   "scripts": {
-    "build": "tsc -d --declarationDir lib --outDir lib && tslint -p .",
-    "test": "mocha -r ts-node/register tests/**/*.test.ts"
+    "build": "tsc -d --declarationDir lib --outDir lib && npm run lint",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
+    "lint": "eslint src/**/*.ts"
   },
   "repository": {
     "type": "git",

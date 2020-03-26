@@ -1,0 +1,19 @@
+{
+  "extends": "../listlab-build/.eslintrc",
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
+  "rules": { 
+    "import/order": ["error", {
+      "newlines-between": "always",
+      "groups": [
+        ["internal"],
+        ["external", "builtin"],
+        ["index", "sibling", "parent"]
+      ],
+      "pathGroups": [
+        {"pattern": "listlab-api/**", "group": "parent"}
+      ]
+    }]
+  }
+}

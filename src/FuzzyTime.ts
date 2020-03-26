@@ -348,6 +348,6 @@ export default class FuzzyTime {
 const timezoneOffset = new Date().getTimezoneOffset();
 
 export const unoffsetNow = () => {
-    // Pretend there are no timezones :)
-    return Date.now() - (timezoneOffset * 60 * 1000);
+  // Pretend there are no timezones :)
+  return Date.now() - (timezoneOffset * 60 * 1000);
 };

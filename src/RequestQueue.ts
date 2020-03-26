@@ -29,6 +29,7 @@ export default class RequestQueue {
       const curRequestQueueObj = this.requestQueue.shift();
       try {
         curRequestQueueObj.resolve(
+          // eslint-disable-next-line no-await-in-loop
           await authorizedRequest(this.config, curRequestQueueObj.ajaxSettings)
         );
       } catch (ex) {

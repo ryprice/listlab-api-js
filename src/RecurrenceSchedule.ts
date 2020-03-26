@@ -14,5 +14,5 @@ export default class RecurrenceSchedule {
     recurrenceSchedule.period = this.period;
     recurrenceSchedule.selected = this.selected.slice(0);
     return recurrenceSchedule;
-  }
+  };
 }

@@ -290,6 +290,7 @@ export default class TaskClient {
 
   async addTasksToList(tasks: number[], listId: number): Promise<void> {
     for (const task of tasks) {
+      // eslint-disable-next-line no-await-in-loop
       await this.addTaskToList(task, listId);
     }
   }
