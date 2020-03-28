@@ -25,16 +25,16 @@ Env: 'prod'
 RootDomain: 'listlab.io',
 
 // Web addresses
-AppAddress: 'http://app.listlab.io',
-WebAddress: 'http://www.listlab.io',
+AppAddress: 'https://app.listlab.io',
+WebAddress: 'https://www.listlab.io',
 
 // Microservice addresses
-AuthServiceAddress: 'http://api.listlab.io/sts',
-CommentServiceAddress: 'http://api.listlab.io/comments',
-ListServiceAddress: 'http://api.listlab.io/lists',
-NotificationServiceAddress: 'http://api.listlab.io/notifications',
-TaskServiceAddress: 'http://api.listlab.io/tasks',
-UserServiceAddress: 'http://api.listlab.io/users',
+AuthServiceAddress: 'https://api.listlab.io/sts',
+CommentServiceAddress: 'https://api.listlab.io/comments',
+ListServiceAddress: 'https://api.listlab.io/lists',
+NotificationServiceAddress: 'https://api.listlab.io/notifications',
+TaskServiceAddress: 'https://api.listlab.io/tasks',
+UserServiceAddress: 'https://api.listlab.io/users',
 
 ```
 

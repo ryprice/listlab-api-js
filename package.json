@@ -30,7 +30,6 @@
     "listlab-build": "file:../listlab-build",
     "mocha": "^7.0.1",
     "ts-node": "^8.6.2",
-    "tslint": "^5.16.0",
     "typescript": "^3.4.5",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7"
