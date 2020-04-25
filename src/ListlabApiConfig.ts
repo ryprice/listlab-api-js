@@ -7,6 +7,7 @@ export default class ListlabApiConfig {
   public CommentServiceAddress: string;
   public NotificationServiceAddress: string;
   public ListServiceAddress: string;
+  public RootServiceAddress: string;
   public RootDomain: string;
   public AuthToken: string;
   public Env: string;
