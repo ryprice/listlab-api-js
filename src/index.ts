@@ -1,4 +1,4 @@
-
+export {default as Actor} from 'listlab-api/Actor';
 export {default as authorizedRequest} from 'listlab-api/authorizedRequest';
 export {default as AuthClient} from 'listlab-api/AuthClient';
 export {default as CommentClient} from 'listlab-api/CommentClient';

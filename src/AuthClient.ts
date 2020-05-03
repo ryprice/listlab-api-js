@@ -76,6 +76,23 @@ export default class AuthClient {
     return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
   }
 
+  public async authWithAnonActor() {
+    const ajaxSettings = {
+      url: `${this.authServiceAddress}/anon-actor`,
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    };
+    return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
+  }
+
+  public async fetchToken() {
+    const ajaxSettings = {
+      url: `${this.authServiceAddress}/token`,
+      method: 'GET',
+    };
+    return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
+  }
+
   private parseAuthResult(response: any) {
     const token = response.data.token;
     this.setCookie('todoAuthToken', token);
@@ -85,6 +102,7 @@ export default class AuthClient {
     const tokenObj = new ListLabSession();
     tokenObj.token = token;
     tokenObj.userId = response.data.userId;
+    tokenObj.actorId = response.data.actorId;
     return tokenObj;
   }
 
