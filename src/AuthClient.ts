@@ -88,6 +88,9 @@ export default class AuthClient {
   public async fetchToken() {
     const ajaxSettings = {
       url: `${this.authServiceAddress}/token`,
+      headers: {
+        Authorization: `${this.getAuthToken()}`,
+      },
       method: 'GET',
     };
     return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
