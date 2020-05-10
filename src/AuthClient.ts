@@ -85,6 +85,18 @@ export default class AuthClient {
     return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
   }
 
+  public async awaitAnyToken() {
+    if (!this.isAuthenticated()) {
+      await this.authWithAnonActor();
+    } else {
+      try {
+        await this.fetchToken();
+      } catch {
+        await this.authWithAnonActor();
+      }
+    }
+  }
+
   public async fetchToken() {
     const ajaxSettings = {
       url: `${this.authServiceAddress}/token`,
