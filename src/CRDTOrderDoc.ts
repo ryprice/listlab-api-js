@@ -37,6 +37,7 @@ export default class CRDTOrderDoc<T> {
 
   public append(value: T) {
     const insertKey = Math.random() + '';
+    const moveNode = this.doc.find(v => this.equal(v.value, value));
     if (this.doc.size < 1) {
       const innerDoc = this.doc.set(insertKey, {
         key: insertKey,
@@ -45,8 +46,28 @@ export default class CRDTOrderDoc<T> {
         value
       });
       return new CRDTOrderDoc(innerDoc, this.equal, insertKey, insertKey);
+    } else if (moveNode != null) {
+      return this.remove(moveNode.key).insertAfter(value, this.last);
     } else {
       return this.insertAfter(value, this.last);
+    }
+  }
+
+  public prepend(value: T) {
+    const insertKey = Math.random() + '';
+    const moveNode = this.doc.find(v => this.equal(v.value, value));
+    if (this.doc.size < 1) {
+      const innerDoc = this.doc.set(insertKey, {
+        key: insertKey,
+        prev: null,
+        next: null,
+        value
+      });
+      return new CRDTOrderDoc(innerDoc, this.equal, insertKey, insertKey);
+    } else if (moveNode != null) {
+      return this.remove(moveNode.key).insertBefore(value, this.first);
+    } else {
+      return this.insertBefore(value, this.first);
     }
   }
 
