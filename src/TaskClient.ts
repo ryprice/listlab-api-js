@@ -16,7 +16,13 @@ import Recurrence from 'listlab-api/Recurrence';
 import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
 import RequestQueue from 'listlab-api/RequestQueue';
 import Task from 'listlab-api/Task';
-import {consumeTasks, generateTaskJson} from 'listlab-api/taskSerialization';
+import {consumeTasks, generateTaskJson, consumeTaskDueOrders} from 'listlab-api/taskSerialization';
+
+type PostTaskParams = {
+  parent?: number;
+  before?: number;
+  after?: number;
+};
 
 export default class TaskClient {
 
@@ -180,10 +186,10 @@ export default class TaskClient {
     await this.requestQueue.queue(ajaxSettings);
   }
 
-  async postTask(task: Task): Promise<Payload> {
+  async postTask(task: Task, params?: PostTaskParams): Promise<Payload> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
-      data: JSON.stringify(generateTaskJson(task)),
+      data: JSON.stringify({task: generateTaskJson(task), ...params}),
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
@@ -191,9 +197,9 @@ export default class TaskClient {
     return consumePayloadResult(json);
   }
 
-  postTasks(tasks: Task[]): void {
+  postTasks(tasks: Task[], params?: PostTaskParams): void {
     for (const task of tasks) {
-      this.postTask(task);
+      this.postTask(task, params);
     }
   }
 
