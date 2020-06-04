@@ -32,6 +32,28 @@ export default class TaskClient {
     this.requestQueue = new RequestQueue(this.config);
   }
 
+  async getTaskRootOrder() {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/init/app`,
+      method: 'GET'
+    };
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    const payload = consumePayloadResult(json);
+    return payload.taskRootOrder;
+  }
+
+  async getTaskDueOrders(dues: FuzzyTime[]) {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/dueorder?${dues
+        .map(due => `due=${encodeURI(JSON.stringify(generateFuzzyTimeJson(due)))}&`)
+        .join('')
+      }`,
+      method: 'GET'
+    };
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return consumeTaskDueOrders(json);
+  }
+
   async getTaskDetails(id: number): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/task/${id}/details`,
