@@ -1,8 +1,8 @@
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import ListRole from 'listlab-api/ListRole';
-import ListRoleType, {generateListRoleTypeJson} from 'listlab-api/ListRoleType';
-import {consumeListRole, generateListRoleJson} from 'listlab-api/listSerialization';
+import ListRoleType, {listRoleTypeToRestJson} from 'listlab-api/ListRoleType';
+import {restJsonToListRole, listRoleToRestJson} from 'listlab-api/listSerialization';
 import randomToken from 'listlab-api/utils/randomToken';
 
 export default class ListPermissionClient {
@@ -32,7 +32,8 @@ export default class ListPermissionClient {
     const ajaxSettings = {
       url: (
         `${this.listServiceAddress}/permission/${listId}/user` +
-        `?userId=${userId}&type=${generateListRoleTypeJson(type)}`
+        `?userId=${userId}` +
+        `&type=${listRoleTypeToRestJson(type)}`
       ),
       method: 'POST'
     };
@@ -50,11 +51,15 @@ export default class ListPermissionClient {
   async addRoleToList(listId: number, type: ListRoleType): Promise<ListRole> {
     const secret = randomToken(64);
     const ajaxSettings = {
-      url: `${this.listServiceAddress}/permission/${listId}/role?s=${secret}&type=${generateListRoleTypeJson(type)}`,
+      url: (
+        `${this.listServiceAddress}/permission/${listId}/role` +
+        `?s=${secret}` +
+        `&type=${listRoleTypeToRestJson(type)}`
+      ),
       method: 'POST'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeListRole(json);
+    return restJsonToListRole(json);
   }
 
   async removeRoleFromList(listId: number, roleId: number): Promise<void> {
@@ -69,7 +74,7 @@ export default class ListPermissionClient {
     const ajaxSettings = {
       url: `${this.listServiceAddress}/permission/${listRole.listId}/role?roleId=${listRole.roleId}`,
       method: 'PUT',
-      data: generateListRoleJson(listRole)
+      data: listRoleToRestJson(listRole)
     };
     await authorizedRequest(this.config, ajaxSettings);
   }

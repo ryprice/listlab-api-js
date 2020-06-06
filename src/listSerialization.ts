@@ -1,12 +1,13 @@
 import List from 'listlab-api/List';
 import ListRole from 'listlab-api/ListRole';
-import {consumeListRoleType} from 'listlab-api/ListRoleType';
+import {restJsonToListRoleType} from 'listlab-api/ListRoleType';
 import ListRoleUser from 'listlab-api/ListRoleUser';
 import ListTask from 'listlab-api/ListTask';
 import Payload from 'listlab-api/Payload';
-import {consumeTasks} from 'listlab-api/taskSerialization';
+import {restJsonToTasks} from 'listlab-api/taskSerialization';
+import {restParseInt, restParseString, restParseDate, restParseBool} from 'listlab-api/utils/restParamParsers';
 
-export const generateListJson = (list: List) => ({
+export const listToRestJson = (list: List) => ({
   listId: list.listId,
   name: list.name,
   userId: list.userId,
@@ -18,38 +19,38 @@ export const generateListJson = (list: List) => ({
   archived: list.archived,
 });
 
-export const consumeList = (json: any): List => {
+export const restJsonToList = (json: any): List => {
   const list = new List();
-  list.listId = json.listId;
-  list.userId = json.userId;
-  list.name = json.name;
-  list.color = json.color;
-  list.sortOrder = json.sortOrder;
-  list.parentId = json.parentId;
-  list.readRole = json.readRole;
-  list.writeRole = json.writeRole;
-  list.author = json.author;
-  list.creationTime = json.creationTime && new Date(json.creationTime);
-  list.archived = json.archived;
+  list.listId = restParseInt(json.listId);
+  list.userId = restParseInt(json.userId);
+  list.name = restParseString(json.name);
+  list.color = restParseString(json.color);
+  list.sortOrder = restParseInt(json.sortOrder);
+  list.parentId = restParseInt(json.parentId);
+  list.readRole = restParseInt(json.readRole);
+  list.writeRole = restParseInt(json.writeRole);
+  list.author = restParseInt(json.author);
+  list.creationTime = restParseDate(json.creationTime);
+  list.archived = restParseBool(json.archived);
   if (json.tasks) {
-    consumeListTasks(list.listId, json.tasks);
+    restJsonToListTasks(list.listId, json.tasks);
   }
   return list;
 };
 
-export const consumeLists = (json: any): List[] => {
+export const restJsonToLists = (json: any): List[] => {
   const lists = new Array<List>();
   for (let i = 0; i < json.length; i++) {
-    const list = consumeList(json[i]);
+    const list = restJsonToList(json[i]);
     lists.push(list);
   }
 
   return lists;
 };
 
-export const consumeListTasks = (listId: number, json: any): Payload => {
+export const restJsonToListTasks = (listId: number, json: any): Payload => {
   const payload = new Payload();
-  payload.tasks = consumeTasks(json);
+  payload.tasks = restJsonToTasks(json);
   payload.listTasks = [];
   for (const task of payload.tasks) {
     const listTask = new ListTask(listId, task.taskId);
@@ -58,21 +59,21 @@ export const consumeListTasks = (listId: number, json: any): Payload => {
   return payload;
 };
 
-export const consumeListRole = (json: any): ListRole => {
+export const restJsonToListRole = (json: any): ListRole => {
   const listRole = new ListRole();
-  listRole.roleId = json.roleId;
-  listRole.listId = json.listId;
-  listRole.secret = json.secret;
-  listRole.type = consumeListRoleType(json.type);
+  listRole.roleId = restParseInt(json.roleId);
+  listRole.listId = restParseInt(json.listId);
+  listRole.secret = restParseString(json.secret);
+  listRole.type = restJsonToListRoleType(json.type);
   return listRole;
 };
 
-export const consumeListRoleUser = (json: any): ListRoleUser => {
+export const restJsonToListRoleUser = (json: any): ListRoleUser => {
   const listRoleUser = new ListRoleUser(json.roleId, json.userId);
   return listRoleUser;
 };
 
-export const generateListRoleJson = (listRole: ListRole): Object => ({
+export const listRoleToRestJson = (listRole: ListRole): Object => ({
   roleId: listRole.roleId,
   listId: listRole.listId,
   type: listRole.type,

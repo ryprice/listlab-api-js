@@ -6,7 +6,7 @@ export type LifecycleCountsResult = {
   created: {key: string, value: number}[],
 };
 
-const consumeLifecycleCountResult = (data: any): LifecycleCountsResult => {
+const restJsonToLifecycleCountResult = (data: any): LifecycleCountsResult => {
   const completed = data.completed.map((d: any) => ({
     key: d.key,
     value: d.value,
@@ -35,6 +35,6 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeLifecycleCountResult(json);
+    return restJsonToLifecycleCountResult(json);
   }
 }

@@ -1,20 +1,20 @@
 import CRDTOrderDoc from 'listlab-api/CRDTOrderDoc';
 import {
-  consumeListRole,
-  consumeListRoleUser,
-  consumeLists
+  restJsonToListRole,
+  restJsonToListRoleUser,
+  restJsonToLists
 } from 'listlab-api/listSerialization';
 import ListTask from 'listlab-api/ListTask';
 import Payload from 'listlab-api/Payload';
-import {consumeRecurrences} from 'listlab-api/TaskClient';
-import {consumeTaskRole, consumeTaskRoleUser} from 'listlab-api/taskRoleSerialization';
-import {consumeTaskDueOrders, consumeTaskParentOrders, consumeTasks} from 'listlab-api/taskSerialization';
-import {consumeUsers} from 'listlab-api/userSerialization';
+import {restJsonToRecurrences} from 'listlab-api/TaskClient';
+import {restJsonToTaskRole, restJsonToTaskRoleUser} from 'listlab-api/taskRoleSerialization';
+import {restJsonToTaskDueOrders, restJsonToTaskParentOrders, restJsonToTasks} from 'listlab-api/taskSerialization';
+import {restJsonToUsers} from 'listlab-api/userSerialization';
 
-export const consumePayloadResult = (json: any): Payload => {
+export const restJsonToPayloadResult = (json: any): Payload => {
   const payload = new Payload();
   if (json.tasks) {
-    payload.tasks = consumeTasks(json.tasks);
+    payload.tasks = restJsonToTasks(json.tasks);
   }
   if (json.listTasks) {
     const listTasks: ListTask[] = [];
@@ -25,22 +25,22 @@ export const consumePayloadResult = (json: any): Payload => {
     payload.listTasks = listTasks;
   }
   if (json.listRoles) {
-    payload.listRoles = json.listRoles.map(consumeListRole);
+    payload.listRoles = json.listRoles.map(restJsonToListRole);
   }
   if (json.listRoleUsers) {
-    payload.listRoleUsers = json.listRoleUsers.map(consumeListRoleUser);
+    payload.listRoleUsers = json.listRoleUsers.map(restJsonToListRoleUser);
   }
   if (json.lists) {
-    payload.lists = consumeLists(json.lists);
+    payload.lists = restJsonToLists(json.lists);
   }
   if (json.taskRoles) {
-    payload.taskRoles = json.taskRoles.map(consumeTaskRole);
+    payload.taskRoles = json.taskRoles.map(restJsonToTaskRole);
   }
   if (json.taskRoleUsers) {
-    payload.taskRoleUsers = json.taskRoleUsers.map(consumeTaskRoleUser);
+    payload.taskRoleUsers = json.taskRoleUsers.map(restJsonToTaskRoleUser);
   }
   if (json.taskParentOrders) {
-    payload.taskParentOrders = consumeTaskParentOrders(json.taskParentOrders);
+    payload.taskParentOrders = restJsonToTaskParentOrders(json.taskParentOrders);
   }
   if (json.taskRootOrder) {
     payload.taskRootOrder = CRDTOrderDoc.create<number>(
@@ -49,13 +49,13 @@ export const consumePayloadResult = (json: any): Payload => {
     );
   }
   if (json.taskDueOrders) {
-    payload.taskDueOrders = consumeTaskDueOrders(json.taskDueOrders);
+    payload.taskDueOrders = restJsonToTaskDueOrders(json.taskDueOrders);
   }
   if (json.recurrences) {
-    payload.recurrences = consumeRecurrences(json.recurrences);
+    payload.recurrences = restJsonToRecurrences(json.recurrences);
   }
   if (json.users) {
-    payload.users = consumeUsers(json.users);
+    payload.users = restJsonToUsers(json.users);
   }
   return payload;
 };

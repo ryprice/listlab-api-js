@@ -3,7 +3,7 @@ enum TaskRoleType {
   WRITE
 }
 
-export const consumeTaskRoleType = (json: any): TaskRoleType => {
+export const restJsonToTaskRoleType = (json: any): TaskRoleType => {
   if (typeof json === 'string' || json instanceof String) {
     if (json.toLowerCase() === 'read') {
       return TaskRoleType.READ;
@@ -14,7 +14,7 @@ export const consumeTaskRoleType = (json: any): TaskRoleType => {
   return null;
 };
 
-export const generateTaskRoleTypeJson = (type: TaskRoleType) => {
+export const taskRoleTypeToRestJson = (type: TaskRoleType) => {
   switch (type) {
     case TaskRoleType.READ: return 'read';
     case TaskRoleType.WRITE: return 'write';

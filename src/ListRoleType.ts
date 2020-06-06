@@ -3,7 +3,7 @@ enum ListRoleType {
   WRITE
 }
 
-export const consumeListRoleType = (json: any): ListRoleType => {
+export const restJsonToListRoleType = (json: any): ListRoleType => {
   if (typeof json === 'string' || json instanceof String) {
     if (json.toLowerCase() === 'read') {
       return ListRoleType.READ;
@@ -14,7 +14,7 @@ export const consumeListRoleType = (json: any): ListRoleType => {
   return null;
 };
 
-export const generateListRoleTypeJson = (type: ListRoleType) => {
+export const listRoleTypeToRestJson = (type: ListRoleType) => {
   switch (type) {
     case ListRoleType.READ: return 'read';
     case ListRoleType.WRITE: return 'write';

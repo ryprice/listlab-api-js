@@ -1,7 +1,7 @@
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import Notification from 'listlab-api/Notification';
-import {consumeNotifications} from 'listlab-api/notificationSerialization';
+import {restJsonToNotifications} from 'listlab-api/notificationSerialization';
 
 export default class NotificationClient {
   private readonly config: ListlabApiConfig;
@@ -16,7 +16,7 @@ export default class NotificationClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeNotifications(json);
+    return restJsonToNotifications(json);
   }
 
   async markSeen(notificationId: number): Promise<void> {

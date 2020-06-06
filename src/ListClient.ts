@@ -1,8 +1,8 @@
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import List from 'listlab-api/List';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
-import {consumeList, consumeLists, generateListJson} from 'listlab-api/listSerialization';
-import {consumePayloadResult} from 'listlab-api/payloadSerialization';
+import {restJsonToList, restJsonToLists, listToRestJson} from 'listlab-api/listSerialization';
+import {restJsonToPayloadResult} from 'listlab-api/payloadSerialization';
 
 export default class ListClient {
 
@@ -21,7 +21,7 @@ export default class ListClient {
       method: 'GET'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json) => {
-      return consumeList(json);
+      return restJsonToList(json);
     });
   }
 
@@ -31,7 +31,7 @@ export default class ListClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeLists(json);
+    return restJsonToLists(json);
   }
 
   async deleteList(list: List): Promise<List> {
@@ -47,12 +47,12 @@ export default class ListClient {
   async postList(list: List): Promise<List> {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
-      data: JSON.stringify(generateListJson(list)),
+      data: JSON.stringify(listToRestJson(list)),
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
     return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      const persistedId = this.consumeInsertResult(json);
+      const persistedId = this.restJsonToInsertResult(json);
       list.listId = persistedId;
       return list;
     });
@@ -61,7 +61,7 @@ export default class ListClient {
   async putList(list: List): Promise<List> {
     const ajaxSettings: any = {
       url: this.listServiceAddress,
-      data: JSON.stringify(generateListJson(list)),
+      data: JSON.stringify(listToRestJson(list)),
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
@@ -114,7 +114,7 @@ export default class ListClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json);
+    return restJsonToPayloadResult(json);
   }
 
   async getListsByIds(ids: number[]) {
@@ -126,14 +126,14 @@ export default class ListClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeLists(json);
+    return restJsonToLists(json);
   }
 
   constructEmptyEntity(): List {
     return new List();
   }
 
-  consumeInsertResult(json: any): number {
+  restJsonToInsertResult(json: any): number {
     if (json.id) {
       return json.id;
     } else {

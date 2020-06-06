@@ -4,19 +4,19 @@ import authorizedRequest from 'listlab-api/authorizedRequest';
 import CreatePublicTaskResponse from 'listlab-api/CreatePublicTaskResponse';
 import FuzzyTime from 'listlab-api/FuzzyTime';
 import {
-  consumeFuzzyGranularity,
-  consumeFuzzyTime,
-  generateFuzzyTimeJson
+  restJsonToFuzzyGranularity,
+  restJsonToFuzzyTime,
+  fuzzyTimeToRestJson
 } from 'listlab-api/fuzzyTimeSerialization';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import MaybeUser from 'listlab-api/MaybeUser';
 import Payload from 'listlab-api/Payload';
-import {consumePayloadResult} from 'listlab-api/payloadSerialization';
+import {restJsonToPayloadResult} from 'listlab-api/payloadSerialization';
 import Recurrence from 'listlab-api/Recurrence';
 import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
 import RequestQueue from 'listlab-api/RequestQueue';
 import Task from 'listlab-api/Task';
-import {consumeTasks, generateTaskJson, consumeTaskDueOrders} from 'listlab-api/taskSerialization';
+import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
 
 type PostTaskParams = {
   parent?: number;
@@ -44,20 +44,20 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    const payload = consumePayloadResult(json);
+    const payload = restJsonToPayloadResult(json);
     return payload.taskRootOrder;
   }
 
   async getTaskDueOrders(dues: FuzzyTime[]) {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/dueorder?${dues
-        .map(due => `due=${encodeURI(JSON.stringify(generateFuzzyTimeJson(due)))}&`)
+        .map(due => `due=${encodeURI(JSON.stringify(fuzzyTimeToRestJson(due)))}&`)
         .join('')
       }`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeTaskDueOrders(json);
+    return restJsonToTaskDueOrders(json);
   }
 
   async getTaskDetails(id: number): Promise<Payload> {
@@ -66,7 +66,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json);
+    return restJsonToPayloadResult(json);
   }
 
   async getTasks(): Promise<Task[]> {
@@ -75,7 +75,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeTasks(json);
+    return restJsonToTasks(json);
   }
 
   private preTasks: Task[] = [];
@@ -86,7 +86,7 @@ export default class TaskClient {
       method: 'POST'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    this.preTasks = this.preTasks.concat(consumeTasks(json));
+    this.preTasks = this.preTasks.concat(restJsonToTasks(json));
   }
 
   getPreTask(): Task {
@@ -102,7 +102,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeTasks(json);
+    return restJsonToTasks(json);
   }
 
   async getTaskChildren(taskId: number): Promise<Task[]> {
@@ -111,7 +111,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json).tasks;
+    return restJsonToPayloadResult(json).tasks;
   }
 
   async getTasksInProgress(): Promise<Task[]> {
@@ -120,7 +120,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json).tasks;
+    return restJsonToPayloadResult(json).tasks;
   }
 
   async getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): Promise<Task[]> {
@@ -140,25 +140,25 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    const payload = consumePayloadResult(json);
+    const payload = restJsonToPayloadResult(json);
     return payload.tasks;
   }
 
   async putTask(task: Task): Promise<Task[]> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
-      data: JSON.stringify(generateTaskJson(task)),
+      data: JSON.stringify(taskToRestJson(task)),
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
     const json = await this.requestQueue.queue(ajaxSettings);
-    return consumePayloadResult(json).tasks;
+    return restJsonToPayloadResult(json).tasks;
   }
 
   async putRecurrence(recurrence: Recurrence): Promise<Recurrence> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
-      data: JSON.stringify(this.generateRecurrenceJson(recurrence)),
+      data: JSON.stringify(this.recurrenceToRestJson(recurrence)),
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
@@ -169,7 +169,7 @@ export default class TaskClient {
   async postRecurrence(recurrence: Recurrence): Promise<Recurrence> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/recurrence`,
-      data: JSON.stringify(this.generateRecurrenceJson(recurrence)),
+      data: JSON.stringify(this.recurrenceToRestJson(recurrence)),
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
@@ -189,12 +189,12 @@ export default class TaskClient {
   async postTask(task: Task, params?: PostTaskParams): Promise<Payload> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
-      data: JSON.stringify({task: generateTaskJson(task), ...params}),
+      data: JSON.stringify({task: taskToRestJson(task), ...params}),
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
     const json = await this.requestQueue.queue(ajaxSettings);
-    return consumePayloadResult(json);
+    return restJsonToPayloadResult(json);
   }
 
   postTasks(tasks: Task[], params?: PostTaskParams): void {
@@ -288,7 +288,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeTasks(json);
+    return restJsonToTasks(json);
   }
 
   async getTasksInList(listId: number): Promise<Payload> {
@@ -297,7 +297,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json);
+    return restJsonToPayloadResult(json);
   }
 
   async removeTaskFromList(taskId: number, listId: number): Promise<void> {
@@ -332,42 +332,42 @@ export default class TaskClient {
       ajaxSettings = {
         ...ajaxSettings,
         headers: {'Content-Type': 'application/json'},
-        data: JSON.stringify(generateTaskJson(newTask))
+        data: JSON.stringify(taskToRestJson(newTask))
       };
     }
     const json = await authorizedRequest(this.config, ajaxSettings);
     return json as CreatePublicTaskResponse;
   }
 
-  generateRecurrenceJson(recurrence: Recurrence): Object {
+  recurrenceToRestJson(recurrence: Recurrence): Object {
     return {
       recurrenceId: recurrence.recurrenceId,
       baseTaskId: recurrence.baseTaskId,
-      from: generateFuzzyTimeJson(recurrence.schedule.from),
-      to: generateFuzzyTimeJson(recurrence.schedule.to),
+      from: fuzzyTimeToRestJson(recurrence.schedule.from),
+      to: fuzzyTimeToRestJson(recurrence.schedule.to),
       period: recurrence.schedule.period.getName(),
       selected: recurrence.schedule.selected
     };
   }
 }
 
-export const consumeRecurrence = (json: any) => {
+export const restJsonToRecurrence = (json: any) => {
   const recurrence = new Recurrence();
   recurrence.recurrenceId = json.recurrenceId;
   recurrence.baseTaskId = json.baseTaskId;
   const schedule = new RecurrenceSchedule();
-  schedule.to = consumeFuzzyTime(json.to);
-  schedule.from = consumeFuzzyTime(json.from);
-  schedule.period = consumeFuzzyGranularity(json.period);
+  schedule.to = restJsonToFuzzyTime(json.to);
+  schedule.from = restJsonToFuzzyTime(json.from);
+  schedule.period = restJsonToFuzzyGranularity(json.period);
   schedule.selected = json.selected;
   recurrence.schedule = schedule;
   return recurrence;
 };
 
-export const consumeRecurrences = (json: any): Recurrence[] => {
+export const restJsonToRecurrences = (json: any): Recurrence[] => {
   const recurrences = new Array<Recurrence>();
   for (let i = 0; i < json.length; i++) {
-    const entity = consumeRecurrence(json[i]);
+    const entity = restJsonToRecurrence(json[i]);
     recurrences.push(entity);
   }
   return recurrences;

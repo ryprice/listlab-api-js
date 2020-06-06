@@ -1,7 +1,7 @@
 import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
 import FuzzyTime, {buildFuzzyTime} from 'listlab-api/FuzzyTime';
 
-export const generateFuzzyTimeJson = (fuzzyTime: FuzzyTime): Object => {
+export const fuzzyTimeToRestJson = (fuzzyTime: FuzzyTime): Object => {
   if (fuzzyTime) {
     return {
       time: fuzzyTime.getTime(),
@@ -10,14 +10,14 @@ export const generateFuzzyTimeJson = (fuzzyTime: FuzzyTime): Object => {
   }
 };
 
-export const consumeFuzzyTime = (json: any) => {
+export const restJsonToFuzzyTime = (json: any) => {
   return buildFuzzyTime(
     new Date(json.time),
-    consumeFuzzyGranularity(json.granularity)
+    restJsonToFuzzyGranularity(json.granularity)
   );
 };
 
-export const consumeFuzzyGranularity = (json: any) => {
+export const restJsonToFuzzyGranularity = (json: any) => {
   switch(json.toLowerCase()) {
     case 'minute': return FuzzyGranularity.MINUTE;
     case 'hour': return FuzzyGranularity.HOUR;
@@ -26,6 +26,6 @@ export const consumeFuzzyGranularity = (json: any) => {
     case 'month': return FuzzyGranularity.MONTH;
     case 'year': return FuzzyGranularity.YEAR;
     case 'forever': return FuzzyGranularity.FOREVER;
-    default: throw 'Error in consumeFuzzyGranularity: granularity unknown';
+    default: throw 'Error in restJsonToFuzzyGranularity: granularity unknown';
   }
 };

@@ -1,19 +1,20 @@
 import CRDTOrderDoc from 'listlab-api/CRDTOrderDoc';
 import {
-  consumeFuzzyTime,
-  generateFuzzyTimeJson
+  restJsonToFuzzyTime,
+  fuzzyTimeToRestJson
 } from 'listlab-api/fuzzyTimeSerialization';
 import Task from 'listlab-api/Task';
 import TaskDueOrderTuple from 'listlab-api/TaskDueOrderTuple';
 import TaskParentOrderTuple from 'listlab-api/TaskParentOrderTuple';
-import {consumeMaybeUser, generateMaybeUserJson} from 'listlab-api/userSerialization';
+import {restJsonToMaybeUser, maybeUserToRestJson} from 'listlab-api/userSerialization';
+import {restParseInt, restParseString, restParseBool, restParseDate} from 'listlab-api/utils/restParamParsers';
 
-export const generateTaskJson = (task: Task): Object => {
+export const taskToRestJson = (task: Task): Object => {
   return {
     taskId: task.taskId,
     name: task.name,
-    due: generateFuzzyTimeJson(task.due),
-    owner: generateMaybeUserJson(task.owner),
+    due: fuzzyTimeToRestJson(task.due),
+    owner: maybeUserToRestJson(task.owner),
     parentId: task.parentId,
     completed: task.completed,
     seen: task.seen,
@@ -26,41 +27,41 @@ export const generateTaskJson = (task: Task): Object => {
   };
 };
 
-export const consumeTasks = (json: any): Task[] => {
+export const restJsonToTasks = (json: any): Task[] => {
   const tasks = new Array<Task>();
   for (let i = 0; i < json.length; i++) {
-    const entity = consumeTask(json[i]);
+    const entity = restJsonToTask(json[i]);
     tasks.push(entity);
   }
   return tasks;
 };
 
-export const consumeTask = (json: any) => {
+export const restJsonToTask = (json: any) => {
   const task = new Task();
-  task.taskId = json.taskId;
-  task.name = json.name;
-  task.owner = consumeMaybeUser(json.owner);
-  task.completed = json.completed;
-  task.parentId = json.parentId;
-  task.childCount = json.childCount ? json.childCount : 0;
-  task.incompleteChildCount = json.incompleteChildCount ? json.incompleteChildCount : 0;
-  task.isShared = json.isShared;
-  task.seen = json.seen;
-  task.recurrenceId = json.recurrenceId;
-  task.creationTime = json.creationTime && new Date(json.creationTime);
-  task.completionTime = json.completionTime && new Date(json.completionTime);
-  task.readRole = json.readRole;
-  task.writeRole = json.writeRole;
-  task.author = json.author;
-  task.canRead = json.canRead;
-  task.canWrite = json.canWrite;
+  task.taskId = restParseInt(json.taskId);
+  task.name = restParseString(json.name);
+  task.owner = restJsonToMaybeUser(json.owner);
+  task.completed = restParseBool(json.completed);
+  task.parentId = restParseInt(json.parentId);
+  task.childCount = json.childCount ? restParseInt(json.childCount) : 0;
+  task.incompleteChildCount = json.incompleteChildCount ? restParseInt(json.incompleteChildCount) : 0;
+  task.isShared = restParseBool(json.isShared);
+  task.seen = restParseBool(json.seen);
+  task.recurrenceId = restParseInt(json.recurrenceId);
+  task.creationTime = restParseDate(json.creationTime);
+  task.completionTime = restParseDate(json.completionTime);
+  task.readRole = restParseInt(json.readRole);
+  task.writeRole = restParseInt(json.writeRole);
+  task.author = restParseInt(json.author);
+  task.canRead = restParseBool(json.canRead);
+  task.canWrite = restParseBool(json.canWrite);
   if (json.due) {
-    task.due = consumeFuzzyTime(json.due);
+    task.due = restJsonToFuzzyTime(json.due);
   }
   return task;
 };
 
-export const consumeTaskParentOrders = (json: any): TaskParentOrderTuple[] => {
+export const restJsonToTaskParentOrders = (json: any): TaskParentOrderTuple[] => {
   const tuples = new Array<TaskParentOrderTuple>();
   for (let i = 0; i < json.length; i++) {
     tuples.push({
@@ -71,11 +72,11 @@ export const consumeTaskParentOrders = (json: any): TaskParentOrderTuple[] => {
   return tuples;
 };
 
-export const consumeTaskDueOrders = (json: any): TaskDueOrderTuple[] => {
+export const restJsonToTaskDueOrders = (json: any): TaskDueOrderTuple[] => {
   const tuples = new Array<TaskDueOrderTuple>();
   for (let i = 0; i < json.length; i++) {
     tuples.push({
-      due: consumeFuzzyTime(json[i].due),
+      due: restJsonToFuzzyTime(json[i].due),
       userId: 0,
       doc: CRDTOrderDoc.create<number>(json[i].doc, (a,b) => a === b)
     });

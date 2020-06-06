@@ -1,5 +1,5 @@
 import authorizedRequest from 'listlab-api/authorizedRequest';
-import {consumeTaskComment, consumeTaskComments} from 'listlab-api/commentSerialization';
+import {restJsonToTaskComment, restJsonToTaskComments} from 'listlab-api/commentSerialization';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import TaskComment from 'listlab-api/TaskComment';
 
@@ -18,7 +18,7 @@ export default class CommentClient {
       url: `${this.commentServiceAddress}/task/${taskId}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeTaskComments);
+    return authorizedRequest(this.config, ajaxSettings).then(restJsonToTaskComments);
   }
 
   async postTaskComment(comment: TaskComment): Promise<TaskComment> {
@@ -28,7 +28,7 @@ export default class CommentClient {
       data: JSON.stringify(comment),
       headers: {'Content-Type': 'application/json'},
     };
-    return authorizedRequest(this.config, ajaxSettings).then(consumeTaskComment);
+    return authorizedRequest(this.config, ajaxSettings).then(restJsonToTaskComment);
   }
 
 

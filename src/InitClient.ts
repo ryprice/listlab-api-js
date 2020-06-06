@@ -1,7 +1,7 @@
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import Payload from 'listlab-api/Payload';
-import {consumePayloadResult} from 'listlab-api/payloadSerialization';
+import {restJsonToPayloadResult} from 'listlab-api/payloadSerialization';
 
 export default class InitClient {
 
@@ -20,6 +20,6 @@ export default class InitClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumePayloadResult(json);
+    return restJsonToPayloadResult(json);
   }
 }

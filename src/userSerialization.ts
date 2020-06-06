@@ -1,8 +1,9 @@
 import MaybeUser from 'listlab-api/MaybeUser';
 import User from 'listlab-api/User';
 import UserDetails from 'listlab-api/UserDetails';
+import {restParseInt, restParseString, restParseBool} from 'listlab-api/utils/restParamParsers';
 
-export const consumeUser = (json: any): User => {
+export const restJsonToUser = (json: any): User => {
   const user = new User();
   user.userId = json.userId;
   user.name = json.name;
@@ -11,31 +12,31 @@ export const consumeUser = (json: any): User => {
   return user;
 };
 
-export const consumeUsers = (json: any): User[] => {
+export const restJsonToUsers = (json: any): User[] => {
   const users = new Array<User>();
   for (let i = 0; i < json.length; i++) {
-    const entity = consumeUser(json[i]);
+    const entity = restJsonToUser(json[i]);
     users.push(entity);
   }
   return users;
 };
 
-export const consumeUserDetails = (json: any): UserDetails => {
+export const restJsonToUserDetails = (json: any): UserDetails => {
   const userDetails = new UserDetails();
-  userDetails.userId = json.userId;
-  userDetails.name = json.name;
-  userDetails.email = json.email;
+  userDetails.userId = restParseInt(json.userId);
+  userDetails.name = restParseString(json.name);
+  userDetails.email = restParseString(json.email);
   userDetails.settings = json.settings;
-  userDetails.facebookId = json.facebookId;
-  userDetails.googleId = json.googleId;
-  userDetails.username = json.username;
-  userDetails.pendingEmail = json.pendingEmail;
-  userDetails.isAnonymous = json.isAnonymous;
+  userDetails.facebookId = restParseString(json.facebookId);
+  userDetails.googleId = restParseString(json.googleId);
+  userDetails.username = restParseString(json.username);
+  userDetails.pendingEmail = restParseString(json.pendingEmail);
+  userDetails.isAnonymous = restParseBool(json.isAnonymous);
   userDetails.gates = json.gates;
   return userDetails;
 };
 
-export const generateMaybeUserJson = (maybeUser: MaybeUser): Object => {
+export const maybeUserToRestJson = (maybeUser: MaybeUser): Object => {
   if (maybeUser) {
     return {
       userId: maybeUser.userId,
@@ -44,9 +45,12 @@ export const generateMaybeUserJson = (maybeUser: MaybeUser): Object => {
   }
 };
 
-export const consumeMaybeUser = (json: any) => {
+export const restJsonToMaybeUser = (json: any) => {
   if (json) {
-    return new MaybeUser(json.userId, json.name);
+    return new MaybeUser(
+      restParseInt(json.userId),
+      restParseString(json.name)
+    );
   } else {
     return new MaybeUser(null, null);
   }

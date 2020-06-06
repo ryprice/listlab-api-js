@@ -5,7 +5,7 @@ import authorizedRequest, {authorizedRequestRaw} from 'listlab-api/authorizedReq
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import User from 'listlab-api/User';
 import UserDetails from 'listlab-api/UserDetails';
-import {consumeUserDetails, consumeUsers} from 'listlab-api/userSerialization';
+import {restJsonToUserDetails, restJsonToUsers} from 'listlab-api/userSerialization';
 
 export default class UserClient {
 
@@ -27,7 +27,7 @@ export default class UserClient {
       }
     };
     const response = await axios(ajaxSettings);
-    return consumeUserDetails(response.data);
+    return restJsonToUserDetails(response.data);
   }
 
   async search(q: string): Promise<User[]> {
@@ -36,7 +36,7 @@ export default class UserClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeUsers(json);
+    return restJsonToUsers(json);
   }
 
   async getUsersById(ids: number[]): Promise<User[]> {
@@ -48,7 +48,7 @@ export default class UserClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeUsers(json);
+    return restJsonToUsers(json);
   }
 
   async isUsernameTaken(username: string): Promise<boolean> {

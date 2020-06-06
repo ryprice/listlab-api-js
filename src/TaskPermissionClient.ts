@@ -2,9 +2,9 @@ import authorizedRequest from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import TaskRole from 'listlab-api/TaskRole';
 import {
-  consumeTaskRole,
-  generateTaskRoleJson,
-  generateTaskRoleTypeJson
+  restJsonToTaskRole,
+  taskRoleToRestJson,
+  taskRoleTypeToRestJson
 } from 'listlab-api/taskRoleSerialization';
 import TaskRoleType from 'listlab-api/TaskRoleType';
 import randomToken from 'listlab-api/utils/randomToken';
@@ -35,11 +35,11 @@ export default class TaskPermissionClient {
   async addRoleToTask(taskId: number, type: TaskRoleType): Promise<TaskRole> {
     const secret = randomToken(64);
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/permission/${taskId}/role?s=${secret}&type=${generateTaskRoleTypeJson(type)}`,
+      url: `${this.taskServiceAddress}/permission/${taskId}/role?s=${secret}&type=${taskRoleTypeToRestJson(type)}`,
       method: 'POST'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return consumeTaskRole(json);
+    return restJsonToTaskRole(json);
   }
 
   async removeRoleFromTask(taskId: number, roleId: number): Promise<void> {
@@ -54,7 +54,7 @@ export default class TaskPermissionClient {
     const ajaxSettings = {
       url: (
         `${this.taskServiceAddress}/permission/${taskId}/user` +
-        `?userId=${userId}&type=${generateTaskRoleTypeJson(type)}`
+        `?userId=${userId}&type=${taskRoleTypeToRestJson(type)}`
       ),
       method: 'POST'
     };
@@ -73,7 +73,7 @@ export default class TaskPermissionClient {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/permission/${taskRole.taskId}/role?roleId=${taskRole.roleId}`,
       method: 'PUT',
-      data: generateTaskRoleJson(taskRole)
+      data: taskRoleToRestJson(taskRole)
     };
     await authorizedRequest(this.config, ajaxSettings);
   }
