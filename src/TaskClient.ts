@@ -17,11 +17,13 @@ import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
 import RequestQueue from 'listlab-api/RequestQueue';
 import Task from 'listlab-api/Task';
 import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
+import TaskMoveParams from 'listlab-api/TaskMoveParams';
 
 type PostTaskParams = {
   parent?: number;
   before?: number;
   after?: number;
+  orderType?: string;
 };
 
 export default class TaskClient {
@@ -203,17 +205,16 @@ export default class TaskClient {
     }
   }
 
-  async moveTaskBefore(taskId: number, beforeId: number): Promise<void> {
+  async moveTask(taskId: number, moveParams: TaskMoveParams): Promise<void> {
+    const {before, after, parent, type} = moveParams;
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/move?taskId=${taskId}&before=${beforeId}`,
-      method: 'PUT'
-    };
-    await this.requestQueue.queue(ajaxSettings);
-  }
-
-  async moveTaskAfter(taskId: number, afterId: number): Promise<void> {
-    const ajaxSettings = {
-      url: `${this.taskServiceAddress}/move?taskId=${taskId}&after=${afterId}`,
+      url: (
+        `${this.taskServiceAddress}/move` +
+        `?taskId=${taskId}&orderType=${type}` +
+        (before != null ? `&before=${before}` : '') +
+        (after != null ? `&after=${after}` : '') +
+        (parent != null ? `&parent=${parent}` : '')
+      ),
       method: 'PUT'
     };
     await this.requestQueue.queue(ajaxSettings);
@@ -222,24 +223,6 @@ export default class TaskClient {
   async moveTaskToParent(taskId: number, parentId: number): Promise<void> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/move?taskId=${taskId}&parent=${parentId}`,
-      method: 'PUT'
-    };
-    await this.requestQueue.queue(ajaxSettings);
-  }
-
-  async moveTaskToParentBefore(taskId: number, parentId: number, before: number): Promise<void> {
-    const query = qs.stringify({taskId, parent: parentId, before});
-    const ajaxSettings = {
-      url: `${this.taskServiceAddress}/move?${query}`,
-      method: 'PUT'
-    };
-    await this.requestQueue.queue(ajaxSettings);
-  }
-
-  async moveTaskToParentAfter(taskId: number, parentId: number, after: number): Promise<void> {
-    const query = qs.stringify({taskId, parent: parentId, after});
-    const ajaxSettings = {
-      url: `${this.taskServiceAddress}/move?${query}`,
       method: 'PUT'
     };
     await this.requestQueue.queue(ajaxSettings);

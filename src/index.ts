@@ -40,6 +40,7 @@ export {default as TaskComment} from 'listlab-api/TaskComment';
 export {default as TaskDueOrderTuple} from 'listlab-api/TaskDueOrderTuple';
 export {default as TaskFilter} from 'listlab-api/TaskFilter';
 export {default as TaskMetricsClient} from 'listlab-api/TaskMetricsClient';
+export {default as TaskMoveParams, TaskMoveRelativePosition, TaskMoveType} from 'listlab-api/TaskMoveParams';
 export {default as TaskParentOrderTuple} from 'listlab-api/TaskParentOrderTuple';
 export {default as TaskPermissionClient} from 'listlab-api/TaskPermissionClient';
 export {default as TaskRole} from 'listlab-api/TaskRole';
