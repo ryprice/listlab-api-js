@@ -15,7 +15,7 @@ let groceryList = new List();
 groceryList.name = 'grocery list';
 groceryList = await listClient.postList(groceryList);
 
-await listClient.addTaskToList(buyMilk.taskId, groceryList.listId);
+await listClient.addTasksToList([buyMilk.taskId], groceryList.listId);
 ```
 
 Production configuration should look like this:

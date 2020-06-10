@@ -283,27 +283,27 @@ export default class TaskClient {
     return restJsonToPayloadResult(json);
   }
 
-  async removeTaskFromList(taskId: number, listId: number): Promise<void> {
+  async removeTasksFromList(taskIds: number[], listId: number): Promise<void> {
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
+      url: (
+        `${this.taskServiceAddress}/list/${listId}/delete-tasks?` +
+        taskIds.map(taskId => `taskId=${taskId}&`).join('')
+      ),
       method: 'DELETE'
     };
     await authorizedRequest(this.config, ajaxSettings);
   }
 
-  private async addTaskToList(taskId: number, listId: number): Promise<void> {
+  async addTasksToList(taskIds: number[], listId: number): Promise<void> {
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/list/${listId}/${taskId}`,
-      method: 'POST'
+      url: (
+        `${this.taskServiceAddress}/list/${listId}/add-tasks?` +
+        taskIds.map(taskId => `taskId=${taskId}&`).join('')
+      ),
+      method: 'POST',
+      data: taskIds,
     };
     await authorizedRequest(this.config, ajaxSettings);
-  }
-
-  async addTasksToList(tasks: number[], listId: number): Promise<void> {
-    for (const task of tasks) {
-      // eslint-disable-next-line no-await-in-loop
-      await this.addTaskToList(task, listId);
-    }
   }
 
   async createPublicTask(newTask?: Task): Promise<CreatePublicTaskResponse> {
