@@ -129,6 +129,9 @@ export default class FuzzyTime {
   }
 
   public equals(other: FuzzyTime): boolean {
+    if (other == null && this.getGranularity() === FuzzyGranularity.FOREVER) {
+      return true;
+    }
     return (
       this === other || (
         this &&
