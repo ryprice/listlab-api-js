@@ -37,6 +37,20 @@ export default class TaskFilter {
     });
   }
 
+  public setListId(listId: number): TaskFilter {
+    return new TaskFilter({
+      ...(this as TaskFilter),
+      listId
+    });
+  }
+
+  public setCompleted(completed: boolean): TaskFilter {
+    return new TaskFilter({
+      ...(this as TaskFilter),
+      completed
+    });
+  }
+
   public isEmpty(): boolean {
     return (
       !this.listId &&
@@ -65,5 +79,26 @@ export default class TaskFilter {
       this.seen === other.seen &&
       this.taskIds === other.taskIds
     );
+  }
+
+  public without(other: TaskFilter) {
+    let result: TaskFilter = this;
+    if (other.listId) {
+      result = result.setListId(null);
+    }
+    if (other.parentId) {
+      result = result.setParentId(null);
+    }
+    if (other.completed != null) {
+      result = result.setCompleted(null);
+    }
+    return result;
+  }
+
+  public merge(other: TaskFilter) {
+    return new TaskFilter({
+      ...(this as TaskFilter),
+      ...other
+    });
   }
 }
