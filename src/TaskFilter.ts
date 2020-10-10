@@ -1,3 +1,5 @@
+import {pickBy} from 'lodash';
+
 import FuzzyTimeRange from 'listlab-api/FuzzyTimeRange';
 
 export default class TaskFilter {
@@ -81,24 +83,27 @@ export default class TaskFilter {
     );
   }
 
-  public without(other: TaskFilter) {
+  public without(other: TaskFilter): TaskFilter {
     let result: TaskFilter = this;
+    console.log(Object.keys(this));
     if (other.listId) {
-      result = result.setListId(null);
+      result = result.setListId(undefined);
     }
     if (other.parentId) {
-      result = result.setParentId(null);
+      result = result.setParentId(undefined);
     }
     if (other.completed != null) {
-      result = result.setCompleted(null);
+      result = result.setCompleted(undefined);
     }
     return result;
   }
 
-  public merge(other: TaskFilter) {
+  public merge(other: TaskFilter): TaskFilter {
+    // Removes undefined values
+    const notUndefined = (v: any) => v !== undefined;
     return new TaskFilter({
-      ...(this as TaskFilter),
-      ...other
+      ...pickBy((this as TaskFilter), notUndefined),
+      ...pickBy(other, notUndefined),
     });
   }
 }

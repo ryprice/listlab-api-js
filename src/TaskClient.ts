@@ -16,8 +16,8 @@ import Recurrence from 'listlab-api/Recurrence';
 import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
 import RequestQueue from 'listlab-api/RequestQueue';
 import Task from 'listlab-api/Task';
-import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
 import TaskMoveParams from 'listlab-api/TaskMoveParams';
+import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
 
 type PostTaskParams = {
   parent?: number;
