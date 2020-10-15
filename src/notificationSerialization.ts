@@ -1,5 +1,5 @@
 import Notification from 'listlab-api/Notification';
-import {restParseInt, restParseBool, restParseString} from './utils/restParamParsers';
+import {restParseInt, restParseBool, restParseString} from 'listlab-api/utils/restParamParsers';
 
 export const restJsonToNotification = (json: any): Notification => {
   const notification = new Notification();

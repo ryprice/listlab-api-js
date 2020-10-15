@@ -85,7 +85,6 @@ export default class TaskFilter {
 
   public without(other: TaskFilter): TaskFilter {
     let result: TaskFilter = this;
-    console.log(Object.keys(this));
     if (other.listId) {
       result = result.setListId(undefined);
     }
