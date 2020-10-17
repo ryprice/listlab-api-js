@@ -38,12 +38,14 @@ export default class TaskFilter {
    * When true, includes tasks at the root of the tree. If parentId
    * is also set, includes only tasks that are at the root of the subtree.
    * When false, include only non-root tasks.
-   * 
+   *
    * Examples:
    * {isRoot: true, isLeaf: true} results in orphaned tasks
    * {isRoot: true, isLeaf: false} results in root level tasks with children
    */
   public readonly isRoot: boolean;
+
+  public readonly isListRecursive: boolean;
 
   constructor(init?: {[P in keyof TaskFilter]?: TaskFilter[P]}) {
     if (init) {
@@ -57,49 +59,36 @@ export default class TaskFilter {
       this.taskIds = init.taskIds;
       this.isLeaf = init.isLeaf;
       this.isRoot = init.isRoot;
+      this.isListRecursive = init.isListRecursive;
     }
   }
 
   public setRange(range: FuzzyTimeRange): TaskFilter {
-    return new TaskFilter({
-      ...(this as TaskFilter),
-      range
-    });
+    return new TaskFilter({...this, range});
   }
 
   public setParentId(parentId: number): TaskFilter {
-    return new TaskFilter({
-      ...(this as TaskFilter),
-      parentId
-    });
+    return new TaskFilter({...this, parentId});
   }
 
   public setListId(listId: number): TaskFilter {
-    return new TaskFilter({
-      ...(this as TaskFilter),
-      listId
-    });
+    return new TaskFilter({...this, listId});
   }
 
   public setCompleted(completed: boolean): TaskFilter {
-    return new TaskFilter({
-      ...(this as TaskFilter),
-      completed
-    });
+    return new TaskFilter({...this, completed});
   }
 
   public setIsRoot(isRoot: boolean): TaskFilter {
-    return new TaskFilter({
-      ...(this as TaskFilter),
-      isRoot
-    });
+    return new TaskFilter({...this, isRoot});
   }
 
   public setIsLeaf(isLeaf: boolean): TaskFilter {
-    return new TaskFilter({
-      ...(this as TaskFilter),
-      isLeaf
-    });
+    return new TaskFilter({...this, isLeaf});
+  }
+
+  public setIsListRecursive(isListRecursive: boolean): TaskFilter {
+    return new TaskFilter({...this, isListRecursive});
   }
 
   public isEmpty(): boolean {
@@ -117,7 +106,8 @@ export default class TaskFilter {
       ) &&
       !this.taskIds &&
       this.isLeaf == null &&
-      this.isRoot == null
+      this.isRoot == null &&
+      this.isListRecursive == null
     );
   }
 
@@ -132,7 +122,8 @@ export default class TaskFilter {
       this.seen === other.seen &&
       this.taskIds === other.taskIds &&
       this.isLeaf === other.isLeaf &&
-      this.isRoot === other.isRoot
+      this.isRoot === other.isRoot &&
+      this.isListRecursive === other.isListRecursive
     );
   }
 
@@ -146,6 +137,9 @@ export default class TaskFilter {
     }
     if (other.completed != null) {
       result = result.setCompleted(undefined);
+    }
+    if (other.isListRecursive != null) {
+      result = result.setIsListRecursive(undefined);
     }
     return result;
   }
