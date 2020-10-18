@@ -146,6 +146,19 @@ export default class TaskClient {
     return payload.tasks;
   }
 
+  async getTasksByCreationTime(fromTaskId: number, limit: number) {
+    const data: any = {limit};
+    if (fromTaskId) {
+      data.continuation = fromTaskId;
+    }
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}&sort=creation_time`,
+      method: 'GET'
+    };
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return restJsonToPayloadResult(json).tasks;
+  }
+
   async putTask(task: Task): Promise<Task[]> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
