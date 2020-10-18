@@ -3,6 +3,7 @@ import * as qs from 'qs';
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import CreatePublicTaskResponse from 'listlab-api/CreatePublicTaskResponse';
 import FuzzyTime from 'listlab-api/FuzzyTime';
+import FuzzyTimeRange from 'listlab-api/FuzzyTimeRange';
 import {
   restJsonToFuzzyGranularity,
   restJsonToFuzzyTime,
@@ -16,6 +17,8 @@ import Recurrence from 'listlab-api/Recurrence';
 import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
 import RequestQueue from 'listlab-api/RequestQueue';
 import Task from 'listlab-api/Task';
+import TaskFilter from 'listlab-api/TaskFilter';
+import {taskFilterToRestJson} from 'listlab-api/taskFilterSerialization';
 import TaskMoveParams from 'listlab-api/TaskMoveParams';
 import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
 
@@ -108,8 +111,11 @@ export default class TaskClient {
   }
 
   async getTaskChildren(taskId: number): Promise<Task[]> {
+    const filter = new TaskFilter({parentId: taskId});
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/tasks?${qs.stringify({parentId: taskId})}`,
+      url: `${this.taskServiceAddress}/tasks?${qs.stringify({
+        filter: taskFilterToRestJson(filter)
+      })}`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
@@ -117,8 +123,11 @@ export default class TaskClient {
   }
 
   async getTasksInProgress(): Promise<Task[]> {
+    const filter = new TaskFilter({inProgress: true});
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/tasks/inprogress`,
+      url: `${this.taskServiceAddress}/tasks?${qs.stringify({
+        filter: taskFilterToRestJson(filter)
+      })}`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
@@ -127,11 +136,11 @@ export default class TaskClient {
 
   async getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): Promise<Task[]> {
     const data: any = {};
-    if (from) {
-      data.from = from.getTime().toISOString();
-    }
-    if (to) {
-      data.to = to.getNext().getTime().toISOString();
+    if (from != null || to != null) {
+      const filter = new TaskFilter({
+        range: new FuzzyTimeRange(from, to != null ? to.getNext() : null)
+      });
+      data.filter = taskFilterToRestJson(filter);
     }
     if (limit) {
       data.limit = limit;
@@ -147,12 +156,15 @@ export default class TaskClient {
   }
 
   async getTasksByCreationTime(fromTaskId: number, limit: number) {
-    const data: any = {limit};
+    const data: any = {
+      sort: 'creation_time',
+      limit
+    };
     if (fromTaskId) {
       data.continuation = fromTaskId;
     }
     const ajaxSettings = {
-      url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}&sort=creation_time`,
+      url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);

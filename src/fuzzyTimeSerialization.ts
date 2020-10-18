@@ -1,5 +1,6 @@
 import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
 import FuzzyTime, {buildFuzzyTime} from 'listlab-api/FuzzyTime';
+import FuzzyTimeRange from 'listlab-api/FuzzyTimeRange';
 
 export const fuzzyTimeToRestJson = (fuzzyTime: FuzzyTime): Object => {
   if (fuzzyTime) {
@@ -29,3 +30,17 @@ export const restJsonToFuzzyGranularity = (json: any) => {
     default: throw 'Error in restJsonToFuzzyGranularity: granularity unknown';
   }
 };
+
+export const fuzzyTimeRangeToRestJson = (range: FuzzyTimeRange) => {
+  const result: any = {};
+  if (range.getStart()) {
+    result.start = fuzzyTimeToRestJson(range.getStart());
+  }
+  if (range.getEnd()) {
+    result.end = fuzzyTimeToRestJson(range.getEnd());
+  }
+  return result;
+};
+
+export const restJsonToFuzzyTimeRange = (json: any) =>
+  new FuzzyTimeRange(restJsonToFuzzyTime(json.start), restJsonToFuzzyTime(json.end));
