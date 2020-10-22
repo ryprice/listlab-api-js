@@ -74,15 +74,6 @@ export default class TaskClient {
     return restJsonToPayloadResult(json);
   }
 
-  async getTasks(): Promise<Task[]> {
-    const ajaxSettings = {
-      url: this.taskServiceAddress,
-      method: 'GET'
-    };
-    const json = await authorizedRequest(this.config, ajaxSettings);
-    return restJsonToTasks(json);
-  }
-
   private preTasks: Task[] = [];
 
   async precreateTasks(): Promise<void> {
@@ -155,13 +146,20 @@ export default class TaskClient {
     return payload.tasks;
   }
 
-  async getTasksByCreationTime(fromTaskId: number, limit: number) {
+  async getTasks(args: {
+    continuation: number,
+    limit: number,
+    sort?: string,
+  }) {
+    const {continuation, sort, limit} = args;
     const data: any = {
-      sort: 'creation_time',
-      limit
+      limit,
     };
-    if (fromTaskId) {
-      data.continuation = fromTaskId;
+    if (continuation) {
+      data.continuation = continuation;
+    }
+    if (sort) {
+      data.sort = sort;
     }
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}`,
