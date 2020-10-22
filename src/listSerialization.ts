@@ -15,7 +15,7 @@ export const listToRestJson = (list: List) => ({
   sortOrder: list.sortOrder,
   parentId: list.parentId,
   author: list.author,
-  creationTime: list.creationTime,
+  creationTime: list.creationTime ? list.creationTime.toUTCString() : null,
   archived: list.archived,
 });
 
