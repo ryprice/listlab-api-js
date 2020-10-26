@@ -20,9 +20,7 @@ export default class ListClient {
       url: `${this.listServiceAddress}/${listId}`,
       method: 'GET'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json) => {
-      return restJsonToList(json);
-    });
+    return authorizedRequest(this.config, ajaxSettings).then(restJsonToList);
   }
 
   async getLists() {
@@ -39,9 +37,8 @@ export default class ListClient {
       url: `${this.listServiceAddress}/${list.listId}`,
       method: 'DELETE'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {
-      return list;
-    });
+    await authorizedRequest(this.config, ajaxSettings);
+    return list;
   }
 
   async postList(list: List): Promise<List> {
@@ -51,11 +48,10 @@ export default class ListClient {
       headers: {'Content-Type': 'application/json'},
       method: 'POST'
     };
-    return authorizedRequest(this.config, ajaxSettings).then((json: any) => {
-      const persistedId = this.restJsonToInsertResult(json);
-      list.listId = persistedId;
-      return list;
-    });
+    const response = await authorizedRequest(this.config, ajaxSettings);
+    const persistedId = this.restJsonToInsertResult(response);
+    list.listId = persistedId;
+    return list;
   }
 
   async putList(list: List): Promise<List> {
@@ -65,7 +61,8 @@ export default class ListClient {
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => list);
+    await authorizedRequest(this.config, ajaxSettings);
+    return list;
   }
 
   async moveList(listId: number, parentId: number): Promise<void> {
@@ -97,7 +94,7 @@ export default class ListClient {
       url: `${this.listServiceAddress}/${listId}/move?before=${beforeId}`,
       method: 'PUT'
     };
-    return authorizedRequest(this.config, ajaxSettings).then(() => {});
+    await authorizedRequest(this.config, ajaxSettings);
   }
 
   async moveListAfter(listId: number, afterId: number) {

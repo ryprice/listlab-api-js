@@ -40,7 +40,8 @@ export default class AuthClient {
       },
       data: qs.stringify({userId: userId})
     };
-    return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
+    const response = await axios(ajaxSettings);
+    return this.parseAuthResult(response);
   }
 
   public async authWithGoogleIdToken(googleIdToken: string) {
@@ -51,7 +52,8 @@ export default class AuthClient {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         data: qs.stringify({idToken: googleIdToken}),
       };
-      return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
+      const response = await axios(ajaxSettings);
+      return this.parseAuthResult(response);
     }
   }
 
@@ -63,7 +65,8 @@ export default class AuthClient {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         data: qs.stringify({accessToken: fbAccessToken})
       };
-      return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
+      const response = await axios(ajaxSettings);
+      return this.parseAuthResult(response);
     }
   }
 
@@ -73,7 +76,8 @@ export default class AuthClient {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     };
-    return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
+    const response = await axios(ajaxSettings);
+    return this.parseAuthResult(response);
   }
 
   public async authWithAnonActor() {
@@ -82,7 +86,8 @@ export default class AuthClient {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     };
-    return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
+    const response = await axios(ajaxSettings);
+    return this.parseAuthResult(response);
   }
 
   public async awaitAnyToken() {
@@ -105,7 +110,8 @@ export default class AuthClient {
       },
       method: 'GET',
     };
-    return axios(ajaxSettings).then((response: any) => this.parseAuthResult(response));
+    const response = await axios(ajaxSettings);
+    return this.parseAuthResult(response);
   }
 
   private parseAuthResult(response: any) {
