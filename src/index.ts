@@ -46,6 +46,7 @@ export {default as TaskPermissionClient} from 'listlab-api/TaskPermissionClient'
 export {default as TaskRole} from 'listlab-api/TaskRole';
 export {default as TaskRoleType} from 'listlab-api/TaskRoleType';
 export {default as TaskRoleUser} from 'listlab-api/TaskRoleUser';
+export {default as TaskUncontexted} from 'listlab-api/TaskUncontexted';
 export {default as User} from 'listlab-api/User';
 export {default as UserClient} from 'listlab-api/UserClient';
 export {default as UserDetails} from 'listlab-api/UserDetails';

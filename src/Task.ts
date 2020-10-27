@@ -1,57 +1,24 @@
-import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
-import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'listlab-api/FuzzyTime';
-import MaybeUser from 'listlab-api/MaybeUser';
+import TaskUncontexted, {applyTaskUncontextedClone} from 'listlab-api/TaskUncontexted';
 
-export default class Task {
-  public taskId: number;
-  public parentId: number;
-  public owner: MaybeUser;
-  public name: string;
-  public due: FuzzyTime;
-  public completed: boolean;
-  public childCount: number;
-  public incompleteChildCount: number;
-  public isShared: boolean;
+export default class Task extends TaskUncontexted {
+  // Viewer contextual properties
   public seen: boolean;
-  public recurrenceId: number;
-  public creationTime: Date;
-  public completionTime: Date;
-  public readRole: number;
-  public writeRole: number;
-  public author: number;
   public canRead: boolean;
   public canWrite: boolean;
 
   constructor() {
-    this.name = '';
-    this.completed = false;
+    super();
     this.seen = true;
-    this.due = buildFuzzyTime(new Date(unoffsetNow()), FuzzyGranularity.DAY);
-    this.owner = new MaybeUser(null, null);
-    this.childCount = 0;
-    this.incompleteChildCount = 0;
   }
 
   clone(): Task {
     const clone = new Task();
-    clone.taskId = this.taskId;
-    clone.parentId = this.parentId;
-    clone.owner = this.owner;
-    clone.name = this.name;
-    clone.due = this.due;
-    clone.completed = this.completed;
-    clone.childCount = this.childCount;
-    clone.isShared = this.isShared;
-    clone.incompleteChildCount = this.incompleteChildCount;
+    applyTaskUncontextedClone(this, clone);
+
     clone.seen = this.seen;
-    clone.recurrenceId = this.recurrenceId;
-    clone.creationTime = this.creationTime;
-    clone.completionTime = this.completionTime;
-    clone.readRole = this.readRole;
-    clone.writeRole = this.writeRole;
-    clone.author = this.author;
     clone.canRead = this.canRead;
     clone.canWrite = this.canWrite;
+
     return clone;
   }
 }

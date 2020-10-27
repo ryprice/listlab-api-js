@@ -285,6 +285,14 @@ export default class TaskClient {
     await authorizedRequest(this.config, ajaxSettings);
   }
 
+  async markUnseen(taskId: number): Promise<void> {
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/task/${taskId}/unseen`,
+      method: 'PUT'
+    };
+    await authorizedRequest(this.config, ajaxSettings);
+  }
+
   async getTasksByIds(ids: number[]): Promise<Task[]> {
     if (ids.length < 1) {
       return Promise.resolve([]);
