@@ -23,7 +23,7 @@ export default class AuthClient {
   }
 
   public getAuthToken() {
-    return this.getCookie('todoAuthToken');
+    return this.getCookie(this.getCookieKey());
   }
 
   public logout() {
@@ -114,9 +114,13 @@ export default class AuthClient {
     return this.parseAuthResult(response);
   }
 
+  private getCookieKey() {
+    return `listlabToken${this.config.Env === 'local' ? 'Local' : ''}`;
+  }
+
   private parseAuthResult(response: any) {
     const token = response.data.token;
-    this.setCookie('todoAuthToken', token);
+    this.setCookie(this.getCookieKey(), token);
     if (token) {
       this.config.AuthToken = token;
     }
