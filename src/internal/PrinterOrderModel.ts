@@ -15,6 +15,10 @@ export const pricePerPage = (quantity: number) => {
   }
 };
 
+export const pricePerCard = (quantity: number) => {
+  return (pricePerPage(quantity) / 8);
+};
+
 export const pageCount = (quantity: number) => Math.ceil(quantity/8);
 
 export const weightCost = (weight: PaperWeights) => {
