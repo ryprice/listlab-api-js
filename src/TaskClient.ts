@@ -169,10 +169,10 @@ export default class TaskClient {
     return restJsonToPayloadResult(json).tasks;
   }
 
-  async putTask(task: Task): Promise<Task[]> {
+  async putTasks(tasks: Task[]): Promise<Task[]> {
     const ajaxSettings: any = {
       url: `${this.taskServiceAddress}/task`,
-      data: JSON.stringify(taskToRestJson(task)),
+      data: JSON.stringify(tasks.map(taskToRestJson)),
       headers: {'Content-Type': 'application/json'},
       method: 'PUT'
     };
