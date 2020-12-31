@@ -1,8 +1,8 @@
 class UserDetails {
   public userId: number;
+  public actorId: number;
   public name: string;
   public email: string;
-  public isAnonymous: boolean;
   public settings: {[key: string]: string};
   public facebookId: string;
   public googleId: string;
@@ -13,6 +13,7 @@ class UserDetails {
   clone(): UserDetails {
     const clone = new UserDetails();
     clone.userId = this.userId;
+    clone.actorId = this.actorId;
     clone.name = this.name;
     clone.email = this.email;
     clone.settings = this.settings || {};

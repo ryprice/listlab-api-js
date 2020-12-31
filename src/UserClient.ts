@@ -3,9 +3,10 @@ import * as qs from 'qs';
 
 import authorizedRequest, {authorizedRequestRaw} from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
+import SessionActor from 'listlab-api/SessionActor';
 import User from 'listlab-api/User';
 import UserDetails from 'listlab-api/UserDetails';
-import {restJsonToUserDetails, restJsonToUsers} from 'listlab-api/userSerialization';
+import {restJsonToSessionActor, restJsonToUsers} from 'listlab-api/userSerialization';
 
 export default class UserClient {
 
@@ -18,16 +19,16 @@ export default class UserClient {
     this.userServiceAddress = config.UserServiceAddress;
   }
 
-  async getDetails(): Promise<UserDetails> {
+  async getSessionActor(): Promise<SessionActor> {
     const ajaxSettings = {
-      url: `${this.userServiceAddress}/details`,
+      url: `${this.userServiceAddress}/session-actor`,
       method: 'GET',
       headers: {
         Authorization: this.config.AuthToken
       }
     };
     const response = await axios(ajaxSettings);
-    return restJsonToUserDetails(response.data);
+    return restJsonToSessionActor(response.data);
   }
 
   async search(q: string): Promise<User[]> {

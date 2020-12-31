@@ -48,6 +48,7 @@ export {default as TaskRoleActor} from 'listlab-api/TaskRoleActor';
 export {default as TaskRoleType} from 'listlab-api/TaskRoleType';
 export {default as TaskRoleUser} from 'listlab-api/TaskRoleUser';
 export {default as TaskUncontexted} from 'listlab-api/TaskUncontexted';
+export {default as SessionActor} from 'listlab-api/SessionActor';
 export {default as User} from 'listlab-api/User';
 export {default as UserClient} from 'listlab-api/UserClient';
 export {default as UserDetails} from 'listlab-api/UserDetails';

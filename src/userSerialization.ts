@@ -1,14 +1,14 @@
 import MaybeUser from 'listlab-api/MaybeUser';
+import SessionActor from 'listlab-api/SessionActor';
 import User from 'listlab-api/User';
 import UserDetails from 'listlab-api/UserDetails';
-import {restParseInt, restParseString, restParseBool} from 'listlab-api/utils/restParamParsers';
+import {restParseInt, restParseString} from 'listlab-api/utils/restParamParsers';
 
 export const restJsonToUser = (json: any): User => {
   const user = new User();
   user.userId = json.userId;
   user.name = json.name;
   user.username = json.username;
-  user.isAnonymous = json.isAnonymous;
   return user;
 };
 
@@ -31,9 +31,18 @@ export const restJsonToUserDetails = (json: any): UserDetails => {
   userDetails.googleId = restParseString(json.googleId);
   userDetails.username = restParseString(json.username);
   userDetails.pendingEmail = restParseString(json.pendingEmail);
-  userDetails.isAnonymous = restParseBool(json.isAnonymous);
   userDetails.gates = json.gates;
   return userDetails;
+};
+
+export const restJsonToSessionActor = (json: any): SessionActor => {
+  const sessionActor = new SessionActor();
+  sessionActor.userId = restParseInt(json.userId);
+  sessionActor.actorId = restParseInt(json.actorId);
+  if (json.user) {
+    sessionActor.user = restJsonToUserDetails(json.user);
+  }
+  return sessionActor;
 };
 
 export const maybeUserToRestJson = (maybeUser: MaybeUser): Object => {
