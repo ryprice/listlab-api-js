@@ -44,6 +44,7 @@ export {default as TaskMoveParams, TaskMoveRelativePosition, TaskMoveType} from 
 export {default as TaskParentOrderTuple} from 'listlab-api/TaskParentOrderTuple';
 export {default as TaskPermissionClient} from 'listlab-api/TaskPermissionClient';
 export {default as TaskRole} from 'listlab-api/TaskRole';
+export {default as TaskRoleActor} from 'listlab-api/TaskRoleActor';
 export {default as TaskRoleType} from 'listlab-api/TaskRoleType';
 export {default as TaskRoleUser} from 'listlab-api/TaskRoleUser';
 export {default as TaskUncontexted} from 'listlab-api/TaskUncontexted';
