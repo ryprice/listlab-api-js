@@ -70,16 +70,6 @@ export default class AuthClient {
     }
   }
 
-  public async authWithAnonymous() {
-    const ajaxSettings = {
-      url: `${this.authServiceAddress}/anonymous`,
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    };
-    const response = await axios(ajaxSettings);
-    return this.parseAuthResult(response);
-  }
-
   public async authWithAnonActor() {
     const ajaxSettings = {
       url: `${this.authServiceAddress}/anon-actor`,

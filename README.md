@@ -5,7 +5,7 @@ Sample usage to create a task and list:
 ```javascript
 const authClient = new AuthClient(config);
 const taskClient = new TaskClient(config);
-await authClient.authWithAnonymous();
+await authClient.awaitAnyToken();
 
 let buyMilk = new Task();
 buyMilk.name = 'buy milk';
