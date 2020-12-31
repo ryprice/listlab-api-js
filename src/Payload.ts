@@ -13,18 +13,18 @@ import User from 'listlab-api/User';
 
 export default class Payload {
 
-  public lists?: List[] = [];
-  public listRoles?: ListRole[] = [];
-  public listRoleUsers?: ListRoleUser[] = [];
+  public lists?: List[];
+  public listRoles?: ListRole[];
+  public listRoleUsers?: ListRoleUser[];
 
-  public tasks?: Task[] = [];
-  public taskRoles?: TaskRole[] = [];
-  public taskRoleUsers?: TaskRoleUser[] = [];
-  public listTasks?: ListTask[] = [];
-  public recurrences?: Recurrence[] = [];
-  public taskParentOrders?: TaskParentOrderTuple[] = [];
+  public tasks?: Task[];
+  public taskRoles?: TaskRole[];
+  public taskRoleUsers?: TaskRoleUser[];
+  public listTasks?: ListTask[];
+  public recurrences?: Recurrence[];
+  public taskParentOrders?: TaskParentOrderTuple[];
   public taskRootOrder?: CRDTOrderDoc<number>;
-  public taskDueOrders?: TaskDueOrderTuple[] = [];
+  public taskDueOrders?: TaskDueOrderTuple[];
 
-  public users?: User[] = [];
+  public users?: User[];
 }
