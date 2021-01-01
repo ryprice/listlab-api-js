@@ -14,9 +14,9 @@ export default class InitClient {
     this.initServiceAddress = `${config.TaskServiceAddress}/init`;
   }
 
-  public async init(): Promise<Payload> {
+  public async init(params: {tasks?: boolean}): Promise<Payload> {
     const ajaxSettings = {
-      url: `${this.initServiceAddress}/app`,
+      url: `${this.initServiceAddress}/app?tasks=${params.tasks === true ? 'true' : 'false'}`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);

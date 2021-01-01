@@ -92,16 +92,16 @@ export default class TaskClient {
     return this.preTasks.shift();
   }
 
-  async search(query: string): Promise<Task[]> {
+  async search(query: string): Promise<Payload> {
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/search?q=${query}`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return restJsonToTasks(json);
+    return restJsonToPayloadResult(json);
   }
 
-  async getTaskChildren(taskId: number): Promise<Task[]> {
+  async getTaskChildren(taskId: number): Promise<Payload> {
     const filter = new TaskFilter({parentId: taskId});
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify({
@@ -110,10 +110,10 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return restJsonToPayloadResult(json).tasks;
+    return restJsonToPayloadResult(json);
   }
 
-  async getTasksInProgress(): Promise<Task[]> {
+  async getTasksInProgress(): Promise<Payload> {
     const filter = new TaskFilter({inProgress: true});
     const ajaxSettings = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify({
@@ -122,10 +122,10 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return restJsonToPayloadResult(json).tasks;
+    return restJsonToPayloadResult(json);
   }
 
-  async getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): Promise<Task[]> {
+  async getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): Promise<Payload> {
     const data: any = {};
     if (from != null || to != null) {
       const filter = new TaskFilter({
@@ -142,8 +142,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    const payload = restJsonToPayloadResult(json);
-    return payload.tasks;
+    return restJsonToPayloadResult(json);
   }
 
   async getTasks(args: {
@@ -166,7 +165,7 @@ export default class TaskClient {
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
-    return restJsonToPayloadResult(json).tasks;
+    return restJsonToPayloadResult(json);
   }
 
   async putTasks(tasks: Task[]): Promise<Task[]> {
