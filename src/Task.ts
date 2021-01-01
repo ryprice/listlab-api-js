@@ -5,6 +5,7 @@ export default class Task extends TaskUncontexted {
   public seen: boolean;
   public canRead: boolean;
   public canWrite: boolean;
+  public inbox: boolean;
 
   constructor() {
     super();
@@ -18,6 +19,7 @@ export default class Task extends TaskUncontexted {
     clone.seen = this.seen;
     clone.canRead = this.canRead;
     clone.canWrite = this.canWrite;
+    clone.inbox = this.inbox;
 
     return clone;
   }

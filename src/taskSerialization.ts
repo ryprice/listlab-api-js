@@ -24,6 +24,7 @@ export const taskToRestJson = (task: Task): Object => {
     readRole: task.readRole,
     writeRole: task.writeRole,
     author: task.author,
+    inbox: task.inbox,
   };
 };
 
@@ -55,6 +56,7 @@ export const restJsonToTask = (json: any) => {
   task.author = restParseInt(json.author);
   task.canRead = restParseBool(json.canRead);
   task.canWrite = restParseBool(json.canWrite);
+  task.inbox = restParseBool(json.inbox);
   if (json.due) {
     task.due = restJsonToFuzzyTime(json.due);
   }

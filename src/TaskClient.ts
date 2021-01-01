@@ -293,6 +293,25 @@ export default class TaskClient {
     await authorizedRequest(this.config, ajaxSettings);
   }
 
+
+  async markInbox(taskIds: number[]): Promise<void> {
+    const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/task/inbox?${idsQuery}`,
+      method: 'PUT'
+    };
+    await authorizedRequest(this.config, ajaxSettings);
+  }
+
+  async markUninbox(taskIds: number[]): Promise<void> {
+    const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
+    const ajaxSettings = {
+      url: `${this.taskServiceAddress}/task/uninbox?${idsQuery}`,
+      method: 'PUT'
+    };
+    await authorizedRequest(this.config, ajaxSettings);
+  }
+
   async getTasksByIds(ids: number[]): Promise<Task[]> {
     if (ids.length < 1) {
       return Promise.resolve([]);

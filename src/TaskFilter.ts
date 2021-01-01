@@ -47,6 +47,8 @@ export default class TaskFilter {
 
   public readonly isListRecursive: boolean;
 
+  public readonly inbox: boolean;
+
   constructor(init?: {[P in keyof TaskFilter]?: TaskFilter[P]}) {
     if (init) {
       this.listId = init.listId;
@@ -60,6 +62,7 @@ export default class TaskFilter {
       this.isLeaf = init.isLeaf;
       this.isRoot = init.isRoot;
       this.isListRecursive = init.isListRecursive;
+      this.inbox = init.inbox;
     }
   }
 
@@ -107,7 +110,8 @@ export default class TaskFilter {
       !this.taskIds &&
       this.isLeaf == null &&
       this.isRoot == null &&
-      this.isListRecursive == null
+      this.isListRecursive == null &&
+      this.inbox === null
     );
   }
 
@@ -123,7 +127,8 @@ export default class TaskFilter {
       this.taskIds === other.taskIds &&
       this.isLeaf === other.isLeaf &&
       this.isRoot === other.isRoot &&
-      this.isListRecursive === other.isListRecursive
+      this.isListRecursive === other.isListRecursive &&
+      this.inbox === other.inbox
     );
   }
 

@@ -36,6 +36,9 @@ export const restJsonToTaskFilter = (json: any): TaskFilter => {
   if (json.isRoot != null) {
     initArgs.isRoot = restParseBool(json.isRoot);
   }
+  if (json.inbox != null) {
+    initArgs.inbox = restParseBool(json.inbox);
+  }
 
   return new TaskFilter(initArgs);
 };
