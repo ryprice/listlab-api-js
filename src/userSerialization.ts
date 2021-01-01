@@ -1,3 +1,4 @@
+import Actor from 'listlab-api/Actor';
 import MaybeUser from 'listlab-api/MaybeUser';
 import SessionActor from 'listlab-api/SessionActor';
 import User from 'listlab-api/User';
@@ -62,5 +63,23 @@ export const restJsonToMaybeUser = (json: any) => {
     );
   } else {
     return new MaybeUser(null, null);
+  }
+};
+
+export const actorToRestJson = (actor: Actor) => {
+  if (!actor) {
+    return null;
+  }
+  return {
+    actorId: actor.actorId,
+    userId: actor.userId,
+  };
+};
+
+export const restJsonToActor = (data: any) => {
+  if (data != null) {
+    return new Actor(data.actorId, data.userId);
+  } else {
+    return null;
   }
 };

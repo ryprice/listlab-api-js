@@ -1,3 +1,4 @@
+import Actor from 'listlab-api/Actor';
 import UserDetails from 'listlab-api/UserDetails';
 
 class SessionActor {
@@ -11,6 +12,13 @@ class SessionActor {
     clone.actorId = this.actorId;
     clone.user = this.user.clone();
     return clone;
+  }
+
+  equalsActor(actor: Actor) {
+    return (
+      (actor.userId != null && actor.userId === this.userId) ||
+      (actor.actorId != null && actor.actorId === this.actorId)
+    );
   }
 }
 

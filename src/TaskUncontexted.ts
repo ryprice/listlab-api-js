@@ -1,3 +1,4 @@
+import Actor from 'listlab-api/Actor';
 import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
 import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'listlab-api/FuzzyTime';
 import MaybeUser from 'listlab-api/MaybeUser';
@@ -17,7 +18,7 @@ export default class TaskUncontexted {
   public completionTime: Date;
   public readRole: number;
   public writeRole: number;
-  public author: number;
+  public author: Actor;
 
   constructor() {
     this.name = '';

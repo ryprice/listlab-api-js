@@ -6,7 +6,7 @@ import {
 import Task from 'listlab-api/Task';
 import TaskDueOrderTuple from 'listlab-api/TaskDueOrderTuple';
 import TaskParentOrderTuple from 'listlab-api/TaskParentOrderTuple';
-import {restJsonToMaybeUser, maybeUserToRestJson} from 'listlab-api/userSerialization';
+import {actorToRestJson, restJsonToMaybeUser, maybeUserToRestJson, restJsonToActor} from 'listlab-api/userSerialization';
 import {restParseInt, restParseString, restParseBool, restParseDate} from 'listlab-api/utils/restParamParsers';
 
 export const taskToRestJson = (task: Task): Object => {
@@ -23,7 +23,7 @@ export const taskToRestJson = (task: Task): Object => {
     completionTime: task.completionTime ? task.completionTime.toUTCString() : null,
     readRole: task.readRole,
     writeRole: task.writeRole,
-    author: task.author,
+    author: actorToRestJson(task.author),
     inbox: task.inbox,
   };
 };
@@ -53,7 +53,7 @@ export const restJsonToTask = (json: any) => {
   task.completionTime = restParseDate(json.completionTime);
   task.readRole = restParseInt(json.readRole);
   task.writeRole = restParseInt(json.writeRole);
-  task.author = restParseInt(json.author);
+  task.author = restJsonToActor(json.author);
   task.canRead = restParseBool(json.canRead);
   task.canWrite = restParseBool(json.canWrite);
   task.inbox = restParseBool(json.inbox);
