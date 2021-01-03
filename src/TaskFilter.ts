@@ -1,6 +1,7 @@
 import {pickBy} from 'lodash';
 
 import FuzzyTimeRange from 'listlab-api/FuzzyTimeRange';
+import Task from 'listlab-api/Task';
 
 export default class TaskFilter {
 
@@ -49,6 +50,8 @@ export default class TaskFilter {
 
   public readonly inbox: boolean;
 
+  public readonly lambda: (task: Task) => boolean;
+
   constructor(init?: {[P in keyof TaskFilter]?: TaskFilter[P]}) {
     if (init) {
       this.listId = init.listId;
@@ -63,6 +66,7 @@ export default class TaskFilter {
       this.isRoot = init.isRoot;
       this.isListRecursive = init.isListRecursive;
       this.inbox = init.inbox;
+      this.lambda = init.lambda;
     }
   }
 
@@ -94,6 +98,10 @@ export default class TaskFilter {
     return new TaskFilter({...this, isListRecursive});
   }
 
+  public setLambda(lambda: (task: Task) => boolean): TaskFilter {
+    return new TaskFilter({...this, lambda});
+  }
+
   public isEmpty(): boolean {
     return (
       !this.listId &&
@@ -111,7 +119,8 @@ export default class TaskFilter {
       this.isLeaf == null &&
       this.isRoot == null &&
       this.isListRecursive == null &&
-      this.inbox === null
+      this.inbox === null &&
+      this.lambda === null
     );
   }
 
@@ -128,7 +137,8 @@ export default class TaskFilter {
       this.isLeaf === other.isLeaf &&
       this.isRoot === other.isRoot &&
       this.isListRecursive === other.isListRecursive &&
-      this.inbox === other.inbox
+      this.inbox === other.inbox &&
+      this.lambda === other.lambda
     );
   }
 
