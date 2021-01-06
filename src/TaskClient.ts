@@ -1,3 +1,4 @@
+import {AxiosRequestConfig} from 'axios';
 import * as qs from 'qs';
 
 import authorizedRequest from 'listlab-api/authorizedRequest';
@@ -44,7 +45,7 @@ export default class TaskClient {
   }
 
   async getTaskRootOrder() {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/init/app`,
       method: 'GET'
     };
@@ -54,7 +55,7 @@ export default class TaskClient {
   }
 
   async getTaskDueOrders(dues: FuzzyTime[]) {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/dueorder?${dues
         .map(due => `due=${encodeURI(JSON.stringify(fuzzyTimeToRestJson(due)))}&`)
         .join('')
@@ -66,7 +67,7 @@ export default class TaskClient {
   }
 
   async getTaskDetails(id: number): Promise<Payload> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/task/${id}/details`,
       method: 'GET'
     };
@@ -77,7 +78,7 @@ export default class TaskClient {
   private preTasks: Task[] = [];
 
   async precreateTasks(): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks/precreate`,
       method: 'POST'
     };
@@ -93,7 +94,7 @@ export default class TaskClient {
   }
 
   async search(query: string): Promise<Payload> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/search?q=${query}`,
       method: 'GET'
     };
@@ -103,7 +104,7 @@ export default class TaskClient {
 
   async getTaskChildren(taskId: number): Promise<Payload> {
     const filter = new TaskFilter({parentId: taskId});
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify({
         filter: taskFilterToRestJson(filter)
       })}`,
@@ -115,7 +116,7 @@ export default class TaskClient {
 
   async getTasksInProgress(): Promise<Payload> {
     const filter = new TaskFilter({inProgress: true});
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify({
         filter: taskFilterToRestJson(filter)
       })}`,
@@ -137,7 +138,7 @@ export default class TaskClient {
       data.limit = limit;
     }
 
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}`,
       method: 'GET'
     };
@@ -160,7 +161,7 @@ export default class TaskClient {
     if (sort) {
       data.sort = sort;
     }
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}`,
       method: 'GET'
     };
@@ -169,7 +170,7 @@ export default class TaskClient {
   }
 
   async putTasks(tasks: Task[]): Promise<Task[]> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/task`,
       data: JSON.stringify(tasks.map(taskToRestJson)),
       headers: {'Content-Type': 'application/json'},
@@ -180,7 +181,7 @@ export default class TaskClient {
   }
 
   async putRecurrence(recurrence: Recurrence): Promise<Recurrence> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
       data: JSON.stringify(this.recurrenceToRestJson(recurrence)),
       headers: {'Content-Type': 'application/json'},
@@ -191,7 +192,7 @@ export default class TaskClient {
   }
 
   async postRecurrence(recurrence: Recurrence): Promise<Recurrence> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/recurrence`,
       data: JSON.stringify(this.recurrenceToRestJson(recurrence)),
       headers: {'Content-Type': 'application/json'},
@@ -202,7 +203,7 @@ export default class TaskClient {
   }
 
   async deleteRecurrence(recurrence: Recurrence): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
@@ -211,7 +212,7 @@ export default class TaskClient {
   }
 
   async postTask(task: Task, params?: PostTaskParams): Promise<Payload> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/task`,
       data: JSON.stringify({task: taskToRestJson(task), ...params}),
       headers: {'Content-Type': 'application/json'},
@@ -229,7 +230,7 @@ export default class TaskClient {
 
   async moveTask(taskId: number, moveParams: TaskMoveParams): Promise<void> {
     const {before, after, parent, type} = moveParams;
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: (
         `${this.taskServiceAddress}/move` +
         `?taskId=${taskId}&orderType=${type}` +
@@ -243,7 +244,7 @@ export default class TaskClient {
   }
 
   async moveTaskToParent(taskId: number, parentId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/move?taskId=${taskId}&parent=${parentId}`,
       method: 'PUT'
     };
@@ -252,7 +253,7 @@ export default class TaskClient {
 
   async deleteTasks(taskIds: number[]): Promise<number[]> {
     const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks?${idsQuery}`,
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
@@ -269,7 +270,7 @@ export default class TaskClient {
     if (maybeUser.name) {
       data.ownerName = maybeUser.name;
     }
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks/assign?${qs.stringify(data)}`,
       method: 'PUT'
     };
@@ -277,7 +278,7 @@ export default class TaskClient {
   }
 
   async markSeen(taskId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/task/${taskId}/seen`,
       method: 'PUT'
     };
@@ -285,7 +286,7 @@ export default class TaskClient {
   }
 
   async markUnseen(taskId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/task/${taskId}/unseen`,
       method: 'PUT'
     };
@@ -295,7 +296,7 @@ export default class TaskClient {
 
   async markInbox(taskIds: number[]): Promise<void> {
     const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/task/inbox?${idsQuery}`,
       method: 'PUT'
     };
@@ -304,7 +305,7 @@ export default class TaskClient {
 
   async markUninbox(taskIds: number[]): Promise<void> {
     const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/task/uninbox?${idsQuery}`,
       method: 'PUT'
     };
@@ -315,7 +316,7 @@ export default class TaskClient {
     if (ids.length < 1) {
       return Promise.resolve([]);
     }
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: 'GET'
     };
@@ -324,7 +325,7 @@ export default class TaskClient {
   }
 
   async getTasksInList(listId: number): Promise<Payload> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks?listId=${listId}`,
       method: 'GET'
     };
@@ -333,7 +334,7 @@ export default class TaskClient {
   }
 
   async removeTasksFromList(taskIds: number[], listId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: (
         `${this.taskServiceAddress}/list/${listId}/delete-tasks?` +
         taskIds.map(taskId => `taskId=${taskId}&`).join('')
@@ -344,7 +345,7 @@ export default class TaskClient {
   }
 
   async addTasksToList(taskIds: number[], listId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: (
         `${this.taskServiceAddress}/list/${listId}/add-tasks?` +
         taskIds.map(taskId => `taskId=${taskId}&`).join('')
@@ -356,7 +357,7 @@ export default class TaskClient {
   }
 
   async createPublicTask(newTask?: Task): Promise<CreatePublicTaskResponse> {
-    let ajaxSettings: any = {
+    let ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/create-public`,
       method: 'POST',
     };

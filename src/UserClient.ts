@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 import * as qs from 'qs';
 
 import authorizedRequest, {authorizedRequestRaw} from 'listlab-api/authorizedRequest';
@@ -20,7 +20,7 @@ export default class UserClient {
   }
 
   async getSessionActor(): Promise<SessionActor> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.userServiceAddress}/session-actor`,
       method: 'GET',
       headers: {
@@ -32,7 +32,7 @@ export default class UserClient {
   }
 
   async search(q: string): Promise<User[]> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.userServiceAddress}/search?q=${q}`,
       method: 'GET'
     };
@@ -44,7 +44,7 @@ export default class UserClient {
     if (ids.length < 1) {
       return Promise.resolve([]);
     }
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.userServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: 'GET'
     };
@@ -53,7 +53,7 @@ export default class UserClient {
   }
 
   async isUsernameTaken(username: string): Promise<boolean> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.userServiceAddress}/byUsername/${username}`,
       method: 'GET'
     };
@@ -70,7 +70,7 @@ export default class UserClient {
   }
 
   async putSettings(settings: {[key: string]: string}): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.userServiceAddress}/settings`,
       method: 'PUT',
       data: JSON.stringify(settings),
@@ -80,7 +80,7 @@ export default class UserClient {
   }
 
   async putUserDetails(user: UserDetails): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.userServiceAddress}`,
       method: 'PUT',
       data: JSON.stringify(user),
@@ -90,7 +90,7 @@ export default class UserClient {
   }
 
   async anonMergeFacebook(accessToken: string): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.userServiceAddress}/anon-merge/facebook`,
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -100,7 +100,7 @@ export default class UserClient {
   }
 
   async anonMergeGoogle(accessToken: string): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.userServiceAddress}/anon-merge/google`,
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},

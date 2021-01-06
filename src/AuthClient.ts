@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 import * as qs from 'qs';
 
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
@@ -32,7 +32,7 @@ export default class AuthClient {
   }
 
   public async authWithFake(userId: number) {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: this.authServiceAddress + '/fake',
       method: 'POST',
       headers: {
@@ -46,7 +46,7 @@ export default class AuthClient {
 
   public async authWithGoogleIdToken(googleIdToken: string) {
     if (googleIdToken !== null) {
-      const ajaxSettings = {
+      const ajaxSettings: AxiosRequestConfig = {
         url: `${this.authServiceAddress}/google`,
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -59,7 +59,7 @@ export default class AuthClient {
 
   public async authWithFacebookAccessToken(fbAccessToken: string) {
     if (fbAccessToken != null) {
-      const ajaxSettings = {
+      const ajaxSettings: AxiosRequestConfig = {
         url: `${this.authServiceAddress}/facebook`,
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -71,7 +71,7 @@ export default class AuthClient {
   }
 
   public async authWithAnonActor() {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.authServiceAddress}/anon-actor`,
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -93,7 +93,7 @@ export default class AuthClient {
   }
 
   public async fetchToken() {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.authServiceAddress}/token`,
       headers: {
         Authorization: `${this.getAuthToken()}`,

@@ -1,3 +1,5 @@
+import {AxiosRequestConfig} from 'axios';
+
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import ListRole from 'listlab-api/ListRole';
@@ -17,7 +19,7 @@ export default class ListPermissionClient {
   }
 
   async userKnowsSecret(listId: number, secret: string): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/permission/${listId}/user?s=${secret}`,
       method: 'POST'
     };
@@ -29,7 +31,7 @@ export default class ListPermissionClient {
   }
 
   async addUserToList(userId: number, listId: number, type: ListRoleType): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: (
         `${this.listServiceAddress}/permission/${listId}/user` +
         `?userId=${userId}` +
@@ -41,7 +43,7 @@ export default class ListPermissionClient {
   }
 
   async removeUserFromList(userId: number, listId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/permission/${listId}/user?userId=${userId}`,
       method: 'DELETE'
     };
@@ -50,7 +52,7 @@ export default class ListPermissionClient {
 
   async addRoleToList(listId: number, type: ListRoleType): Promise<ListRole> {
     const secret = randomToken(64);
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: (
         `${this.listServiceAddress}/permission/${listId}/role` +
         `?s=${secret}` +
@@ -63,7 +65,7 @@ export default class ListPermissionClient {
   }
 
   async removeRoleFromList(listId: number, roleId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/permission/${listId}/role?roleId=${roleId}`,
       method: 'DELETE'
     };
@@ -71,7 +73,7 @@ export default class ListPermissionClient {
   }
 
   async updateListRole(listRole: ListRole): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/permission/${listRole.listId}/role?roleId=${listRole.roleId}`,
       method: 'PUT',
       data: listRoleToRestJson(listRole)

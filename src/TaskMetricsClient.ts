@@ -1,3 +1,5 @@
+import {AxiosRequestConfig} from 'axios';
+
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 
@@ -30,7 +32,7 @@ export default class TaskClient {
   }
 
   async getLifecycleCounts(): Promise<LifecycleCountsResult> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/metrics/lifecycle-counts`,
       method: 'GET'
     };

@@ -1,3 +1,5 @@
+import {AxiosRequestConfig} from 'axios';
+
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import List from 'listlab-api/List';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
@@ -16,7 +18,7 @@ export default class ListClient {
   }
 
   async getList(listId: number): Promise<List> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/${listId}`,
       method: 'GET'
     };
@@ -24,7 +26,7 @@ export default class ListClient {
   }
 
   async getLists() {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: this.listServiceAddress,
       method: 'GET'
     };
@@ -33,7 +35,7 @@ export default class ListClient {
   }
 
   async deleteList(list: List): Promise<List> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/${list.listId}`,
       method: 'DELETE'
     };
@@ -42,7 +44,7 @@ export default class ListClient {
   }
 
   async postList(list: List): Promise<List> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: this.listServiceAddress,
       data: JSON.stringify(listToRestJson(list)),
       headers: {'Content-Type': 'application/json'},
@@ -55,7 +57,7 @@ export default class ListClient {
   }
 
   async putList(list: List): Promise<List> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: this.listServiceAddress,
       data: JSON.stringify(listToRestJson(list)),
       headers: {'Content-Type': 'application/json'},
@@ -66,7 +68,7 @@ export default class ListClient {
   }
 
   async moveList(listId: number, parentId: number): Promise<void> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/${listId}/move?parent=${parentId}`,
       method: 'PUT'
     };
@@ -74,7 +76,7 @@ export default class ListClient {
   }
 
   async archiveList(listId: number): Promise<void> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/${listId}/archive`,
       method: 'PUT'
     };
@@ -82,7 +84,7 @@ export default class ListClient {
   }
 
   async unarchiveList(listId: number): Promise<void> {
-    const ajaxSettings: any = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/${listId}/unarchive`,
       method: 'PUT'
     };
@@ -90,7 +92,7 @@ export default class ListClient {
   }
 
   async moveListBefore(listId: number, beforeId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/${listId}/move?before=${beforeId}`,
       method: 'PUT'
     };
@@ -98,7 +100,7 @@ export default class ListClient {
   }
 
   async moveListAfter(listId: number, afterId: number) {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/${listId}/move?after=${afterId}`,
       method: 'PUT'
     };
@@ -106,7 +108,7 @@ export default class ListClient {
   }
 
   async getListDetails(listId: number) {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/${listId}/details`,
       method: 'GET'
     };
@@ -118,7 +120,7 @@ export default class ListClient {
     if (ids.length < 1) {
       return Promise.resolve([]);
     }
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.listServiceAddress}/byId?${ids.map(id => `id=${id}&`).join('')}`,
       method: 'GET'
     };

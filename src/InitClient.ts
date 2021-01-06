@@ -1,3 +1,5 @@
+import {AxiosRequestConfig}  from 'axios';
+
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import Payload from 'listlab-api/Payload';
@@ -15,7 +17,7 @@ export default class InitClient {
   }
 
   public async init(params: {tasks?: boolean}): Promise<Payload> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.initServiceAddress}/app?tasks=${params.tasks === true ? 'true' : 'false'}`,
       method: 'GET'
     };

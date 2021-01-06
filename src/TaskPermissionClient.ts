@@ -1,3 +1,5 @@
+import {AxiosRequestConfig} from 'axios';
+
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import TaskRole from 'listlab-api/TaskRole';
@@ -21,7 +23,7 @@ export default class TaskPermissionClient {
   }
 
   async userKnowsSecret(taskId: number, secret: string): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?s=${secret}`,
       method: 'POST'
     };
@@ -34,7 +36,7 @@ export default class TaskPermissionClient {
 
   async addRoleToTask(taskId: number, type: TaskRoleType): Promise<TaskRole> {
     const secret = randomToken(64);
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: (
         `${this.taskServiceAddress}/permission/${taskId}/role` +
         `?s=${secret}&type=${taskRoleTypeToRestJson(type)}`
@@ -46,7 +48,7 @@ export default class TaskPermissionClient {
   }
 
   async removeRoleFromTask(taskId: number, roleId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/permission/${taskId}/role?roleId=${roleId}`,
       method: 'DELETE'
     };
@@ -54,7 +56,7 @@ export default class TaskPermissionClient {
   }
 
   async addUserToTask(userId: number, taskId: number, type: TaskRoleType): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: (
         `${this.taskServiceAddress}/permission/${taskId}/user` +
         `?userId=${userId}&type=${taskRoleTypeToRestJson(type)}`
@@ -65,7 +67,7 @@ export default class TaskPermissionClient {
   }
 
   async removeUserFromTask(userId: number, taskId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/permission/${taskId}/user?userId=${userId}`,
       method: 'DELETE'
     };
@@ -73,7 +75,7 @@ export default class TaskPermissionClient {
   }
 
   async updateTaskRole(taskRole: TaskRole): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/permission/${taskRole.taskId}/role?roleId=${taskRole.roleId}`,
       method: 'PUT',
       data: taskRoleToRestJson(taskRole)

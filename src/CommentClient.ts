@@ -1,3 +1,5 @@
+import {AxiosRequestConfig} from 'axios';
+
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import {restJsonToTaskComment, restJsonToTaskComments} from 'listlab-api/commentSerialization';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
@@ -14,7 +16,7 @@ export default class CommentClient {
   }
 
   async getCommentsForTask(taskId: number): Promise<TaskComment[]> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.commentServiceAddress}/task/${taskId}`,
       method: 'GET'
     };
@@ -22,7 +24,7 @@ export default class CommentClient {
   }
 
   async postTaskComment(comment: TaskComment): Promise<TaskComment> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.commentServiceAddress}/task`,
       method: 'POST',
       data: JSON.stringify(comment),
@@ -33,7 +35,7 @@ export default class CommentClient {
 
 
   async deleteTaskComment(commentId: number): Promise<void> {
-    const ajaxSettings = {
+    const ajaxSettings: AxiosRequestConfig = {
       url: `${this.commentServiceAddress}/taskComment/${commentId}`,
       method: 'DELETE',
     };
