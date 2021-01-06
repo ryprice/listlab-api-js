@@ -9,6 +9,8 @@ interface RequestQueueObject {
   ajaxSettings: AxiosRequestConfig;
 }
 
+type RequestQueueListener = (running: boolean) => void;
+
 // Lazy way of guarenteeing order of operations by
 // performing requests in serial
 export default class RequestQueue {
@@ -16,6 +18,8 @@ export default class RequestQueue {
   private readonly config: ListlabApiConfig;
 
   private readonly requestQueue: RequestQueueObject[] = [];
+
+  private listeners: RequestQueueListener[] = [];
 
   private isRunning = false;
 
@@ -25,6 +29,7 @@ export default class RequestQueue {
 
   private async start() {
     this.isRunning = true;
+    this.fireListener(true);
     while (this.requestQueue.length > 0) {
       const curRequestQueueObj = this.requestQueue.shift();
       try {
@@ -37,6 +42,7 @@ export default class RequestQueue {
       }
     }
     this.isRunning = false;
+    this.fireListener(false);
   }
 
   queue(ajaxSettings: AxiosRequestConfig) {
@@ -52,5 +58,17 @@ export default class RequestQueue {
       this.start();
     }
     return promise;
+  }
+
+  addListener(listener: RequestQueueListener) {
+    this.listeners = this.listeners.concat([listener]);
+  }
+
+  removeListener(listener: RequestQueueListener) {
+    this.listeners = this.listeners.filter(l => listener === l);
+  }
+
+  private fireListener(running: boolean) {
+    this.listeners.forEach(l => l(running));
   }
 }

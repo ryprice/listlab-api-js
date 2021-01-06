@@ -299,7 +299,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/task/inbox?${idsQuery}`,
       method: 'PUT'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async markUninbox(taskIds: number[]): Promise<void> {
@@ -308,7 +308,7 @@ export default class TaskClient {
       url: `${this.taskServiceAddress}/task/uninbox?${idsQuery}`,
       method: 'PUT'
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async getTasksByIds(ids: number[]): Promise<Task[]> {
@@ -380,6 +380,14 @@ export default class TaskClient {
       period: recurrence.schedule.period.getName(),
       selected: recurrence.schedule.selected
     };
+  }
+
+  addRequestQueueListener(l: (isRunning: boolean) => void) {
+    this.requestQueue.addListener(l);
+  }
+
+  removeRequestQueueListener(l: (isRunning: boolean) => void) {
+    this.requestQueue.removeListener(l);
   }
 }
 

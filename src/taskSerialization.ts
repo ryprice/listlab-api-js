@@ -6,8 +6,18 @@ import {
 import Task from 'listlab-api/Task';
 import TaskDueOrderTuple from 'listlab-api/TaskDueOrderTuple';
 import TaskParentOrderTuple from 'listlab-api/TaskParentOrderTuple';
-import {actorToRestJson, restJsonToMaybeUser, maybeUserToRestJson, restJsonToActor} from 'listlab-api/userSerialization';
-import {restParseInt, restParseString, restParseBool, restParseDate} from 'listlab-api/utils/restParamParsers';
+import {
+  actorToRestJson,
+  restJsonToMaybeUser,
+  maybeUserToRestJson,
+  restJsonToActor
+} from 'listlab-api/userSerialization';
+import {
+  restParseInt,
+  restParseString,
+  restParseBool,
+  restParseDate
+} from 'listlab-api/utils/restParamParsers';
 
 export const taskToRestJson = (task: Task): Object => {
   return {
