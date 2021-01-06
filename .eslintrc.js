@@ -6,6 +6,6 @@ module.exports = {
     "project": ["./tsconfig.json"]
   },
   "rules": { 
-    "import/order": importOrderConfig('ququmber-ui'),
+    "import/order": importOrderConfig('ququmber-api'),
   }
 };
