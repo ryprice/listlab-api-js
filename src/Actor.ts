@@ -6,4 +6,12 @@ export default class Actor {
     this.actorId = actorId;
     this.userId = userId;
   }
+
+  hasUserId() {
+    return this.userId != null && this.userId > 0;
+  }
+
+  hasActorId(): boolean {
+    return this.actorId != null && this.actorId > 0;
+  }
 }
