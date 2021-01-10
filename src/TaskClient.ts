@@ -4,7 +4,6 @@ import * as qs from 'qs';
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import CreatePublicTaskResponse from 'listlab-api/CreatePublicTaskResponse';
 import FuzzyTime from 'listlab-api/FuzzyTime';
-import FuzzyTimeRange from 'listlab-api/FuzzyTimeRange';
 import {
   restJsonToFuzzyGranularity,
   restJsonToFuzzyTime,
@@ -102,44 +101,11 @@ export default class TaskClient {
     return restJsonToPayloadResult(json);
   }
 
-  async getTaskChildren(taskId: number): Promise<Payload> {
-    const filter = new TaskFilter({parentId: taskId});
+  async getTasksInFilter(filter: TaskFilter): Promise<Payload> {
     const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/tasks?${qs.stringify({
         filter: taskFilterToRestJson(filter)
       })}`,
-      method: 'GET'
-    };
-    const json = await authorizedRequest(this.config, ajaxSettings);
-    return restJsonToPayloadResult(json);
-  }
-
-  async getTasksInProgress(): Promise<Payload> {
-    const filter = new TaskFilter({inProgress: true});
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/tasks?${qs.stringify({
-        filter: taskFilterToRestJson(filter)
-      })}`,
-      method: 'GET'
-    };
-    const json = await authorizedRequest(this.config, ajaxSettings);
-    return restJsonToPayloadResult(json);
-  }
-
-  async getTasksInRange(from: FuzzyTime, to: FuzzyTime, limit: number): Promise<Payload> {
-    const data: any = {};
-    if (from != null || to != null) {
-      const filter = new TaskFilter({
-        range: new FuzzyTimeRange(from, to != null ? to.getNext() : null)
-      });
-      data.filter = taskFilterToRestJson(filter);
-    }
-    if (limit) {
-      data.limit = limit;
-    }
-
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/tasks?${qs.stringify(data)}`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
@@ -322,15 +288,6 @@ export default class TaskClient {
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
     return restJsonToTasks(json);
-  }
-
-  async getTasksInList(listId: number): Promise<Payload> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/tasks?listId=${listId}`,
-      method: 'GET'
-    };
-    const json = await authorizedRequest(this.config, ajaxSettings);
-    return restJsonToPayloadResult(json);
   }
 
   async removeTasksFromList(taskIds: number[], listId: number): Promise<void> {
