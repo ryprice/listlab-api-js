@@ -8,6 +8,10 @@ import User from 'listlab-api/User';
 import UserDetails from 'listlab-api/UserDetails';
 import {restJsonToSessionActor, restJsonToUsers} from 'listlab-api/userSerialization';
 
+export type UserClientSearchParams = {
+  taskId?: number;
+};
+
 export default class UserClient {
 
   private readonly config: ListlabApiConfig;
@@ -31,9 +35,12 @@ export default class UserClient {
     return restJsonToSessionActor(response.data);
   }
 
-  async search(q: string): Promise<User[]> {
+  async search(q: string, params: UserClientSearchParams = {}): Promise<User[]> {
     const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.userServiceAddress}/search?q=${q}`,
+      url: `${this.userServiceAddress}/search?${qs.stringify({
+        ...params,
+        ...(q ? {q} : {})
+      })}`,
       method: 'GET'
     };
     const json = await authorizedRequest(this.config, ajaxSettings);
