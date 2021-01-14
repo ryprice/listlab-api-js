@@ -19,6 +19,7 @@ export default class TaskUncontexted {
   public readRole: number;
   public writeRole: number;
   public author: Actor;
+  public isProject: boolean;
 
   constructor() {
     this.name = '';
@@ -27,6 +28,7 @@ export default class TaskUncontexted {
     this.owner = new MaybeUser(null, null);
     this.childCount = 0;
     this.incompleteChildCount = 0;
+    this.isProject = false;
   }
 
   clone(): TaskUncontexted {
@@ -52,4 +54,5 @@ export const applyTaskUncontextedClone = (orig: TaskUncontexted, clone: TaskUnco
   clone.readRole = orig.readRole;
   clone.writeRole = orig.writeRole;
   clone.author = orig.author;
+  clone.isProject = orig.isProject;
 };

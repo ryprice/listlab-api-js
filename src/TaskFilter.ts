@@ -50,6 +50,8 @@ export default class TaskFilter {
 
   public readonly inbox: boolean;
 
+  public readonly isProject: boolean;
+
   public readonly lambda: (task: Task) => boolean;
 
   constructor(init?: {[P in keyof TaskFilter]?: TaskFilter[P]}) {
@@ -66,6 +68,7 @@ export default class TaskFilter {
       this.isRoot = init.isRoot;
       this.isListRecursive = init.isListRecursive;
       this.inbox = init.inbox;
+      this.isProject = init.isProject;
       this.lambda = init.lambda;
     }
   }
@@ -98,6 +101,10 @@ export default class TaskFilter {
     return new TaskFilter({...this, isListRecursive});
   }
 
+  public setIsProject(isProject: boolean): TaskFilter {
+    return new TaskFilter({...this, isProject});
+  }
+
   public setLambda(lambda: (task: Task) => boolean): TaskFilter {
     return new TaskFilter({...this, lambda});
   }
@@ -120,6 +127,7 @@ export default class TaskFilter {
       this.isRoot == null &&
       this.isListRecursive == null &&
       this.inbox === null &&
+      this.isProject === null &&
       this.lambda === null
     );
   }
@@ -138,6 +146,7 @@ export default class TaskFilter {
       this.isRoot === other.isRoot &&
       this.isListRecursive === other.isListRecursive &&
       this.inbox === other.inbox &&
+      this.isProject === other.isProject &&
       this.lambda === other.lambda
     );
   }
