@@ -27,7 +27,7 @@ export default class AuthClient {
   }
 
   public logout() {
-    this.removeCookie('todoAuthToken');
+    this.removeCookie(this.getCookieKey());
     window.location.href = `${this.config.WebAddress}`;
   }
 
