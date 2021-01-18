@@ -1,6 +1,5 @@
 import Actor from 'listlab-api/Actor';
-import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
-import FuzzyTime, {buildFuzzyTime, unoffsetNow} from 'listlab-api/FuzzyTime';
+import FuzzyTime from 'listlab-api/FuzzyTime';
 import MaybeUser from 'listlab-api/MaybeUser';
 
 export default class TaskUncontexted {
@@ -24,7 +23,7 @@ export default class TaskUncontexted {
   constructor() {
     this.name = '';
     this.completed = false;
-    this.due = buildFuzzyTime(new Date(unoffsetNow()), FuzzyGranularity.DAY);
+    this.due = null;
     this.owner = new MaybeUser(null, null);
     this.childCount = 0;
     this.incompleteChildCount = 0;
