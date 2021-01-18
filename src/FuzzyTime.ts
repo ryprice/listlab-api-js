@@ -354,3 +354,23 @@ export const unoffsetNow = () => {
   // Pretend there are no timezones :)
   return Date.now() - (timezoneOffset * 60 * 1000);
 };
+
+export const fuzzyTimeNullableEquals = (a: FuzzyTime, b: FuzzyTime) => {
+  if (a == null && b == null) {
+    return true;
+  } else if (a == null) {
+    return b.equals(a);
+  } else {
+    return a.equals(b);
+  }
+};
+
+export const fuzzyTimeNullableCompareTo = (a: FuzzyTime, b: FuzzyTime) => {
+  if (a == null && b == null) {
+    return 0;
+  } else if (a == null) {
+    return -1 * b.compareTo(a);
+  } else {
+    return a.compareTo(b);
+  }
+};
