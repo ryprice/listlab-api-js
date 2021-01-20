@@ -290,7 +290,8 @@ export default class FuzzyTime {
     const spread = new Array<FuzzyTime>();
     while (currentGranularity !== FuzzyGranularity.FOREVER) {
       let current = startTime.withGranularity(currentGranularity);
-      while (current.compareTo(endTime) < 0 && spread.length < limit) {
+      // Ignoring limit until a better optimization is created. 500 for safety because 365+52+12 < 500
+      while (current.compareTo(endTime) < 0 && spread.length < 400) {
         if (current.compareTo(startTime) >= 0) {
           spread.push(current);
         }
