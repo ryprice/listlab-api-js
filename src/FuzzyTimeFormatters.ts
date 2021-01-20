@@ -19,10 +19,13 @@ export const formatRelativeRangeShortName = (range: FuzzyTimeRange) => {
   const start = range.getStart();
   const end = range.getEnd();
   if (start && end) {
-    if (start.equals(end)) {
+    if (start.equals(end.getPrev())) {
       return formatRelativeShortName(start);
     }
-    return `${formatRelativeShortName(start)} - ${formatRelativeShortName(end)}`;
+    return (
+      `${formatRelativeShortName(start)} - ` +
+      `${formatRelativeShortName(end.withGranularity(FuzzyGranularity.DAY).getPrev())}`
+    );
   } else if (start) {
     return `After ${formatRelativeShortName(start)}`;
   } else if (end) {
