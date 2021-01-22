@@ -20,6 +20,7 @@ import Task from 'listlab-api/Task';
 import TaskFilter from 'listlab-api/TaskFilter';
 import {taskFilterToRestJson} from 'listlab-api/taskFilterSerialization';
 import TaskMoveParams from 'listlab-api/TaskMoveParams';
+import TaskMutation from 'listlab-api/TaskMutation';
 import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
 
 type PostTaskParams = {
@@ -309,6 +310,15 @@ export default class TaskClient {
       ),
       method: 'POST',
       data: taskIds,
+    };
+    await authorizedRequest(this.config, ajaxSettings);
+  }
+
+  async sendMutations(mutations: TaskMutation[]) {
+    const ajaxSettings: AxiosRequestConfig = {
+      url: `${this.taskServiceAddress}/mutate`,
+      method: 'PUT',
+      data: mutations,
     };
     await authorizedRequest(this.config, ajaxSettings);
   }
