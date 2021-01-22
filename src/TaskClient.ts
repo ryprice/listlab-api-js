@@ -21,6 +21,7 @@ import TaskFilter from 'listlab-api/TaskFilter';
 import {taskFilterToRestJson} from 'listlab-api/taskFilterSerialization';
 import TaskMoveParams from 'listlab-api/TaskMoveParams';
 import TaskMutation from 'listlab-api/TaskMutation';
+import taskMutationToRestJson from 'listlab-api/taskMutationSerialization';
 import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
 
 type PostTaskParams = {
@@ -136,17 +137,6 @@ export default class TaskClient {
     return restJsonToPayloadResult(json);
   }
 
-  async putTasks(tasks: Task[]): Promise<Task[]> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/task`,
-      data: JSON.stringify(tasks.map(taskToRestJson)),
-      headers: {'Content-Type': 'application/json'},
-      method: 'PUT'
-    };
-    const json = await this.requestQueue.queue(ajaxSettings);
-    return restJsonToPayloadResult(json).tasks;
-  }
-
   async putRecurrence(recurrence: Recurrence): Promise<Recurrence> {
     const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
@@ -244,41 +234,6 @@ export default class TaskClient {
     await authorizedRequest(this.config, ajaxSettings);
   }
 
-  async markSeen(taskId: number): Promise<void> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/task/${taskId}/seen`,
-      method: 'PUT'
-    };
-    await authorizedRequest(this.config, ajaxSettings);
-  }
-
-  async markUnseen(taskId: number): Promise<void> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/task/${taskId}/unseen`,
-      method: 'PUT'
-    };
-    await authorizedRequest(this.config, ajaxSettings);
-  }
-
-
-  async markInbox(taskIds: number[]): Promise<void> {
-    const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/task/inbox?${idsQuery}`,
-      method: 'PUT'
-    };
-    await this.requestQueue.queue(ajaxSettings);
-  }
-
-  async markUninbox(taskIds: number[]): Promise<void> {
-    const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/task/uninbox?${idsQuery}`,
-      method: 'PUT'
-    };
-    await this.requestQueue.queue(ajaxSettings);
-  }
-
   async getTasksByIds(ids: number[]): Promise<Task[]> {
     if (ids.length < 1) {
       return Promise.resolve([]);
@@ -318,9 +273,9 @@ export default class TaskClient {
     const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/mutate`,
       method: 'PUT',
-      data: mutations,
+      data: mutations.map(taskMutationToRestJson),
     };
-    await authorizedRequest(this.config, ajaxSettings);
+    await this.requestQueue.queue(ajaxSettings);
   }
 
   async createPublicTask(newTask?: Task): Promise<CreatePublicTaskResponse> {

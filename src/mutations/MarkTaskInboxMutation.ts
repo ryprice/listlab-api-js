@@ -21,3 +21,7 @@ export const restParseMarkTaskInboxMutation = (
     }
   };
 };
+
+export const markTaskInboxMutationToRestJson = (
+  mutation: MarkTaskInboxMutation
+) => mutation;
