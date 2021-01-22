@@ -299,7 +299,7 @@ export default class FuzzyTime {
       }
       currentGranularity = FuzzyTime.getNextGranularity(currentGranularity, sequence);
     }
-    spread.sort((a, b) => a.compareTo(b));
+    spread.sort((a, b) => a.compareTo(b)).filter((_, i) => i < limit);
     return spread;
   }
 
