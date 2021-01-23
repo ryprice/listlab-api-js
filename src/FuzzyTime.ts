@@ -75,7 +75,7 @@ export default class FuzzyTime {
     return parent;
   }
 
-  public getParents(granularity?: FuzzyGranularity) {
+  public getParents() {
     const forever = FuzzyTime.getForever();
     const parents: FuzzyTime[] = [];
     let lastParent: FuzzyTime = this;

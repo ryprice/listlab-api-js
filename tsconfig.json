@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "module": "umd",
-    "noImplicitAny": true,
     "removeComments": true,
+    "pretty": true,
     "preserveConstEnums": true,
     "sourceMap": false,
     "target": "es6",
@@ -12,7 +12,10 @@
     "paths": {
       "listlab-api/*": ["src/*"]
     },
-    "noUnusedLocals": true
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
   },
   "include": [
     "src/**/*.ts",
