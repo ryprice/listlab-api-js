@@ -1,11 +1,18 @@
+
+import {addListTaskMutationToRestJson} from 'listlab-api/mutations/AddListTaskMutation';
 import {markTaskInboxMutationToRestJson} from 'listlab-api/mutations/MarkTaskInboxMutation';
 import {markTaskSeenMutationToRestJson} from 'listlab-api/mutations/MarkTaskSeenMutation';
+import {removeListTaskMutationToRestJson} from 'listlab-api/mutations/RemoveListTaskMutation';
 import {updateTaskPropsMutationToRestJson} from 'listlab-api/mutations/UpdateTaskPropsMutation';
 import TaskMuation from 'listlab-api/TaskMutation';
 import TaskMutationTypes from 'listlab-api/TaskMutationTypes';
 
 const taskMutationToRestJson = (mutation: TaskMuation) => {
   switch (mutation.type) {
+
+    case TaskMutationTypes.ADD_LIST_TASK:
+      return addListTaskMutationToRestJson(mutation);
+
     case TaskMutationTypes.MARK_TASK_SEEN:
       return markTaskSeenMutationToRestJson(mutation);
 
@@ -15,8 +22,12 @@ const taskMutationToRestJson = (mutation: TaskMuation) => {
     case TaskMutationTypes.UPDATE_TASK_PROPS:
       return updateTaskPropsMutationToRestJson(mutation);
 
+    case TaskMutationTypes.REMOVE_LIST_TASK:
+      return removeListTaskMutationToRestJson(mutation);
+
     default:
       throw Error(`taskMutationToRestJson missing type ${mutation.type}`);
+      break;
   }
 };
 

@@ -246,29 +246,6 @@ export default class TaskClient {
     return restJsonToTasks(json);
   }
 
-  async removeTasksFromList(taskIds: number[], listId: number): Promise<void> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: (
-        `${this.taskServiceAddress}/list/${listId}/delete-tasks?` +
-        taskIds.map(taskId => `taskId=${taskId}&`).join('')
-      ),
-      method: 'DELETE'
-    };
-    await authorizedRequest(this.config, ajaxSettings);
-  }
-
-  async addTasksToList(taskIds: number[], listId: number): Promise<void> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: (
-        `${this.taskServiceAddress}/list/${listId}/add-tasks?` +
-        taskIds.map(taskId => `taskId=${taskId}&`).join('')
-      ),
-      method: 'POST',
-      data: taskIds,
-    };
-    await authorizedRequest(this.config, ajaxSettings);
-  }
-
   async sendMutations(mutations: TaskMutation[]) {
     const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/mutate`,

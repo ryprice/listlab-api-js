@@ -2,6 +2,8 @@ enum TaskMutationTypes {
   MARK_TASK_INBOX = 'MARK_TASK_INBOX',
   MARK_TASK_SEEN = 'MARK_TASK_SEEN',
   UPDATE_TASK_PROPS = 'UPDATE_TASK_PROPS',
+  ADD_LIST_TASK = 'ADD_LIST_TASK',
+  REMOVE_LIST_TASK = 'REMOVE_LIST_TASK',
 }
 
 export default TaskMutationTypes;
