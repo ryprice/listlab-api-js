@@ -5,6 +5,7 @@ import ListRoleUser from 'listlab-api/ListRoleUser';
 import ListTask from 'listlab-api/ListTask';
 import Recurrence from 'listlab-api/Recurrence';
 import Task from 'listlab-api/Task';
+import TaskCreationGroup from 'listlab-api/TaskCreationGroup';
 import TaskDueOrderTuple from 'listlab-api/TaskDueOrderTuple';
 import TaskParentOrderTuple from 'listlab-api/TaskParentOrderTuple';
 import TaskRole from 'listlab-api/TaskRole';
@@ -25,6 +26,7 @@ export default class Payload {
   public taskParentOrders?: TaskParentOrderTuple[];
   public taskRootOrder?: CRDTOrderDoc<number>;
   public taskDueOrders?: TaskDueOrderTuple[];
+  public taskCreationGroups?: TaskCreationGroup[];
 
   public users?: User[];
 }

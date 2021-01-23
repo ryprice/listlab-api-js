@@ -19,6 +19,7 @@ export default class TaskUncontexted {
   public writeRole: number;
   public author: Actor;
   public isProject: boolean;
+  public taskCreationGroupId: number;
 
   constructor() {
     this.name = '';
@@ -54,4 +55,5 @@ export const applyTaskUncontextedClone = (orig: TaskUncontexted, clone: TaskUnco
   clone.writeRole = orig.writeRole;
   clone.author = orig.author;
   clone.isProject = orig.isProject;
+  clone.taskCreationGroupId = orig.taskCreationGroupId;
 };

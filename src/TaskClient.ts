@@ -17,10 +17,12 @@ import Recurrence from 'listlab-api/Recurrence';
 import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
 import RequestQueue from 'listlab-api/RequestQueue';
 import Task from 'listlab-api/Task';
+import TaskCreationGroup from 'listlab-api/TaskCreationGroup';
 import TaskFilter from 'listlab-api/TaskFilter';
 import {taskFilterToRestJson} from 'listlab-api/taskFilterSerialization';
 import TaskMoveParams from 'listlab-api/TaskMoveParams';
 import TaskMutation from 'listlab-api/TaskMutation';
+import {restJsonToTaskMutationResults} from 'listlab-api/TaskMutationResult';
 import taskMutationToRestJson from 'listlab-api/taskMutationSerialization';
 import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
 
@@ -29,6 +31,7 @@ type PostTaskParams = {
   before?: number;
   after?: number;
   orderType?: string;
+  taskCreationGroupId?: number;
 };
 
 export default class TaskClient {
@@ -246,13 +249,23 @@ export default class TaskClient {
     return restJsonToTasks(json);
   }
 
+  async getTaskCreationGroups(taskCreationGroupIds: number[]): Promise<TaskCreationGroup[]> {
+    const ajaxSettings: AxiosRequestConfig = {
+      url: `${this.taskServiceAddress}/taskcreationgroup?${taskCreationGroupIds.map(id => `id=${id}&`).join('')}`,
+      method: 'GET'
+    };
+    const json = await authorizedRequest(this.config, ajaxSettings);
+    return restJsonToPayloadResult(json).taskCreationGroups;
+  }
+
   async sendMutations(mutations: TaskMutation[]) {
     const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/mutate`,
       method: 'PUT',
       data: mutations.map(taskMutationToRestJson),
     };
-    await this.requestQueue.queue(ajaxSettings);
+    const mutationResults = await this.requestQueue.queue(ajaxSettings);
+    return restJsonToTaskMutationResults(mutationResults);
   }
 
   async createPublicTask(newTask?: Task): Promise<CreatePublicTaskResponse> {

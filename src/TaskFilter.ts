@@ -52,6 +52,10 @@ export default class TaskFilter {
 
   public readonly isProject: boolean;
 
+  public readonly taskCreationGroupId: number;
+
+  public readonly creationTime: {start?: Date, end?: Date};
+
   public readonly lambda: (task: Task) => boolean;
 
   constructor(init?: {[P in keyof TaskFilter]?: TaskFilter[P]}) {
@@ -69,6 +73,8 @@ export default class TaskFilter {
       this.isListRecursive = init.isListRecursive;
       this.inbox = init.inbox;
       this.isProject = init.isProject;
+      this.taskCreationGroupId = init.taskCreationGroupId;
+      this.creationTime = init.creationTime;
       this.lambda = init.lambda;
     }
   }
@@ -109,6 +115,14 @@ export default class TaskFilter {
     return new TaskFilter({...this, lambda});
   }
 
+  public setTaskCreationGroupId(taskCreationGroupId: number) {
+    return new TaskFilter({...this, taskCreationGroupId});
+  }
+
+  public setCreationTime(creationTime: FuzzyTimeRange) {
+    return new TaskFilter({...this, creationTime});
+  }
+
   public isEmpty(): boolean {
     return (
       !this.listId &&
@@ -128,6 +142,8 @@ export default class TaskFilter {
       this.isListRecursive == null &&
       this.inbox === null &&
       this.isProject === null &&
+      this.taskCreationGroupId === null &&
+      this.creationTime === null &&
       this.lambda === null
     );
   }
@@ -147,6 +163,8 @@ export default class TaskFilter {
       this.isListRecursive === other.isListRecursive &&
       this.inbox === other.inbox &&
       this.isProject === other.isProject &&
+      this.taskCreationGroupId === other.taskCreationGroupId &&
+      this.creationTime === other.creationTime &&
       this.lambda === other.lambda
     );
   }

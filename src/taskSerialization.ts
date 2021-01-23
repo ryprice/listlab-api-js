@@ -35,6 +35,7 @@ export const taskToRestJson = (task: Task): Object => {
     writeRole: task.writeRole,
     author: actorToRestJson(task.author),
     inbox: task.inbox,
+    taskCreationGroupId: task.taskCreationGroupId,
   };
 };
 
@@ -70,6 +71,7 @@ export const restJsonToTask = (json: any) => {
   if (json.due) {
     task.due = restJsonToFuzzyTime(json.due);
   }
+  task.taskCreationGroupId = restParseInt(json.taskCreationGroupId);
   return task;
 };
 
