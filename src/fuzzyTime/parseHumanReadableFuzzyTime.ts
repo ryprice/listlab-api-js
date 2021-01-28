@@ -1,5 +1,5 @@
-import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
-import FuzzyTime, {buildFuzzyTime} from 'listlab-api/FuzzyTime';
+import FuzzyGranularity from 'listlab-api/fuzzyTime/FuzzyGranularity';
+import FuzzyTime, {buildFuzzyTime} from 'listlab-api/fuzzyTime/FuzzyTime';
 
 export default (str: string): FuzzyTime => {
   let result = str;

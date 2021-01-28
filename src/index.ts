@@ -3,14 +3,6 @@ export {default as authorizedRequest} from 'listlab-api/authorizedRequest';
 export {default as AuthClient} from 'listlab-api/AuthClient';
 export {default as CommentClient} from 'listlab-api/CommentClient';
 export {default as CRDTOrderDoc} from 'listlab-api/CRDTOrderDoc';
-export {default as FuzzyGranularity, StandardGranularitySequence} from 'listlab-api/FuzzyGranularity';
-export {default as FuzzyTime} from 'listlab-api/FuzzyTime';
-export {
-  formatRelativeName,
-  formatRelativeRangeShortName,
-  formatRelativeShortName
-} from 'listlab-api/FuzzyTimeFormatters';
-export {default as FuzzyTimeRange} from 'listlab-api/FuzzyTimeRange';
 export {default as InitClient} from 'listlab-api/InitClient';
 export {default as List} from 'listlab-api/List';
 export {default as ListClient} from 'listlab-api/ListClient';
@@ -25,7 +17,6 @@ export {default as MaybeUser} from 'listlab-api/MaybeUser';
 export {default as Notification} from 'listlab-api/Notification';
 export {default as NotificationClient} from 'listlab-api/NotificationClient';
 export {default as NotificationTypes} from 'listlab-api/NotificationTypes';
-export {default as parseHumanReadableFuzzyTime} from 'listlab-api/parseHumanReadableFuzzyTime';
 export {default as Payload} from 'listlab-api/Payload';
 export {buildPublicListUrl, buildPublicTaskUrl} from 'listlab-api/ListlabUrlBuilders';
 export {default as Recurrence} from 'listlab-api/Recurrence';
@@ -55,3 +46,13 @@ export {default as SessionActor} from 'listlab-api/SessionActor';
 export {default as User} from 'listlab-api/User';
 export {default as UserClient} from 'listlab-api/UserClient';
 export {default as UserDetails} from 'listlab-api/UserDetails';
+
+export {default as FuzzyGranularity, StandardGranularitySequence} from 'listlab-api/fuzzyTime/FuzzyGranularity';
+export {default as FuzzyTime} from 'listlab-api/fuzzyTime/FuzzyTime';
+export {
+  formatRelativeName,
+  formatRelativeRangeShortName,
+  formatRelativeShortName
+} from 'listlab-api/fuzzyTime/FuzzyTimeFormatters';
+export {default as FuzzyTimeRange} from 'listlab-api/fuzzyTime/FuzzyTimeRange';
+export {default as parseHumanReadableFuzzyTime} from 'listlab-api/fuzzyTime/parseHumanReadableFuzzyTime';

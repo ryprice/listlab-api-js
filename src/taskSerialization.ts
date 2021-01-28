@@ -2,7 +2,7 @@ import CRDTOrderDoc from 'listlab-api/CRDTOrderDoc';
 import {
   restJsonToFuzzyTime,
   fuzzyTimeToRestJson
-} from 'listlab-api/fuzzyTimeSerialization';
+} from 'listlab-api/fuzzyTime/fuzzyTimeSerialization';
 import Task from 'listlab-api/Task';
 import TaskDueOrderTuple from 'listlab-api/TaskDueOrderTuple';
 import TaskParentOrderTuple from 'listlab-api/TaskParentOrderTuple';

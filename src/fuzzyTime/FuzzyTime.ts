@@ -1,7 +1,7 @@
 import FuzzyGranularity, {
   FuzzyGranularitySequence,
   StandardGranularitySequence
-} from 'listlab-api/FuzzyGranularity';
+} from 'listlab-api/fuzzyTime/FuzzyGranularity';
 
 const instanceCache: {[key: string]: FuzzyTime} = {};
 

@@ -1,6 +1,6 @@
-import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
-import FuzzyTime, {buildFuzzyTime} from 'listlab-api/FuzzyTime';
-import FuzzyTimeRange from 'listlab-api/FuzzyTimeRange';
+import FuzzyGranularity from 'listlab-api/fuzzyTime/FuzzyGranularity';
+import FuzzyTime, {buildFuzzyTime} from 'listlab-api/fuzzyTime/FuzzyTime';
+import FuzzyTimeRange from 'listlab-api/fuzzyTime/FuzzyTimeRange';
 
 export const fuzzyTimeToRestJson = (fuzzyTime: FuzzyTime): Object => {
   if (fuzzyTime) {

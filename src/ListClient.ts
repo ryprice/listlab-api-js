@@ -128,22 +128,11 @@ export default class ListClient {
     return restJsonToLists(json);
   }
 
-  constructEmptyEntity(): List {
-    return new List();
-  }
-
   restJsonToInsertResult(json: any): number {
     if (json.id) {
       return json.id;
     } else {
       return 0;
     }
-  }
-  getEntityId(list: List) {
-    return list.listId;
-  }
-
-  setEntityId(list: List, id: number) {
-    list.listId = id;
   }
 }

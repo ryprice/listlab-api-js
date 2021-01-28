@@ -1,6 +1,6 @@
 import {pickBy} from 'lodash';
 
-import FuzzyTimeRange from 'listlab-api/FuzzyTimeRange';
+import FuzzyTimeRange from 'listlab-api/fuzzyTime/FuzzyTimeRange';
 import Task from 'listlab-api/Task';
 
 export default class TaskFilter {

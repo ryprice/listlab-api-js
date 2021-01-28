@@ -1,5 +1,5 @@
 import CRDTOrderDoc from 'listlab-api/CRDTOrderDoc';
-import FuzzyTime from 'listlab-api/FuzzyTime';
+import FuzzyTime from 'listlab-api/fuzzyTime/FuzzyTime';
 
 export default interface TaskDueOrderTuple {
   userId: number;

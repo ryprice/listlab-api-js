@@ -1,5 +1,5 @@
-import FuzzyGranularity from 'listlab-api/FuzzyGranularity';
-import FuzzyTime from 'listlab-api/FuzzyTime';
+import FuzzyGranularity from 'listlab-api/fuzzyTime/FuzzyGranularity';
+import FuzzyTime from 'listlab-api/fuzzyTime/FuzzyTime';
 
 export default class RecurrenceSchedule {
   from: FuzzyTime;

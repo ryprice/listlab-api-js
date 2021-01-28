@@ -1,4 +1,4 @@
-import {StandardGranularitySequence} from 'listlab-api/FuzzyGranularity';
+import {StandardGranularitySequence} from 'listlab-api/fuzzyTime/FuzzyGranularity';
 import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
 import Task from 'listlab-api/Task';
 

@@ -1,5 +1,5 @@
 import Actor from 'listlab-api/Actor';
-import FuzzyTime from 'listlab-api/FuzzyTime';
+import FuzzyTime from 'listlab-api/fuzzyTime/FuzzyTime';
 import MaybeUser from 'listlab-api/MaybeUser';
 
 export default class TaskUncontexted {

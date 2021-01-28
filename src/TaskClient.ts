@@ -3,19 +3,18 @@ import * as qs from 'qs';
 
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import CreatePublicTaskResponse from 'listlab-api/CreatePublicTaskResponse';
-import FuzzyTime from 'listlab-api/FuzzyTime';
+import FuzzyTime from 'listlab-api/fuzzyTime/FuzzyTime';
 import {
   restJsonToFuzzyGranularity,
   restJsonToFuzzyTime,
   fuzzyTimeToRestJson
-} from 'listlab-api/fuzzyTimeSerialization';
+} from 'listlab-api/fuzzyTime/fuzzyTimeSerialization';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import MaybeUser from 'listlab-api/MaybeUser';
 import Payload from 'listlab-api/Payload';
 import {restJsonToPayloadResult} from 'listlab-api/payloadSerialization';
 import Recurrence from 'listlab-api/Recurrence';
 import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
-import RequestQueue from 'listlab-api/RequestQueue';
 import Task from 'listlab-api/Task';
 import TaskCreationGroup from 'listlab-api/TaskCreationGroup';
 import TaskFilter from 'listlab-api/TaskFilter';
@@ -25,6 +24,7 @@ import TaskMutation from 'listlab-api/TaskMutation';
 import {restJsonToTaskMutationResults} from 'listlab-api/TaskMutationResult';
 import taskMutationToRestJson from 'listlab-api/taskMutationSerialization';
 import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
+import RequestQueue from 'listlab-api/utils/RequestQueue';
 
 type PostTaskParams = {
   parent?: number;

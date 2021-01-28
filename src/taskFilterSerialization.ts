@@ -1,4 +1,4 @@
-import {fuzzyTimeRangeToRestJson, restJsonToFuzzyTimeRange} from 'listlab-api/fuzzyTimeSerialization';
+import {fuzzyTimeRangeToRestJson, restJsonToFuzzyTimeRange} from 'listlab-api/fuzzyTime/fuzzyTimeSerialization';
 import TaskFilter from 'listlab-api/TaskFilter';
 import {restParseBool, restParseInt, restParseString} from 'listlab-api/utils/restParamParsers';
 
