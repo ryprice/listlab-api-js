@@ -4,17 +4,11 @@ import * as qs from 'qs';
 import authorizedRequest from 'listlab-api/authorizedRequest';
 import CreatePublicTaskResponse from 'listlab-api/CreatePublicTaskResponse';
 import FuzzyTime from 'listlab-api/fuzzyTime/FuzzyTime';
-import {
-  restJsonToFuzzyGranularity,
-  restJsonToFuzzyTime,
-  fuzzyTimeToRestJson
-} from 'listlab-api/fuzzyTime/fuzzyTimeSerialization';
+import {fuzzyTimeToRestJson} from 'listlab-api/fuzzyTime/fuzzyTimeSerialization';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
 import MaybeUser from 'listlab-api/MaybeUser';
 import Payload from 'listlab-api/Payload';
 import {restJsonToPayloadResult} from 'listlab-api/payloadSerialization';
-import Recurrence from 'listlab-api/Recurrence';
-import RecurrenceSchedule from 'listlab-api/RecurrenceSchedule';
 import Task from 'listlab-api/Task';
 import TaskCreationGroup from 'listlab-api/TaskCreationGroup';
 import TaskFilter from 'listlab-api/TaskFilter';
@@ -140,37 +134,6 @@ export default class TaskClient {
     return restJsonToPayloadResult(json);
   }
 
-  async putRecurrence(recurrence: Recurrence): Promise<Recurrence> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
-      data: JSON.stringify(this.recurrenceToRestJson(recurrence)),
-      headers: {'Content-Type': 'application/json'},
-      method: 'PUT'
-    };
-    await this.requestQueue.queue(ajaxSettings);
-    return recurrence;
-  }
-
-  async postRecurrence(recurrence: Recurrence): Promise<Recurrence> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/recurrence`,
-      data: JSON.stringify(this.recurrenceToRestJson(recurrence)),
-      headers: {'Content-Type': 'application/json'},
-      method: 'POST'
-    };
-    await this.requestQueue.queue(ajaxSettings);
-    return recurrence;
-  }
-
-  async deleteRecurrence(recurrence: Recurrence): Promise<void> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/recurrence/${recurrence.recurrenceId}`,
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json'}
-    };
-    await this.requestQueue.queue(ajaxSettings);
-  }
-
   async postTask(task: Task, params?: PostTaskParams): Promise<Payload> {
     const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/task`,
@@ -284,17 +247,6 @@ export default class TaskClient {
     return json as CreatePublicTaskResponse;
   }
 
-  recurrenceToRestJson(recurrence: Recurrence): Object {
-    return {
-      recurrenceId: recurrence.recurrenceId,
-      baseTaskId: recurrence.baseTaskId,
-      from: fuzzyTimeToRestJson(recurrence.schedule.from),
-      to: fuzzyTimeToRestJson(recurrence.schedule.to),
-      period: recurrence.schedule.period.getName(),
-      selected: recurrence.schedule.selected
-    };
-  }
-
   addRequestQueueListener(l: (isRunning: boolean) => void) {
     this.requestQueue.addListener(l);
   }
@@ -303,25 +255,3 @@ export default class TaskClient {
     this.requestQueue.removeListener(l);
   }
 }
-
-export const restJsonToRecurrence = (json: any) => {
-  const recurrence = new Recurrence();
-  recurrence.recurrenceId = json.recurrenceId;
-  recurrence.baseTaskId = json.baseTaskId;
-  const schedule = new RecurrenceSchedule();
-  schedule.to = restJsonToFuzzyTime(json.to);
-  schedule.from = restJsonToFuzzyTime(json.from);
-  schedule.period = restJsonToFuzzyGranularity(json.period);
-  schedule.selected = json.selected;
-  recurrence.schedule = schedule;
-  return recurrence;
-};
-
-export const restJsonToRecurrences = (json: any): Recurrence[] => {
-  const recurrences = new Array<Recurrence>();
-  for (let i = 0; i < json.length; i++) {
-    const entity = restJsonToRecurrence(json[i]);
-    recurrences.push(entity);
-  }
-  return recurrences;
-};

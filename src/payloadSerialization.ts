@@ -6,7 +6,6 @@ import {
 } from 'listlab-api/listSerialization';
 import ListTask from 'listlab-api/ListTask';
 import Payload from 'listlab-api/Payload';
-import {restJsonToRecurrences} from 'listlab-api/TaskClient';
 import {restJsonToTaskCreationGroup} from 'listlab-api/taskCreationGroupSerialization';
 import {restJsonToTaskRole, restJsonToTaskRoleUser} from 'listlab-api/taskRoleSerialization';
 import {restJsonToTaskDueOrders, restJsonToTaskParentOrders, restJsonToTasks} from 'listlab-api/taskSerialization';
@@ -51,9 +50,6 @@ export const restJsonToPayloadResult = (json: any): Payload => {
   }
   if (json.taskDueOrders) {
     payload.taskDueOrders = restJsonToTaskDueOrders(json.taskDueOrders);
-  }
-  if (json.recurrences) {
-    payload.recurrences = restJsonToRecurrences(json.recurrences);
   }
   if (json.users) {
     payload.users = restJsonToUsers(json.users);
