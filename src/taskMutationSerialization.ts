@@ -1,6 +1,7 @@
 
 import {addListTaskMutationToRestJson} from 'listlab-api/mutations/AddListTaskMutation';
 import {createTaskCreationGroupMutationToRestJson} from 'listlab-api/mutations/CreateTaskCreationGroupMutation';
+import {deleteTaskMutationToRestJson} from 'listlab-api/mutations/DeleteTaskMutation';
 import {markTaskInboxMutationToRestJson} from 'listlab-api/mutations/MarkTaskInboxMutation';
 import {markTaskSeenMutationToRestJson} from 'listlab-api/mutations/MarkTaskSeenMutation';
 import {removeListTaskMutationToRestJson} from 'listlab-api/mutations/RemoveListTaskMutation';
@@ -16,6 +17,9 @@ const taskMutationToRestJson = (mutation: TaskMuation) => {
 
     case TaskMutationTypes.CREATE_TASK_CREATION_GROUP:
       return createTaskCreationGroupMutationToRestJson(mutation);
+
+    case TaskMutationTypes.DELETE_TASK:
+      return deleteTaskMutationToRestJson(mutation);
 
     case TaskMutationTypes.MARK_TASK_SEEN:
       return markTaskSeenMutationToRestJson(mutation);

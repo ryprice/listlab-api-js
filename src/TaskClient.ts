@@ -174,17 +174,6 @@ export default class TaskClient {
     await this.requestQueue.queue(ajaxSettings);
   }
 
-  async deleteTasks(taskIds: number[]): Promise<number[]> {
-    const idsQuery = qs.stringify({id: taskIds}, {arrayFormat: 'repeat'});
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/tasks?${idsQuery}`,
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json'}
-    };
-    await this.requestQueue.queue(ajaxSettings);
-    return taskIds;
-  }
-
   async assignTask(taskId: number, maybeUser: MaybeUser): Promise<void> {
     const data: any = {taskId};
     if (maybeUser.userId) {
