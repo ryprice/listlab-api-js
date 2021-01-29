@@ -13,7 +13,6 @@ import Task from 'listlab-api/Task';
 import TaskCreationGroup from 'listlab-api/TaskCreationGroup';
 import TaskFilter from 'listlab-api/TaskFilter';
 import {taskFilterToRestJson} from 'listlab-api/taskFilterSerialization';
-import TaskMoveParams from 'listlab-api/TaskMoveParams';
 import TaskMutation from 'listlab-api/TaskMutation';
 import {restJsonToTaskMutationResults} from 'listlab-api/TaskMutationResult';
 import taskMutationToRestJson from 'listlab-api/taskMutationSerialization';
@@ -149,21 +148,6 @@ export default class TaskClient {
     for (const task of tasks) {
       this.postTask(task, params);
     }
-  }
-
-  async moveTask(taskId: number, moveParams: TaskMoveParams): Promise<void> {
-    const {before, after, parent, type} = moveParams;
-    const ajaxSettings: AxiosRequestConfig = {
-      url: (
-        `${this.taskServiceAddress}/move` +
-        `?taskId=${taskId}&orderType=${type}` +
-        (before != null ? `&before=${before}` : '') +
-        (after != null ? `&after=${after}` : '') +
-        (parent != null ? `&parent=${parent}` : '')
-      ),
-      method: 'PUT'
-    };
-    await this.requestQueue.queue(ajaxSettings);
   }
 
   async moveTaskToParent(taskId: number, parentId: number): Promise<void> {

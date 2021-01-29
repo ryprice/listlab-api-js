@@ -33,7 +33,7 @@ export {default as TaskCreationSource} from 'listlab-api/TaskCreationSource';
 export {default as TaskDueOrderTuple} from 'listlab-api/TaskDueOrderTuple';
 export {default as TaskFilter} from 'listlab-api/TaskFilter';
 export {default as TaskMetricsClient} from 'listlab-api/TaskMetricsClient';
-export {default as TaskMoveParams, TaskMoveRelativePosition, TaskMoveType} from 'listlab-api/TaskMoveParams';
+export {default as TaskMoveParams, TaskMoveRelativePosition, TaskMoveOrderType} from 'listlab-api/TaskMoveParams';
 export {default as TaskMutationResult} from 'listlab-api/TaskMutationResult';
 export {default as TaskParentOrderTuple} from 'listlab-api/TaskParentOrderTuple';
 export {default as TaskPermissionClient} from 'listlab-api/TaskPermissionClient';
