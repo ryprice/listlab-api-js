@@ -1,3 +1,5 @@
+import TaskSortOrder from 'listlab-api/TaskSortOrder';
+
 export enum TaskMoveOrderType {
   DUE_ORDER = 'due_order',
   PARENT_ORDER = 'parent_order',
@@ -27,6 +29,16 @@ export const taskMoveOrderTypeFromString = (orderTypeStr?: string) => {
     default:
       throw Error(`orderType could not be parsed from ${orderTypeStr}`);
   }
+};
+
+export const taskSortOrderToMoveType = (sortOrder: TaskSortOrder) => {
+  if (sortOrder === TaskSortOrder.DUE) {
+    return TaskMoveOrderType.DUE_ORDER;
+  }
+  if (sortOrder === TaskSortOrder.PARENT_ORDER) {
+    return TaskMoveOrderType.PARENT_ORDER;
+  }
+  return null;
 };
 
 export default TaskMoveParams;

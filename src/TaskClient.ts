@@ -16,6 +16,7 @@ import TaskMutation from 'listlab-api/TaskMutation';
 import {restJsonToTaskMutationResults} from 'listlab-api/TaskMutationResult';
 import taskMutationToRestJson from 'listlab-api/taskMutationSerialization';
 import {restJsonToTasks, taskToRestJson, restJsonToTaskDueOrders} from 'listlab-api/taskSerialization';
+import TaskSortOrder from 'listlab-api/TaskSortOrder';
 import RequestQueue from 'listlab-api/utils/RequestQueue';
 
 type PostTaskParams = {
@@ -112,7 +113,7 @@ export default class TaskClient {
   async getTasks(args: {
     continuation: number,
     limit: number,
-    sort?: string,
+    sort?: TaskSortOrder,
   }) {
     const {continuation, sort, limit} = args;
     const data: any = {
