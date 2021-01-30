@@ -1,4 +1,5 @@
 import {AddListTaskMutation} from 'listlab-api/mutations/AddListTaskMutation';
+import {AssignTaskMutation} from 'listlab-api/mutations/AssignTaskMutation';
 import {CreateTaskCreationGroupMutation} from 'listlab-api/mutations/CreateTaskCreationGroupMutation';
 import {DeleteTaskMutation} from 'listlab-api/mutations/DeleteTaskMutation';
 import {MarkTaskInboxMutation} from 'listlab-api/mutations/MarkTaskInboxMutation';
@@ -9,6 +10,7 @@ import {UpdateTaskPropsMutation} from 'listlab-api/mutations/UpdateTaskPropsMuta
 
 type TaskMutation = (
   AddListTaskMutation |
+  AssignTaskMutation |
   CreateTaskCreationGroupMutation |
   DeleteTaskMutation |
   MarkTaskInboxMutation |

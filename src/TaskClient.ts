@@ -6,7 +6,6 @@ import CreatePublicTaskResponse from 'listlab-api/CreatePublicTaskResponse';
 import FuzzyTime from 'listlab-api/fuzzyTime/FuzzyTime';
 import {fuzzyTimeToRestJson} from 'listlab-api/fuzzyTime/fuzzyTimeSerialization';
 import ListlabApiConfig from 'listlab-api/ListlabApiConfig';
-import MaybeUser from 'listlab-api/MaybeUser';
 import Payload from 'listlab-api/Payload';
 import {restJsonToPayloadResult} from 'listlab-api/payloadSerialization';
 import Task from 'listlab-api/Task';
@@ -156,21 +155,6 @@ export default class TaskClient {
       method: 'PUT'
     };
     await this.requestQueue.queue(ajaxSettings);
-  }
-
-  async assignTask(taskId: number, maybeUser: MaybeUser): Promise<void> {
-    const data: any = {taskId};
-    if (maybeUser.userId) {
-      data.ownerId = maybeUser.userId;
-    }
-    if (maybeUser.name) {
-      data.ownerName = maybeUser.name;
-    }
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/tasks/assign?${qs.stringify(data)}`,
-      method: 'PUT'
-    };
-    await authorizedRequest(this.config, ajaxSettings);
   }
 
   async getTasksByIds(ids: number[]): Promise<Task[]> {
