@@ -70,3 +70,11 @@ export const dueComparator = (a: Task, b: Task) => {
     return 1;
   }
 };
+
+export const childCountComparator = (a: Task, b: Task) => {
+  return b.childCount - a.childCount;
+};
+
+export const incompleteChildCountComparator = (a: Task, b: Task) => {
+  return b.incompleteChildCount - a.incompleteChildCount;
+};
