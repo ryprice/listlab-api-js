@@ -4,6 +4,7 @@ import {
   fuzzyTimeToRestJson
 } from 'listlab-api/fuzzyTime/fuzzyTimeSerialization';
 import Task from 'listlab-api/Task';
+import {restJsonToTaskCreationSource, taskCreationSourceToRestJson} from 'listlab-api/TaskCreationSource';
 import TaskDueOrderTuple from 'listlab-api/TaskDueOrderTuple';
 import TaskParentOrderTuple from 'listlab-api/TaskParentOrderTuple';
 import {
@@ -36,6 +37,7 @@ export const taskToRestJson = (task: Task): Object => {
     author: actorToRestJson(task.author),
     inbox: task.inbox,
     taskCreationGroupId: task.taskCreationGroupId,
+    creationSource: taskCreationSourceToRestJson(task.creationSource),
   };
 };
 
@@ -68,6 +70,7 @@ export const restJsonToTask = (json: any) => {
   task.canRead = restParseBool(json.canRead);
   task.canWrite = restParseBool(json.canWrite);
   task.inbox = restParseBool(json.inbox);
+  task.creationSource = restJsonToTaskCreationSource(json.creationSource);
   if (json.due) {
     task.due = restJsonToFuzzyTime(json.due);
   }
