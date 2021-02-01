@@ -9,7 +9,7 @@ export type MoveTaskMutation = {
     before?: number;
     after?: number;
     parent?: number;
-    orderType: TaskMoveOrderType;
+    orderType?: TaskMoveOrderType;
   }
 };
 

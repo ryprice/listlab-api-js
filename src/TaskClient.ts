@@ -150,14 +150,6 @@ export default class TaskClient {
     }
   }
 
-  async moveTaskToParent(taskId: number, parentId: number): Promise<void> {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/move?taskId=${taskId}&parent=${parentId}`,
-      method: 'PUT'
-    };
-    await this.requestQueue.queue(ajaxSettings);
-  }
-
   async getTasksByIds(ids: number[]): Promise<Task[]> {
     if (ids.length < 1) {
       return Promise.resolve([]);
