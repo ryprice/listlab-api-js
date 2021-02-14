@@ -41,16 +41,6 @@ export default class TaskClient {
     this.requestQueue = new RequestQueue(this.config);
   }
 
-  async getTaskRootOrder() {
-    const ajaxSettings: AxiosRequestConfig = {
-      url: `${this.taskServiceAddress}/init/app`,
-      method: 'GET'
-    };
-    const json = await authorizedRequest(this.config, ajaxSettings);
-    const payload = restJsonToPayloadResult(json);
-    return payload.taskRootOrder;
-  }
-
   async getTaskDueOrders(dues: FuzzyTime[]) {
     const ajaxSettings: AxiosRequestConfig = {
       url: `${this.taskServiceAddress}/dueorder?${dues

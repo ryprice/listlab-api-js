@@ -1,4 +1,3 @@
-import CRDTOrderDoc from 'listlab-api/CRDTOrderDoc';
 import {
   restJsonToListRole,
   restJsonToListRoleUser,
@@ -41,12 +40,6 @@ export const restJsonToPayloadResult = (json: any): Payload => {
   }
   if (json.taskParentOrders) {
     payload.taskParentOrders = restJsonToTaskParentOrders(json.taskParentOrders);
-  }
-  if (json.taskRootOrder) {
-    payload.taskRootOrder = CRDTOrderDoc.create<number>(
-      json.taskRootOrder,
-      (a: number, b: number) => a === b
-    );
   }
   if (json.taskDueOrders) {
     payload.taskDueOrders = restJsonToTaskDueOrders(json.taskDueOrders);

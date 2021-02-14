@@ -1,7 +1,7 @@
 import Actor from 'listlab-api/Actor';
 import FuzzyTime from 'listlab-api/fuzzyTime/FuzzyTime';
 import MaybeUser from 'listlab-api/MaybeUser';
-import TaskCreationSource from './TaskCreationSource';
+import TaskCreationSource from 'listlab-api/TaskCreationSource';
 
 export default class TaskUncontexted {
   public taskId: number;
