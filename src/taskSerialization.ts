@@ -38,6 +38,7 @@ export const taskToRestJson = (task: Task): Object => {
     inbox: task.inbox,
     taskCreationGroupId: task.taskCreationGroupId,
     creationSource: taskCreationSourceToRestJson(task.creationSource),
+    links: task.links,
   };
 };
 
@@ -75,6 +76,7 @@ export const restJsonToTask = (json: any) => {
     task.due = restJsonToFuzzyTime(json.due);
   }
   task.taskCreationGroupId = restParseInt(json.taskCreationGroupId);
+  task.links = json.links;
   return task;
 };
 

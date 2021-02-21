@@ -3,6 +3,11 @@ import FuzzyTime from 'listlab-api/fuzzyTime/FuzzyTime';
 import MaybeUser from 'listlab-api/MaybeUser';
 import TaskCreationSource from 'listlab-api/TaskCreationSource';
 
+export type TaskLink = {
+  url: string;
+  label: string;
+};
+
 export default class TaskUncontexted {
   public taskId: number;
   public parentId: number;
@@ -22,6 +27,7 @@ export default class TaskUncontexted {
   public isProject: boolean;
   public taskCreationGroupId: number;
   public creationSource: TaskCreationSource;
+  public links: TaskLink[];
 
   constructor() {
     this.name = '';
@@ -31,6 +37,7 @@ export default class TaskUncontexted {
     this.childCount = 0;
     this.incompleteChildCount = 0;
     this.isProject = false;
+    this.links = [];
   }
 
   clone(): TaskUncontexted {
@@ -59,4 +66,5 @@ export const applyTaskUncontextedClone = (orig: TaskUncontexted, clone: TaskUnco
   clone.isProject = orig.isProject;
   clone.taskCreationGroupId = orig.taskCreationGroupId;
   clone.creationSource = orig.creationSource;
+  clone.links = orig.links;
 };
